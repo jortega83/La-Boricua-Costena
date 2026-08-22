@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Arroz de Coco Costeño — La Boricua Costeña</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Work+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+
+<div class="app">
+  <div class="masthead">
+    <a class="place" href="../index.html">← La Boricua Costeña</a>
+    <div class="place">Arroz #1</div>
+  </div>
+
+  <div class="hero">
+    <h1>Arroz de <em>Coco</em><br>Costeño</h1>
+    <p class="subtitle">Coastal coconut rice built on titoté — coconut milk reduced slow and dark until the oil breaks free. Rich, a little sweet, a little clingy. As it should be.</p>
+    <div class="credit coral"><span class="dot"></span>Receta de Graciana Romero</div>
+  </div>
+
+  <div class="meta-row">
+    <span>TIME <b>~55 min</b></span>
+    <span>ACTIVE <b>20 min</b></span>
+    <span>GRAIN <b>medium or long</b></span>
+  </div>
+
+  <div class="card">
+    <div class="servings-row">
+      <div class="servings-label">Servings</div>
+      <div class="stepper">
+        <button id="dec" aria-label="Decrease servings">–</button>
+        <div class="count" id="servingsCount">8</div>
+        <button id="inc" aria-label="Increase servings">+</button>
+      </div>
+    </div>
+    <div class="servings-note"><span id="servingsNoteText">4 cups rice</span></div>
+
+    <div style="height:20px"></div>
+
+    <div class="section-label">Ingredients</div>
+    <ul class="ingredients" id="ingredientsList"></ul>
+  </div>
+
+  <div class="card">
+    <div class="note-box">
+      <b>Titoté tip —</b> caramelize the sugar with a splash of coconut milk first, before adding the rest. It deepens the color and flavor. Some stickiness is normal, especially with medium grain — you want tender, not soupy.
+    </div>
+  </div>
+
+  <button class="start-btn" id="startBtn">Start cooking →</button>
+
+  <footer>ARROZ DE COCO COSTEÑO · GRACIANA ROMERO</footer>
+</div>
+
+<!-- COOK MODE -->
+<div class="cook-overlay" id="cookOverlay">
+  <div class="cook-top">
+    <button class="close-btn" id="closeBtn">✕</button>
+    <div class="step-count" id="stepCount">STEP 1 / 8</div>
+    <div style="width:38px"></div>
+  </div>
+
+  <div class="progress-track" id="progressTrack"></div>
+
+  <div class="cook-body" id="cookBody">
+    <div class="step-eyebrow" id="stepEyebrow">TITOTÉ</div>
+    <h2 class="step-title" id="stepTitle"></h2>
+    <p class="step-content" id="stepContent"></p>
+
+    <div class="timer-wrap" id="timerWrap" style="display:none;">
+      <div class="dial">
+        <svg width="190" height="190" viewBox="0 0 190 190">
+          <circle class="track" cx="95" cy="95" r="82"></circle>
+          <circle class="fill" id="dialFill" cx="95" cy="95" r="82"></circle>
+        </svg>
+        <div class="dial-center">
+          <div class="dial-time" id="dialTime">00:00</div>
+          <div class="dial-label" id="dialLabel">READY</div>
+        </div>
+      </div>
+      <div class="timer-controls">
+        <button class="primary" id="timerToggle">Start timer</button>
+        <button id="timerReset">Reset</button>
+      </div>
+      <div class="timer-done-badge" id="timerDoneBadge"><span class="dot"></span>TIME'S UP</div>
+    </div>
+  </div>
+
+  <div class="done-screen" id="doneScreen">
+    <div class="glyph">🥥</div>
+    <h2>Arroz listo.</h2>
+    <p>Fluff it with a fork, let the steam settle a moment, and serve. Buen provecho.</p>
+    <button class="start-btn" id="restartBtn" style="max-width:280px;">Cook it again</button>
+  </div>
+
+  <div class="cook-nav" id="cookNav">
+    <button id="prevBtn">Back</button>
+    <button class="next" id="nextBtn">Next step</button>
+  </div>
+</div>
+
+<script>
+  window.RECIPE = {
+    accent: 'coral',
+    baseServings: 8,
+    servingStep: 2,
+    minServings: 2,
+    maxServings: 40,
+    ingredients: [
+      { name: "Medium or long grain white rice", base: 4, unit: "cup" },
+      { name: "Coconut milk", base: 4, unit: "cup", sub: "≈ 2.5 cans, 13.5 oz each" },
+      { name: "Water", base: 1.75, unit: "cup", sub: "use ~2 cups if using long grain" },
+      { name: "Sugar", base: 2, unit: "tbsp" },
+      { name: "Salt", base: 2, unit: "tsp" },
+      { name: "Raisins", base: 0.5, unit: "cup", sub: "optional, traditional" },
+    ],
+    servingsNote: (scale, fmt) => `${fmt(4*scale)} cups rice`,
+    steps: [
+      {
+        eyebrow: "TITOTÉ · 1",
+        title: "Caramelize the sugar",
+        content: "Pour about <b>½ cup coconut milk</b> into a large pot with all the <b>sugar</b>. Cook over medium heat, stirring often, until it turns dark and starts to caramelize.",
+        timer: 8*60
+      },
+      {
+        eyebrow: "TITOTÉ · 2",
+        title: "Render the titoté",
+        content: "Pour in the <b>rest of the coconut milk</b>. Simmer over medium heat, stirring occasionally, until it darkens further and the oil separates out on top.",
+        timer: 20*60
+      },
+      {
+        eyebrow: "BASE",
+        title: "Add the salt",
+        content: "Once the titoté is dark brown with visible oil on top, stir in the <b>salt</b>.",
+        timer: 60
+      },
+      {
+        eyebrow: "BUILD",
+        title: "Add rice and water",
+        content: "Add the <b>rice</b> and <b>water</b> to the pot, stir well, and add <b>raisins</b> if using.",
+        timer: null
+      },
+      {
+        eyebrow: "BOIL",
+        title: "Boil uncovered, high heat",
+        content: "Bring to a boil <b>uncovered on high</b>, stirring occasionally so nothing sticks to the bottom.",
+        timer: 5*60
+      },
+      {
+        eyebrow: "WATCH",
+        title: "Wait for even craters",
+        content: "Keep it uncovered until <b>steam craters form evenly</b> across the whole surface and most liquid is absorbed. If rice piles up on one side, stir once, then keep going until even.",
+        timer: 5*60
+      },
+      {
+        eyebrow: "STEAM",
+        title: "Cover and drop to low",
+        content: "Once the craters are even, <b>reduce heat to low, cover tightly</b>, and don't lift the lid. This is where it finishes.",
+        timer: 25*60
+      },
+      {
+        eyebrow: "REST",
+        title: "Rest, then fluff",
+        content: "Remove from heat and let it <b>rest covered</b>. Then fluff with a fork before serving.",
+        timer: 12*60
+      },
+    ]
+  };
+</script>
+<script src="../assets/recipe-engine.js"></script>
+
+</body>
+</html>
