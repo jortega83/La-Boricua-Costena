@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#12181a">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>Titi Norks Jalapeño Poppers, La Boricua Costeña</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Work+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+
+<div class="app">
+  <div class="masthead">
+    <a class="place" href="../index.html">← La Boricua Costeña</a>
+    <div class="place">Americana #11</div>
+  </div>
+
+  <div class="hero">
+    <h1>Titi Norks <em>Jalapeño Poppers</em></h1>
+    <p class="subtitle">Just three ingredients, halved jalapeños stuffed with cream cheese, wrapped in bacon, and baked until crisp. Simple, always a hit, and freezer-friendly.</p>
+    <div class="credit"><span class="dot"></span>Receta de Titi Nork</div>
+  </div>
+
+  <div class="meta-row">
+    <span>ACTIVE <b>20 min</b></span>
+    <span>BAKE <b>15 to 20 min</b></span>
+    <span>MAKES <b>20 poppers</b></span>
+  </div>
+
+  <div class="card">
+    <div class="servings-row">
+      <div class="servings-label">Jalapeños</div>
+      <div class="stepper">
+        <button id="dec" aria-label="Decrease servings">–</button>
+        <div class="count" id="servingsCount">10</div>
+        <button id="inc" aria-label="Increase servings">+</button>
+      </div>
+    </div>
+    <div class="servings-note"><span id="servingsNoteText">Makes 20 popper halves</span></div>
+
+    <div style="height:20px"></div>
+
+    <div class="section-label rum">Ingredients</div>
+    <ul class="ingredients" id="ingredientsList"></ul>
+  </div>
+
+  <div class="card">
+    <div class="note-box rum">
+      <b>Good to know,</b> wear gloves when working with the peppers. Round-tipped jalapeños tend to run milder, pointed ones tend to be hotter, so pick your peppers accordingly. For crispier bacon, partially cook it first before wrapping, or bake at a slightly lower temperature for longer.
+    </div>
+  </div>
+
+  <details class="meal-prep rum">
+    <summary>Meal prep &amp; storage <span class="chev">⌄</span></summary>
+    <div class="meal-prep-body">
+      <p><b>Make ahead,</b> assemble the poppers up to a day ahead, cover, and refrigerate until ready to bake.</p>
+      <p><b>Store,</b> baked poppers keep in an airtight container in the fridge for up to 4 days.</p>
+      <p><b>Freeze,</b> freezes well, either before or after baking. For raw poppers, freeze on a tray until solid, then transfer to a freezer bag.</p>
+      <p><b>Reheat or bake from frozen,</b> bake straight from frozen at 425°F, just add extra time until the bacon is done and everything is heated through.</p>
+    </div>
+  </details>
+
+  <div class="action-row">
+    <button class="start-btn rum" id="startBtn">Start cooking →</button>
+    <button class="print-btn rum" id="printBtn">Print</button>
+  </div>
+
+  <div class="print-only" id="printSteps"></div>
+
+  <footer>TITI NORKS JALAPEÑO POPPERS</footer>
+</div>
+
+<!-- COOK MODE -->
+<div class="cook-overlay" id="cookOverlay">
+  <div class="cook-top">
+    <button class="close-btn" id="closeBtn">✕</button>
+    <div class="step-count" id="stepCount">STEP 1 / 4</div>
+    <div style="width:38px"></div>
+  </div>
+
+  <div class="progress-track" id="progressTrack"></div>
+
+  <div class="cook-body" id="cookBody">
+    <div class="step-eyebrow" id="stepEyebrow">PREP</div>
+    <h2 class="step-title" id="stepTitle"></h2>
+    <p class="step-content" id="stepContent"></p>
+
+    <div class="timer-wrap" id="timerWrap" style="display:none;">
+      <div class="dial">
+        <svg width="190" height="190" viewBox="0 0 190 190">
+          <circle class="track" cx="95" cy="95" r="82"></circle>
+          <circle class="fill" id="dialFill" cx="95" cy="95" r="82"></circle>
+        </svg>
+        <div class="dial-center">
+          <div class="dial-time" id="dialTime">00:00</div>
+          <div class="dial-label" id="dialLabel">READY</div>
+        </div>
+      </div>
+      <div class="timer-controls">
+        <button class="primary" id="timerToggle">Start timer</button>
+        <button id="timerReset">Reset</button>
+      </div>
+      <div class="timer-done-badge" id="timerDoneBadge"><span class="dot"></span>TIME'S UP</div>
+    </div>
+  </div>
+
+  <div class="done-screen" id="doneScreen">
+    <div class="glyph">🌶️</div>
+    <h2>Poppers are ready.</h2>
+    <p>Let them cool just a minute, remove the toothpicks, and enjoy while hot.</p>
+    <button class="start-btn rum" id="restartBtn" style="max-width:280px;">Make another batch</button>
+  </div>
+
+  <div class="cook-nav" id="cookNav">
+    <button id="prevBtn">Back</button>
+    <button class="next" id="nextBtn">Next step</button>
+  </div>
+</div>
+
+<script>
+  window.RECIPE = {
+    accent: 'rum',
+    baseServings: 10,
+    servingStep: 5,
+    minServings: 5,
+    maxServings: 40,
+    ingredients: [
+      { name: "Fresh jalapeños", base: 10, unit: "" },
+      { name: "Cream cheese", base: 8, unit: "oz" },
+      { name: "Thin-sliced bacon, cut in half", base: 10, unit: "piece" },
+      { name: "Toothpicks", base: 1, unit: "", sub: "as needed, to secure" },
+    ],
+    servingsNote: (scale, fmt) => `Makes ${fmt(20*scale)} popper halves`,
+    steps: [
+      {
+        eyebrow: "PREP",
+        title: "Prep the jalapeños",
+        content: "Cut the <b>jalapeños</b> in half lengthwise and remove the seeds and veins. Wear gloves while working with the peppers.",
+        timer: null
+      },
+      {
+        eyebrow: "FILL",
+        title: "Fill and wrap",
+        content: "Fill each jalapeño half with <b>cream cheese</b>, then wrap a piece of <b>bacon</b> around it. Secure with a toothpick.",
+        timer: null
+      },
+      {
+        eyebrow: "BAKE",
+        title: "Bake until done",
+        content: "Preheat the oven to 425°F. Bake until the bacon looks done and crisp.",
+        timer: 18*60
+      },
+      {
+        eyebrow: "SERVE",
+        title: "Cool and serve",
+        content: "Let cool just slightly, remove the toothpicks if desired, and serve hot.",
+        timer: 2*60
+      },
+    ]
+  };
+</script>
+<script src="../assets/site.js"></script>
+<script src="../assets/recipe-engine.js"></script>
+
+</body>
+</html>
