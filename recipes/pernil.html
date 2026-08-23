@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#12181a">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>Pernil, La Boricua Costeña</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Work+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+
+<div class="app">
+  <div class="masthead">
+    <a class="place" href="../index.html">← La Boricua Costeña</a>
+    <div class="place">Navidad #2</div>
+  </div>
+
+  <div class="hero">
+    <h1>Pernil <em>Asado</em></h1>
+    <p class="subtitle">A bone-in pork shoulder marinated overnight in garlic, sofrito, citrus, and sazón, then slow-roasted until fall-apart tender with crackling crispy skin, the cuerito everyone fights over.</p>
+  </div>
+
+  <div class="meta-row">
+    <span>MARINATE <b>overnight, 12 to 24 hrs</b></span>
+    <span>ROAST <b>4 to 5 hrs</b></span>
+    <span>SERVES <b>8 to 10</b></span>
+  </div>
+
+  <div class="card">
+    <div class="servings-row">
+      <div class="servings-label">Servings</div>
+      <div class="stepper">
+        <button id="dec" aria-label="Decrease servings">–</button>
+        <div class="count" id="servingsCount">8</div>
+        <button id="inc" aria-label="Increase servings">+</button>
+      </div>
+    </div>
+    <div class="servings-note"><span id="servingsNoteText">8 lb bone-in pork shoulder</span></div>
+
+    <div style="height:20px"></div>
+
+    <div class="section-label rum">Ingredients</div>
+    <ul class="ingredients" id="ingredientsList"></ul>
+  </div>
+
+  <div class="card">
+    <div class="note-box rum">
+      <b>Getting the skin crispy,</b> the skin only crackles well on bone-in, skin-on shoulder. Pat it bone dry before roasting, and don't be afraid to crank the oven up at the very end, right under the broiler if needed, until it sounds hollow when you knock on it.
+    </div>
+  </div>
+
+  <details class="meal-prep rum">
+    <summary>Meal prep &amp; storage <span class="chev">⌄</span></summary>
+    <div class="meal-prep-body">
+      <p><b>Make ahead,</b> the marinade can be made a couple days ahead. The pork itself needs at least 12 hours marinating, overnight to 2 days is even better.</p>
+      <p><b>Store,</b> shredded pernil keeps in an airtight container in the fridge for up to 5 days.</p>
+      <p><b>Reheat,</b> covered in the oven at 325°F with a splash of the pan juices, or in the microwave covered so it doesn't dry out.</p>
+      <p><b>Freeze,</b> shredded meat freezes well for up to 3 months. Thaw overnight in the fridge before reheating.</p>
+    </div>
+  </details>
+
+  <div class="action-row">
+    <button class="start-btn rum" id="startBtn">Start cooking →</button>
+    <button class="print-btn rum" id="printBtn">Print</button>
+  </div>
+
+  <div class="print-only" id="printSteps"></div>
+
+  <footer>PERNIL ASADO · PUERTO RICAN ROAST PORK</footer>
+</div>
+
+<!-- COOK MODE -->
+<div class="cook-overlay" id="cookOverlay">
+  <div class="cook-top">
+    <button class="close-btn" id="closeBtn">✕</button>
+    <div class="step-count" id="stepCount">STEP 1 / 6</div>
+    <div style="width:38px"></div>
+  </div>
+
+  <div class="progress-track" id="progressTrack"></div>
+
+  <div class="cook-body" id="cookBody">
+    <div class="step-eyebrow" id="stepEyebrow">PREP</div>
+    <h2 class="step-title" id="stepTitle"></h2>
+    <p class="step-content" id="stepContent"></p>
+
+    <div class="timer-wrap" id="timerWrap" style="display:none;">
+      <div class="dial">
+        <svg width="190" height="190" viewBox="0 0 190 190">
+          <circle class="track" cx="95" cy="95" r="82"></circle>
+          <circle class="fill" id="dialFill" cx="95" cy="95" r="82"></circle>
+        </svg>
+        <div class="dial-center">
+          <div class="dial-time" id="dialTime">00:00</div>
+          <div class="dial-label" id="dialLabel">READY</div>
+        </div>
+      </div>
+      <div class="timer-controls">
+        <button class="primary" id="timerToggle">Start timer</button>
+        <button id="timerReset">Reset</button>
+      </div>
+      <div class="timer-done-badge" id="timerDoneBadge"><span class="dot"></span>TIME'S UP</div>
+    </div>
+  </div>
+
+  <div class="done-screen" id="doneScreen">
+    <div class="glyph">🐖</div>
+    <h2>Pernil's ready.</h2>
+    <p>Shred it up, mix in bits of the crispy cuerito, and serve with arroz con gandules. Buen provecho.</p>
+    <button class="start-btn rum" id="restartBtn" style="max-width:280px;">Cook it again</button>
+  </div>
+
+  <div class="cook-nav" id="cookNav">
+    <button id="prevBtn">Back</button>
+    <button class="next" id="nextBtn">Next step</button>
+  </div>
+</div>
+
+<script>
+  window.RECIPE = {
+    accent: 'rum',
+    baseServings: 8,
+    servingStep: 4,
+    minServings: 4,
+    maxServings: 24,
+    ingredients: [
+      { name: "Bone-in, skin-on pork shoulder", base: 8, unit: "lb", sub: "picnic cut or Boston butt" },
+      { name: "Garlic cloves", base: 15, unit: "", sub: "whole" },
+      { name: "Green bell pepper", base: 1, unit: "" },
+      { name: "White onion", base: 1, unit: "" },
+      { name: "Sazón packets", base: 2, unit: "" },
+      { name: "Adobo seasoning", base: 2, unit: "tbsp" },
+      { name: "Dried oregano", base: 2, unit: "tbsp" },
+      { name: "Ground cumin", base: 1, unit: "tsp" },
+      { name: "Black pepper", base: 1, unit: "tsp" },
+      { name: "Kosher salt", base: 2, unit: "tbsp" },
+      { name: "Orange juice", base: 0.5, unit: "cup" },
+      { name: "Lime juice", base: 0.25, unit: "cup" },
+      { name: "White vinegar", base: 2, unit: "tbsp" },
+      { name: "Sofrito", base: 0.25, unit: "cup" },
+      { name: "Vegetable or olive oil", base: 0.25, unit: "cup" },
+    ],
+    servingsNote: (scale, fmt) => `${fmt(8*scale)} lb bone-in pork shoulder`,
+    steps: [
+      {
+        eyebrow: "PREP",
+        title: "Prep the pork",
+        content: "Rinse the <b>pork shoulder</b> and pat it completely dry. Use a sharp knife to cut deep slits all over the meat, about 1 inch apart, cutting through the skin down into the flesh.",
+        timer: null
+      },
+      {
+        eyebrow: "MARINADE",
+        title: "Make the marinade",
+        content: "Blend the <b>garlic</b>, <b>bell pepper</b>, <b>onion</b>, <b>sazón</b>, <b>adobo</b>, <b>oregano</b>, <b>cumin</b>, <b>black pepper</b>, <b>salt</b>, <b>orange juice</b>, <b>lime juice</b>, <b>vinegar</b>, <b>sofrito</b>, and <b>oil</b> into a thick paste.",
+        timer: null
+      },
+      {
+        eyebrow: "MARINATE",
+        title: "Marinate overnight",
+        content: "Rub the marinade all over the pork, working it deep into the slits. Cover tightly and refrigerate for at least 12 hours, ideally overnight to 2 days.",
+        timer: 12*60*60
+      },
+      {
+        eyebrow: "ROAST",
+        title: "Roast low and slow",
+        content: "Preheat the oven to 325°F. Place the pork skin-side up in a roasting pan, cover tightly with foil, and roast until the internal temperature reaches about 190°F and the meat is fork-tender.",
+        timer: 4*60*60 + 30*60
+      },
+      {
+        eyebrow: "CRISP",
+        title: "Crisp the skin",
+        content: "Uncover and raise the oven to 450 to 475°F. Roast until the skin is deeply golden and crackling, the cuerito should sound hollow when you knock on it.",
+        timer: 20*60
+      },
+      {
+        eyebrow: "REST",
+        title: "Rest and shred",
+        content: "Let the pernil rest for 20 to 30 minutes. Shred the meat with two forks, breaking the crispy skin into pieces and mixing it back in so everyone gets some.",
+        timer: 20*60
+      },
+    ]
+  };
+</script>
+<script src="../assets/site.js"></script>
+<script src="../assets/recipe-engine.js"></script>
+
+</body>
+</html>
