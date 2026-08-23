@@ -54,6 +54,12 @@
     </div>
   </div>
 
+  <div class="card">
+    <div class="note-box meal">
+      <b>Rice ratio,</b> this recipe always uses about 1¾ cups of water for every 1 cup of rice, plus ¼ teaspoon salt per cup of rice. That ratio is already built into the ingredient list above, whatever serving size you pick, the water and salt scale with it automatically.
+    </div>
+  </div>
+
   <details class="meal-prep meal">
     <summary>Meal prep &amp; storage <span class="chev">⌄</span></summary>
     <div class="meal-prep-body">
@@ -78,7 +84,7 @@
 <div class="cook-overlay" id="cookOverlay">
   <div class="cook-top">
     <button class="close-btn" id="closeBtn">✕</button>
-    <div class="step-count" id="stepCount">STEP 1 / 8</div>
+    <div class="step-count" id="stepCount">STEP 1 / 11</div>
     <div style="width:38px"></div>
   </div>
 
@@ -159,15 +165,33 @@
       },
       {
         eyebrow: "RICE",
-        title: "Cook the rice",
-        content: "Combine the <b>rice</b>, <b>water</b>, and <b>salt</b> in a pot. Bring to a boil, then cover, reduce heat to low, and simmer without lifting the lid.",
+        title: "Rinse the rice",
+        content: "Put the <b>rice</b> in a fine-mesh strainer and rinse under cold running water, stirring it with your hand, until the water runs mostly clear. This takes about 30 to 45 seconds and keeps the rice from turning gummy.",
+        timer: 60
+      },
+      {
+        eyebrow: "RICE",
+        title: "Combine and bring to a boil",
+        content: "Add the rinsed <b>rice</b>, <b>water</b>, and <b>salt</b> to a pot. Stir once, then place over high heat, uncovered, until it reaches a full rolling boil, big bubbles breaking the surface.",
+        timer: 5*60
+      },
+      {
+        eyebrow: "RICE",
+        title: "Cover and simmer on low",
+        content: "As soon as it's boiling, put the lid on, turn the heat down to the lowest setting, and set a timer. Do not lift the lid or stir during this time, the steam trapped inside is what cooks the rice evenly.",
         timer: 18*60
       },
       {
         eyebrow: "RICE",
-        title: "Rest and fluff",
-        content: "Remove from heat and let the rice rest covered, then fluff with a fork and stir in the <b>cilantro</b>.",
+        title: "Rest off the heat",
+        content: "Turn off the heat completely, but leave the lid on and don't peek. Let it sit undisturbed, this lets the last bit of steam finish the job.",
         timer: 5*60
+      },
+      {
+        eyebrow: "RICE",
+        title: "Fluff and finish",
+        content: "Take the lid off, fluff the rice gently with a fork to separate the grains, and stir in the <b>cilantro</b>.",
+        timer: null
       },
       {
         eyebrow: "SEAR",

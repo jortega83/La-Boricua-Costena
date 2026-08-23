@@ -6,7 +6,7 @@
 <meta name="theme-color" content="#12181a">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<title>Sweet and Sour Chicken Meal Prep, La Boricua Costeña</title>
+<title>Honey Garlic Chicken Meal Prep, La Boricua Costeña</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Work+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
@@ -17,17 +17,17 @@
 <div class="app">
   <div class="masthead">
     <a class="place" href="../index.html">← La Boricua Costeña</a>
-    <div class="place">Meal Prep #3</div>
+    <div class="place">Meal Prep #6</div>
   </div>
 
   <div class="hero">
-    <h1>Sweet and <em>Sour Chicken</em></h1>
-    <p class="subtitle">Crispy pan-fried chicken with bell peppers and pineapple in a tangy homemade sauce, better than takeout and ready to portion out for the week in under an hour.</p>
+    <h1>Honey Garlic <em>Chicken</em></h1>
+    <p class="subtitle">Chicken thighs in a sticky honey-garlic-soy glaze with roasted green beans and rice. Simple pantry ingredients, big flavor, kid-friendly.</p>
   </div>
 
   <div class="meta-row">
-    <span>ACTIVE <b>45 min</b></span>
-    <span>TOTAL <b>under 1 hr</b></span>
+    <span>ACTIVE <b>15 min</b></span>
+    <span>COOK <b>20 min</b></span>
     <span>MAKES <b>4 bowls</b></span>
   </div>
 
@@ -40,7 +40,7 @@
         <button id="inc" aria-label="Increase servings">+</button>
       </div>
     </div>
-    <div class="servings-note"><span id="servingsNoteText">1.5 lbs chicken breast</span></div>
+    <div class="servings-note"><span id="servingsNoteText">1.5 lbs chicken thighs</span></div>
 
     <div style="height:20px"></div>
 
@@ -50,7 +50,7 @@
 
   <div class="card">
     <div class="note-box meal">
-      <b>Good to know,</b> cornstarch is what gives the chicken its light, crispy coating, don't skip coating it twice (cornstarch, then egg). Keep the sauce and rice stored separately from the chicken until ready to eat so nothing gets soggy.
+      <b>Good to know,</b> the sauce thickens fast once it starts to reduce, keep an eye on it near the end so it doesn't burn. Chicken breast works too, just watch the cook time since it dries out faster than thighs.
     </div>
   </div>
 
@@ -63,10 +63,9 @@
   <details class="meal-prep meal">
     <summary>Meal prep &amp; storage <span class="chev">⌄</span></summary>
     <div class="meal-prep-body">
-      <p><b>Store,</b> keep in an airtight container in the fridge for up to 3 days.</p>
-      <p><b>Keep crispy,</b> for best texture, store the sauce separately and toss just before eating if you can.</p>
-      <p><b>Reheat,</b> microwave until hot, or a skillet over medium heat to help bring back some crispness.</p>
-      <p><b>Freeze,</b> the chicken and sauce together freeze well for up to 3 months. Thaw overnight in the fridge before reheating.</p>
+      <p><b>Store,</b> airtight container in the fridge for up to 4 days.</p>
+      <p><b>Reheat,</b> microwave until hot, or a skillet over medium heat with a splash of water to loosen the glaze.</p>
+      <p><b>Freeze,</b> the cooked chicken and sauce freeze well for up to 3 months. Thaw overnight in the fridge before reheating.</p>
     </div>
   </details>
 
@@ -77,21 +76,21 @@
 
   <div class="print-only" id="printSteps"></div>
 
-  <footer>SWEET AND SOUR CHICKEN MEAL PREP</footer>
+  <footer>HONEY GARLIC CHICKEN MEAL PREP</footer>
 </div>
 
 <!-- COOK MODE -->
 <div class="cook-overlay" id="cookOverlay">
   <div class="cook-top">
     <button class="close-btn" id="closeBtn">✕</button>
-    <div class="step-count" id="stepCount">STEP 1 / 10</div>
+    <div class="step-count" id="stepCount">STEP 1 / 9</div>
     <div style="width:38px"></div>
   </div>
 
   <div class="progress-track" id="progressTrack"></div>
 
   <div class="cook-body" id="cookBody">
-    <div class="step-eyebrow" id="stepEyebrow">SAUCE</div>
+    <div class="step-eyebrow" id="stepEyebrow">RICE</div>
     <h2 class="step-title" id="stepTitle"></h2>
     <p class="step-content" id="stepContent"></p>
 
@@ -115,9 +114,9 @@
   </div>
 
   <div class="done-screen" id="doneScreen">
-    <div class="glyph">🍍</div>
+    <div class="glyph">🍯</div>
     <h2>Bowls are ready.</h2>
-    <p>Serve over rice, or portion into containers for the week ahead. Enjoy.</p>
+    <p>Portion the chicken, green beans, and rice into containers for the week.</p>
     <button class="start-btn meal" id="restartBtn" style="max-width:280px;">Cook it again</button>
   </div>
 
@@ -135,30 +134,21 @@
     minServings: 2,
     maxServings: 12,
     ingredients: [
-      { name: "Chicken breast, cut into bite-sized pieces", base: 1.5, unit: "lb" },
-      { name: "Cornstarch", base: 0.5, unit: "cup", sub: "for coating the chicken" },
-      { name: "Eggs, beaten", base: 2, unit: "" },
-      { name: "Vegetable oil", base: 0.25, unit: "cup", sub: "for frying" },
-      { name: "Bell peppers, chopped", base: 2, unit: "" },
-      { name: "Onion, chopped", base: 1, unit: "" },
-      { name: "Pineapple chunks", base: 2, unit: "cup", sub: "fresh or canned" },
-      { name: "Ketchup", base: 0.5, unit: "cup", sub: "for the sauce" },
-      { name: "Rice vinegar or apple cider vinegar", base: 0.25, unit: "cup", sub: "for the sauce" },
-      { name: "Brown sugar", base: 0.33, unit: "cup", sub: "for the sauce" },
-      { name: "Soy sauce", base: 2, unit: "tbsp", sub: "for the sauce" },
-      { name: "Garlic, minced", base: 2, unit: "clove", sub: "for the sauce" },
-      { name: "White rice", base: 2, unit: "cup", sub: "uncooked, for serving" },
+      { name: "Chicken thighs, boneless and skinless, cut into pieces", base: 1.5, unit: "lb" },
+      { name: "Salt and pepper", base: 1, unit: "", sub: "to taste" },
+      { name: "Olive oil", base: 1, unit: "tbsp", sub: "for searing" },
+      { name: "Honey", base: 0.33, unit: "cup", sub: "for the sauce" },
+      { name: "Soy sauce", base: 3, unit: "tbsp", sub: "for the sauce" },
+      { name: "Garlic cloves, minced", base: 4, unit: "", sub: "for the sauce" },
+      { name: "Rice vinegar", base: 1, unit: "tbsp", sub: "for the sauce" },
+      { name: "Green beans, trimmed", base: 1, unit: "lb" },
+      { name: "Olive oil", base: 1, unit: "tbsp", sub: "for roasting the green beans" },
+      { name: "White rice", base: 2, unit: "cup", sub: "uncooked" },
       { name: "Water", base: 3.5, unit: "cup", sub: "for cooking the rice" },
       { name: "Salt", base: 0.5, unit: "tsp", sub: "for the rice" },
     ],
-    servingsNote: (scale, fmt) => `${fmt(1.5*scale)} lbs chicken breast`,
+    servingsNote: (scale, fmt) => `${fmt(1.5*scale)} lbs chicken thighs`,
     steps: [
-      {
-        eyebrow: "SAUCE",
-        title: "Make the sauce",
-        content: "Whisk together the <b>ketchup</b>, <b>vinegar</b>, <b>brown sugar</b>, <b>soy sauce</b>, and <b>garlic</b> in a bowl. Set aside.",
-        timer: null
-      },
       {
         eyebrow: "RICE",
         title: "Rinse the rice",
@@ -186,31 +176,31 @@
       {
         eyebrow: "RICE",
         title: "Fluff and finish",
-        content: "Take the lid off and fluff the rice gently with a fork to separate the grains before serving.",
+        content: "Take the lid off and fluff the rice gently with a fork to separate the grains.",
         timer: null
       },
       {
-        eyebrow: "COAT",
-        title: "Coat and fry the chicken",
-        content: "Toss the <b>chicken</b> pieces in <b>cornstarch</b>, then dip in the beaten <b>egg</b>. Heat the <b>oil</b> in a large skillet over medium-high heat and fry the chicken until golden and cooked through.",
+        eyebrow: "ROAST",
+        title: "Roast the green beans",
+        content: "Preheat the oven to 425°F. Toss the <b>green beans</b> with <b>olive oil</b> and a pinch of salt, spread on a sheet pan, and roast until tender with a little char.",
+        timer: 15*60
+      },
+      {
+        eyebrow: "SEAR",
+        title: "Sear the chicken",
+        content: "Season the <b>chicken</b> with <b>salt and pepper</b>. Heat the <b>olive oil</b> in a skillet over medium-high heat and sear until browned and cooked through.",
         timer: 8*60
       },
       {
-        eyebrow: "VEGGIES",
-        title: "Sauté the veggies",
-        content: "Remove the chicken and set aside. In the same pan, sauté the <b>bell peppers</b> and <b>onion</b> until just tender.",
+        eyebrow: "SAUCE",
+        title: "Make the sauce and glaze",
+        content: "Whisk together the <b>honey</b>, <b>soy sauce</b>, <b>garlic</b>, and <b>rice vinegar</b>. Pour over the cooked chicken and simmer until the sauce thickens and coats the chicken, watch closely so it doesn't burn.",
         timer: 4*60
       },
       {
-        eyebrow: "SIMMER",
-        title: "Add pineapple and sauce",
-        content: "Add the <b>pineapple</b> and the reserved <b>sauce</b> to the pan. Bring to a boil, then add the chicken back in and stir to coat evenly.",
-        timer: 5*60
-      },
-      {
-        eyebrow: "SERVE",
-        title: "Serve or portion",
-        content: "Serve hot over the rice, or divide into meal prep containers for the week.",
+        eyebrow: "ASSEMBLE",
+        title: "Build the bowls",
+        content: "Divide the <b>rice</b>, <b>honey garlic chicken</b>, and roasted <b>green beans</b> into containers.",
         timer: null
       },
     ]
