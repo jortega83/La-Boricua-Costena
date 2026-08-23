@@ -19,12 +19,12 @@
 
   <div class="hero">
     <h1>Co<em>quito</em></h1>
-    <p class="subtitle">Puerto Rico's Christmas eggnog, no eggs, all coconut and rum. Blend it, chill it, and let it round out overnight. Serve cold with a cinnamon stick.</p>
+    <p class="subtitle">Puerto Rico's Christmas eggnog, no eggs, built on a warm spiced tea of cinnamon, star anise, and cloves blended with coconut and rum. Blend it, chill it, and let it round out overnight. Serve cold with a cinnamon stick.</p>
     <div class="credit"><span class="dot"></span>Receta de Johanna</div>
   </div>
 
   <div class="meta-row">
-    <span>ACTIVE <b>10 min</b></span>
+    <span>ACTIVE <b>25 min</b></span>
     <span>CHILL <b>4+ hrs, best overnight</b></span>
     <span>ABV <b>adjustable</b></span>
   </div>
@@ -48,7 +48,7 @@
 
   <div class="card">
     <div class="note-box rum">
-      <b>Johanna's tip,</b> taste before bottling and adjust the rum to your crowd. It always tastes a little stronger once it's had a few hours to chill and settle, so go easy at first.
+      <b>Johanna's tip,</b> the spiced tea is what sets this version apart, don't skip letting it cool before blending or it can curdle the milks. Taste before bottling and adjust the ron to your crowd, it always tastes a little stronger once it's had a few hours to chill and settle.
     </div>
   </div>
 
@@ -76,7 +76,7 @@
 <div class="cook-overlay" id="cookOverlay">
   <div class="cook-top">
     <button class="close-btn" id="closeBtn">✕</button>
-    <div class="step-count" id="stepCount">STEP 1 / 5</div>
+    <div class="step-count" id="stepCount">STEP 1 / 7</div>
     <div style="width:38px"></div>
   </div>
 
@@ -127,40 +127,56 @@
     minServings: 4,
     maxServings: 48,
     ingredients: [
-      { name: "Cream of coconut", base: 1.75, unit: "cup", sub: "1 can, ~15 oz (e.g. Coco López)" },
-      { name: "Coconut milk", base: 1.75, unit: "cup", sub: "1 can, ~13.5 oz" },
-      { name: "Evaporated milk", base: 1.5, unit: "cup", sub: "1 can, ~12 oz" },
-      { name: "Sweetened condensed milk", base: 1.25, unit: "cup", sub: "1 can, ~14 oz" },
-      { name: "White rum", base: 1, unit: "cup", sub: "adjust to taste" },
-      { name: "Vanilla extract", base: 1, unit: "tsp" },
-      { name: "Ground cinnamon", base: 1, unit: "tsp" },
-      { name: "Ground nutmeg", base: 0.25, unit: "tsp" },
-      { name: "Cinnamon sticks", base: 4, unit: "", sub: "for garnish, not scaled" },
+      { name: "Agua", base: 1, unit: "cup", sub: "para el té de especias" },
+      { name: "Palitos de canela", base: 2.5, unit: "", sub: "2 to 3, para el té" },
+      { name: "Anís estrella", base: 4.5, unit: "", sub: "4 to 5, para el té" },
+      { name: "Clavos de especias", base: 7.5, unit: "", sub: "7 to 8, para el té" },
+      { name: "Leche evaporada", base: 1.5, unit: "cup", sub: "1 lata" },
+      { name: "Leche condensada", base: 1.25, unit: "cup", sub: "1 lata" },
+      { name: "Leche de coco", base: 1.75, unit: "cup", sub: "1 lata" },
+      { name: "Crema de coco", base: 1.75, unit: "cup", sub: "1 lata" },
+      { name: "Ron blanco", base: 0.75, unit: "cup", sub: "al gusto, opcional" },
+      { name: "Vainilla", base: 1, unit: "tsp" },
+      { name: "Canela en polvo", base: 1, unit: "tsp", sub: "al gusto" },
+      { name: "Jengibre en polvo", base: 0.25, unit: "tsp" },
+      { name: "Nuez moscada", base: 0.25, unit: "tsp" },
     ],
-    servingsNote: (scale, fmt) => `≈ ${fmt(6*scale)} cups`,
+    servingsNote: (scale, fmt) => `≈ ${fmt(7*scale)} cups`,
     steps: [
+      {
+        eyebrow: "TÉ · 1",
+        title: "Make the spiced tea",
+        content: "Bring the <b>water</b> to a boil with the <b>cinnamon sticks</b>, <b>star anise</b>, and <b>cloves</b>. Let it boil a few minutes, then remove from heat and steep.",
+        timer: 10*60
+      },
+      {
+        eyebrow: "TÉ · 2",
+        title: "Strain and cool",
+        content: "Strain the tea, discarding the whole spices. You should have about ½ cup of concentrated tea. Let it cool before using.",
+        timer: 15*60
+      },
       {
         eyebrow: "BLEND · 1",
         title: "Combine the base",
-        content: "Add the <b>cream of coconut</b>, <b>coconut milk</b>, <b>evaporated milk</b>, and <b>condensed milk</b> to a blender.",
+        content: "Add the cooled <b>spiced tea</b>, <b>leche evaporada</b>, <b>leche condensada</b>, <b>leche de coco</b>, and <b>crema de coco</b> to a blender.",
         timer: null
       },
       {
         eyebrow: "BLEND · 2",
         title: "Add rum and spice",
-        content: "Add the <b>rum</b>, <b>vanilla</b>, <b>cinnamon</b>, and <b>nutmeg</b>. Blend on high until completely smooth, about a minute.",
+        content: "Add the <b>ron</b>, <b>vainilla</b>, <b>canela</b>, <b>jengibre</b>, and <b>nuez moscada</b>. Blend on high until completely smooth, about a minute.",
         timer: 90
       },
       {
         eyebrow: "TASTE",
         title: "Taste and adjust",
-        content: "Give it a taste. Want it stronger or sweeter? Adjust the <b>rum</b> or <b>condensed milk</b> now, then blend again briefly.",
+        content: "Give it a taste. Want it stronger or sweeter? Adjust the <b>ron</b> or <b>leche condensada</b> now, then blend again briefly.",
         timer: null
       },
       {
         eyebrow: "BOTTLE",
         title: "Bottle it up",
-        content: "Pour into bottles or a pitcher through a strainer if you want it extra smooth.",
+        content: "Pour into two glass bottles, preferably, through a strainer if you want it extra smooth.",
         timer: null
       },
       {

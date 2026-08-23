@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Johanna's Famous Chili, La Boricua Costeña</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Work+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+
+<div class="app">
+  <div class="masthead">
+    <a class="place" href="../index.html">← La Boricua Costeña</a>
+    <div class="place">Americana #1</div>
+  </div>
+
+  <div class="hero">
+    <h1>Johanna's Famous <em>Chili</em></h1>
+    <p class="subtitle">Ground beef and pork simmered low and slow with three kinds of beans, tomato, and sweet peppers. A cold weather favorite, topped with cheddar and sour cream.</p>
+    <div class="credit"><span class="dot"></span>Receta de Johanna</div>
+  </div>
+
+  <div class="meta-row">
+    <span>ACTIVE <b>25 min</b></span>
+    <span>SIMMER <b>45 to 60 min</b></span>
+    <span>SERVES <b>8 to 10</b></span>
+  </div>
+
+  <div class="card">
+    <div class="servings-row">
+      <div class="servings-label">Servings</div>
+      <div class="stepper">
+        <button id="dec" aria-label="Decrease servings">–</button>
+        <div class="count" id="servingsCount">8</div>
+        <button id="inc" aria-label="Increase servings">+</button>
+      </div>
+    </div>
+    <div class="servings-note"><span id="servingsNoteText">2 lbs meat, 3 cans beans</span></div>
+
+    <div style="height:20px"></div>
+
+    <div class="section-label rum">Ingredients</div>
+    <ul class="ingredients" id="ingredientsList"></ul>
+  </div>
+
+  <div class="card">
+    <div class="note-box rum">
+      <b>Bean options,</b> pinto, black, red, pink, kidney, and white all work well, mix and match. Three cans is usually perfect, but more can be added if you like a heartier chili.
+    </div>
+  </div>
+
+  <details class="meal-prep rum">
+    <summary>Meal prep &amp; storage <span class="chev">⌄</span></summary>
+    <div class="meal-prep-body">
+      <p><b>Make ahead,</b> chili always tastes better the next day, once the flavors have had time to meld. Great for cooking a day before you need it.</p>
+      <p><b>Store,</b> airtight container in the fridge for up to 5 days.</p>
+      <p><b>Reheat,</b> stovetop over low heat or microwave, adding a splash of water if it's thickened up too much.</p>
+      <p><b>Freeze,</b> freezes well for up to 3 months. Thaw overnight in the fridge before reheating.</p>
+    </div>
+  </details>
+
+  <div class="action-row">
+    <button class="start-btn rum" id="startBtn">Start cooking →</button>
+    <button class="print-btn rum" id="printBtn">Print</button>
+  </div>
+
+  <div class="print-only" id="printSteps"></div>
+
+  <footer>JOHANNA'S FAMOUS CHILI</footer>
+</div>
+
+<!-- COOK MODE -->
+<div class="cook-overlay" id="cookOverlay">
+  <div class="cook-top">
+    <button class="close-btn" id="closeBtn">✕</button>
+    <div class="step-count" id="stepCount">STEP 1 / 6</div>
+    <div style="width:38px"></div>
+  </div>
+
+  <div class="progress-track" id="progressTrack"></div>
+
+  <div class="cook-body" id="cookBody">
+    <div class="step-eyebrow" id="stepEyebrow">MEAT</div>
+    <h2 class="step-title" id="stepTitle"></h2>
+    <p class="step-content" id="stepContent"></p>
+
+    <div class="timer-wrap" id="timerWrap" style="display:none;">
+      <div class="dial">
+        <svg width="190" height="190" viewBox="0 0 190 190">
+          <circle class="track" cx="95" cy="95" r="82"></circle>
+          <circle class="fill" id="dialFill" cx="95" cy="95" r="82"></circle>
+        </svg>
+        <div class="dial-center">
+          <div class="dial-time" id="dialTime">00:00</div>
+          <div class="dial-label" id="dialLabel">READY</div>
+        </div>
+      </div>
+      <div class="timer-controls">
+        <button class="primary" id="timerToggle">Start timer</button>
+        <button id="timerReset">Reset</button>
+      </div>
+      <div class="timer-done-badge" id="timerDoneBadge"><span class="dot"></span>TIME'S UP</div>
+    </div>
+  </div>
+
+  <div class="done-screen" id="doneScreen">
+    <div class="glyph">🌶️</div>
+    <h2>Chili's ready.</h2>
+    <p>Top with shredded cheddar, sour cream, and crackers on the side. Enjoy.</p>
+    <button class="start-btn rum" id="restartBtn" style="max-width:280px;">Cook it again</button>
+  </div>
+
+  <div class="cook-nav" id="cookNav">
+    <button id="prevBtn">Back</button>
+    <button class="next" id="nextBtn">Next step</button>
+  </div>
+</div>
+
+<script>
+  window.RECIPE = {
+    accent: 'rum',
+    baseServings: 8,
+    servingStep: 2,
+    minServings: 4,
+    maxServings: 24,
+    ingredients: [
+      { name: "Ground beef", base: 1, unit: "lb" },
+      { name: "Ground pork", base: 1, unit: "lb" },
+      { name: "Garlic powder, salt, pepper, onion powder, chili powder", base: 1, unit: "", sub: "to taste, for seasoning the meat" },
+      { name: "Olive or avocado oil", base: 2, unit: "tbsp" },
+      { name: "Yellow bell pepper, chopped fine", base: 1, unit: "" },
+      { name: "Red bell pepper, chopped fine", base: 1, unit: "" },
+      { name: "Orange bell pepper, chopped fine", base: 1, unit: "" },
+      { name: "Red onion, chopped fine", base: 1, unit: "" },
+      { name: "Celery, chopped", base: 1, unit: "cup", sub: "optional" },
+      { name: "Carrots, chopped", base: 1, unit: "cup", sub: "optional" },
+      { name: "Canned beans, drained", base: 3, unit: "can", sub: "pinto, black, red, pink, kidney, or white, mix and match" },
+      { name: "Tomato sauce", base: 1, unit: "can" },
+      { name: "Tomato paste", base: 1, unit: "can" },
+      { name: "Diced tomatoes", base: 1, unit: "can" },
+      { name: "Chili powder", base: 1, unit: "tbsp", sub: "more to taste at the end" },
+      { name: "Cream cheese", base: 0.25, unit: "block", sub: "optional, cuts the acidity" },
+      { name: "Shredded cheddar, sour cream, crackers", base: 1, unit: "", sub: "for serving" },
+    ],
+    servingsNote: (scale, fmt) => `${fmt(2*scale)} lbs meat, ${fmt(3*scale)} cans beans`,
+    steps: [
+      {
+        eyebrow: "MEAT",
+        title: "Season and brown the meat",
+        content: "Cook the <b>ground beef</b> and <b>ground pork</b> together, seasoning with <b>garlic powder</b>, <b>salt</b>, <b>pepper</b>, <b>onion powder</b>, and <b>chili powder</b> to taste, until browned through.",
+        timer: 12*60
+      },
+      {
+        eyebrow: "BUILD",
+        title: "Add veggies and tomato",
+        content: "Add a bit of <b>oil</b>, the chopped <b>bell peppers</b>, <b>onion</b>, and <b>celery</b> and <b>carrots</b> if using. Stir in the <b>tomato sauce</b>, <b>tomato paste</b>, <b>diced tomatoes</b>, and drained <b>beans</b>.",
+        timer: null
+      },
+      {
+        eyebrow: "SIMMER",
+        title: "Simmer covered on low",
+        content: "Cover and let it cook on low heat. It will get soupy as it simmers.",
+        timer: 20*60
+      },
+      {
+        eyebrow: "STIR",
+        title: "Uncover and stir",
+        content: "Uncover and stir every few minutes so it doesn't stick. If it looks too thick, add a bit of <b>water</b>.",
+        timer: 20*60
+      },
+      {
+        eyebrow: "TASTE",
+        title: "Taste and adjust",
+        content: "Once the beans and vegetables have softened, taste and add more <b>chili powder</b> if needed. For less acidity, stir in the <b>cream cheese</b>.",
+        timer: null
+      },
+      {
+        eyebrow: "SERVE",
+        title: "Serve it up",
+        content: "Serve hot, topped with <b>shredded cheddar</b> and <b>sour cream</b>, with crackers on the side.",
+        timer: null
+      },
+    ]
+  };
+</script>
+<script src="../assets/recipe-engine.js"></script>
+
+</body>
+</html>

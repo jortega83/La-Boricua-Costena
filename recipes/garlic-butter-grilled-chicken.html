@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Garlic Butter Grilled Chicken, La Boricua Costeña</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Work+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+
+<div class="app">
+  <div class="masthead">
+    <a class="place" href="../index.html">← La Boricua Costeña</a>
+    <div class="place">Americana #2</div>
+  </div>
+
+  <div class="hero">
+    <h1>Garlic Butter <em>Grilled Chicken</em></h1>
+    <p class="subtitle">Pounded even, seasoned simple, grilled hot with cross-hatch sear marks, and finished with a garlic parsley butter that melts right in as it rests. Great on its own or piled onto a bun with pepper jack.</p>
+    <div class="credit"><span class="dot"></span>Adapted from Sam The Cooking Guy</div>
+  </div>
+
+  <div class="meta-row">
+    <span>ACTIVE <b>15 min</b></span>
+    <span>GRILL <b>7 to 8 min</b></span>
+    <span>SERVES <b>4</b></span>
+  </div>
+
+  <div class="card">
+    <div class="servings-row">
+      <div class="servings-label">Servings</div>
+      <div class="stepper">
+        <button id="dec" aria-label="Decrease servings">–</button>
+        <div class="count" id="servingsCount">4</div>
+        <button id="inc" aria-label="Increase servings">+</button>
+      </div>
+    </div>
+    <div class="servings-note"><span id="servingsNoteText">4 chicken breasts</span></div>
+
+    <div style="height:20px"></div>
+
+    <div class="section-label rum">Ingredients</div>
+    <ul class="ingredients" id="ingredientsList"></ul>
+  </div>
+
+  <div class="card">
+    <div class="note-box rum">
+      <b>Sandwich option,</b> toast the bun, melt a slice of pepper jack over the hot chicken, and pile it on with a swipe of extra garlic butter. Works just as well with boneless chicken thighs, grill in the same way, just watch for doneness since thighs cook a little differently than breasts.
+    </div>
+  </div>
+
+  <details class="meal-prep rum">
+    <summary>Meal prep &amp; storage <span class="chev">⌄</span></summary>
+    <div class="meal-prep-body">
+      <p><b>Make ahead,</b> the garlic butter can be made a few days ahead and kept refrigerated, soften before using.</p>
+      <p><b>Store,</b> cooked chicken keeps in an airtight container in the fridge for up to 4 days.</p>
+      <p><b>Reheat,</b> gently in a skillet over medium-low with a small pat of butter, or in the microwave covered so it doesn't dry out.</p>
+      <p><b>Freeze,</b> cooked chicken freezes well for up to 3 months. Thaw overnight in the fridge before reheating.</p>
+    </div>
+  </details>
+
+  <div class="action-row">
+    <button class="start-btn rum" id="startBtn">Start cooking →</button>
+    <button class="print-btn rum" id="printBtn">Print</button>
+  </div>
+
+  <div class="print-only" id="printSteps"></div>
+
+  <footer>GARLIC BUTTER GRILLED CHICKEN · ADAPTED FROM SAM THE COOKING GUY</footer>
+</div>
+
+<!-- COOK MODE -->
+<div class="cook-overlay" id="cookOverlay">
+  <div class="cook-top">
+    <button class="close-btn" id="closeBtn">✕</button>
+    <div class="step-count" id="stepCount">STEP 1 / 7</div>
+    <div style="width:38px"></div>
+  </div>
+
+  <div class="progress-track" id="progressTrack"></div>
+
+  <div class="cook-body" id="cookBody">
+    <div class="step-eyebrow" id="stepEyebrow">PREP</div>
+    <h2 class="step-title" id="stepTitle"></h2>
+    <p class="step-content" id="stepContent"></p>
+
+    <div class="timer-wrap" id="timerWrap" style="display:none;">
+      <div class="dial">
+        <svg width="190" height="190" viewBox="0 0 190 190">
+          <circle class="track" cx="95" cy="95" r="82"></circle>
+          <circle class="fill" id="dialFill" cx="95" cy="95" r="82"></circle>
+        </svg>
+        <div class="dial-center">
+          <div class="dial-time" id="dialTime">00:00</div>
+          <div class="dial-label" id="dialLabel">READY</div>
+        </div>
+      </div>
+      <div class="timer-controls">
+        <button class="primary" id="timerToggle">Start timer</button>
+        <button id="timerReset">Reset</button>
+      </div>
+      <div class="timer-done-badge" id="timerDoneBadge"><span class="dot"></span>TIME'S UP</div>
+    </div>
+  </div>
+
+  <div class="done-screen" id="doneScreen">
+    <div class="glyph">🧈</div>
+    <h2>Chicken's ready.</h2>
+    <p>Let it rest a couple minutes with that last coat of garlic butter melting in, then serve as is or build a sandwich.</p>
+    <button class="start-btn rum" id="restartBtn" style="max-width:280px;">Cook it again</button>
+  </div>
+
+  <div class="cook-nav" id="cookNav">
+    <button id="prevBtn">Back</button>
+    <button class="next" id="nextBtn">Next step</button>
+  </div>
+</div>
+
+<script>
+  window.RECIPE = {
+    accent: 'rum',
+    baseServings: 4,
+    servingStep: 2,
+    minServings: 2,
+    maxServings: 16,
+    ingredients: [
+      { name: "Boneless chicken breasts", base: 4, unit: "" },
+      { name: "Avocado oil", base: 2, unit: "tbsp", sub: "or olive oil" },
+      { name: "Kosher salt", base: 1, unit: "tsp", sub: "to taste" },
+      { name: "Black pepper", base: 1, unit: "tsp", sub: "to taste" },
+      { name: "Butter", base: 0.5, unit: "cup", sub: "1 stick" },
+      { name: "Garlic, minced or paste", base: 4, unit: "clove" },
+      { name: "Fresh parsley, chopped", base: 2, unit: "tbsp" },
+      { name: "Buns", base: 4, unit: "", sub: "optional, for sandwiches" },
+      { name: "Sliced pepper jack cheese", base: 4, unit: "slice", sub: "optional, for sandwiches" },
+    ],
+    servingsNote: (scale, fmt) => `${fmt(4*scale)} chicken breasts`,
+    steps: [
+      {
+        eyebrow: "PREP",
+        title: "Prep and level the chicken",
+        content: "Place the <b>chicken breasts</b> in a plastic zip-lock bag with a little <b>avocado oil</b>. Pound to an even thickness so it cooks uniformly.",
+        timer: null
+      },
+      {
+        eyebrow: "SEASON",
+        title: "Season both sides",
+        content: "Season both sides generously with <b>kosher salt</b> and <b>black pepper</b>.",
+        timer: null
+      },
+      {
+        eyebrow: "BUTTER",
+        title: "Make the garlic butter",
+        content: "Melt and mix the <b>butter</b> with the <b>garlic</b> and <b>parsley</b>. Keep a clean portion aside for brushing after the chicken comes off the grill.",
+        timer: null
+      },
+      {
+        eyebrow: "GRILL",
+        title: "Preheat and start grilling",
+        content: "Preheat your grill to high. Lay the chicken on the hot grates and cook for about 3 minutes.",
+        timer: 3*60
+      },
+      {
+        eyebrow: "SEAR",
+        title: "Turn for cross-hatch marks",
+        content: "Turn the chicken 45 degrees to get classic cross-hatch sear marks, then cook 2 more minutes.",
+        timer: 2*60
+      },
+      {
+        eyebrow: "FLIP",
+        title: "Flip and butter",
+        content: "Flip once the first side has great color and is mostly cooked through. Spread or brush the <b>garlic butter</b> over the top as the second side finishes cooking.",
+        timer: 3*60
+      },
+      {
+        eyebrow: "REST",
+        title: "Rest with a final coat",
+        content: "Remove from the heat and give it one final quick coat of the <b>garlic butter</b> so it melts right in while the chicken rests.",
+        timer: 3*60
+      },
+    ]
+  };
+</script>
+<script src="../assets/recipe-engine.js"></script>
+
+</body>
+</html>
