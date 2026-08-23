@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#12181a">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>Pastel de Arroz Cartagenero, La Boricua Costeña</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Work+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+
+<div class="app">
+  <div class="masthead">
+    <a class="place" href="../index.html">← La Boricua Costeña</a>
+    <div class="place">Navidad #3</div>
+  </div>
+
+  <div class="hero">
+    <h1>Pastel de Arroz <em>Cartagenero</em></h1>
+    <p class="subtitle">Also called tamal costeño, achiote rice layered with stewed pork and chicken, sliced vegetables, and olives, wrapped in vijao leaves and boiled. The star dish of end-of-year celebrations in Cartagena.</p>
+  </div>
+
+  <div class="meta-row">
+    <span>ACTIVE <b>1.5 hrs</b></span>
+    <span>BOIL <b>1 to 2 hrs</b></span>
+    <span>MAKES <b>8 pasteles</b></span>
+  </div>
+
+  <div class="card">
+    <div class="servings-row">
+      <div class="servings-label">Pasteles</div>
+      <div class="stepper">
+        <button id="dec" aria-label="Decrease servings">–</button>
+        <div class="count" id="servingsCount">8</div>
+        <button id="inc" aria-label="Increase servings">+</button>
+      </div>
+    </div>
+    <div class="servings-note"><span id="servingsNoteText">1.5 lbs pork, 1.5 lbs chicken</span></div>
+
+    <div style="height:20px"></div>
+
+    <div class="section-label">Ingredients</div>
+    <ul class="ingredients" id="ingredientsList"></ul>
+  </div>
+
+  <div class="card">
+    <div class="note-box">
+      <b>Good to know,</b> vijao leaves are traditional, but banana leaves work as a substitute if you can't find them. This is a project best shared with extra hands, the guiso, rice, and assembly all go faster with help.
+    </div>
+  </div>
+
+  <details class="meal-prep">
+    <summary>Meal prep &amp; storage <span class="chev">⌄</span></summary>
+    <div class="meal-prep-body">
+      <p><b>Make ahead,</b> the guiso can be made a day ahead and refrigerated. The rice can also be par-cooked ahead of time.</p>
+      <p><b>Freeze uncooked,</b> wrapped pasteles freeze well for up to 3 months, this is the traditional way to stock up for the holidays.</p>
+      <p><b>Cook from frozen,</b> boil for closer to 2 hours instead of 1.</p>
+      <p><b>Store cooked,</b> refrigerate cooked, unwrapped pasteles in an airtight container for up to 4 days.</p>
+    </div>
+  </details>
+
+  <div class="action-row">
+    <button class="start-btn" id="startBtn">Start cooking →</button>
+    <button class="print-btn" id="printBtn">Print</button>
+  </div>
+
+  <div class="print-only" id="printSteps"></div>
+
+  <footer>PASTEL DE ARROZ CARTAGENERO</footer>
+</div>
+
+<!-- COOK MODE -->
+<div class="cook-overlay" id="cookOverlay">
+  <div class="cook-top">
+    <button class="close-btn" id="closeBtn">✕</button>
+    <div class="step-count" id="stepCount">STEP 1 / 7</div>
+    <div style="width:38px"></div>
+  </div>
+
+  <div class="progress-track" id="progressTrack"></div>
+
+  <div class="cook-body" id="cookBody">
+    <div class="step-eyebrow" id="stepEyebrow">GUISO</div>
+    <h2 class="step-title" id="stepTitle"></h2>
+    <p class="step-content" id="stepContent"></p>
+
+    <div class="timer-wrap" id="timerWrap" style="display:none;">
+      <div class="dial">
+        <svg width="190" height="190" viewBox="0 0 190 190">
+          <circle class="track" cx="95" cy="95" r="82"></circle>
+          <circle class="fill" id="dialFill" cx="95" cy="95" r="82"></circle>
+        </svg>
+        <div class="dial-center">
+          <div class="dial-time" id="dialTime">00:00</div>
+          <div class="dial-label" id="dialLabel">READY</div>
+        </div>
+      </div>
+      <div class="timer-controls">
+        <button class="primary" id="timerToggle">Start timer</button>
+        <button id="timerReset">Reset</button>
+      </div>
+      <div class="timer-done-badge" id="timerDoneBadge"><span class="dot"></span>TIME'S UP</div>
+    </div>
+  </div>
+
+  <div class="done-screen" id="doneScreen">
+    <div class="glyph">🎉</div>
+    <h2>Pasteles listos.</h2>
+    <p>Serve hot with suero costeño, a touch of ají picante, and a cold aguapanela with lime. Buen provecho.</p>
+    <button class="start-btn" id="restartBtn" style="max-width:280px;">Make another batch</button>
+  </div>
+
+  <div class="cook-nav" id="cookNav">
+    <button id="prevBtn">Back</button>
+    <button class="next" id="nextBtn">Next step</button>
+  </div>
+</div>
+
+<script>
+  window.RECIPE = {
+    accent: 'coral',
+    baseServings: 8,
+    servingStep: 4,
+    minServings: 4,
+    maxServings: 24,
+    ingredients: [
+      { name: "Pork ribs or pork belly, cut into pieces", base: 1.5, unit: "lb", sub: "for the guiso" },
+      { name: "Chicken thighs, cut into pieces", base: 1.5, unit: "lb" },
+      { name: "Adobo seasoning", base: 1, unit: "tbsp" },
+      { name: "Ground cumin", base: 1, unit: "tsp" },
+      { name: "Sweet ají dulce peppers, chopped", base: 0.5, unit: "cup" },
+      { name: "Onion, chopped", base: 1, unit: "cup" },
+      { name: "Garlic cloves, minced", base: 4, unit: "" },
+      { name: "Vegetable oil", base: 2, unit: "tbsp" },
+      { name: "Water or broth", base: 2, unit: "cup", sub: "for stewing the meats" },
+      { name: "Long grain white rice", base: 3, unit: "cup", sub: "for the rice layer" },
+      { name: "Achiote oil", base: 3, unit: "tbsp" },
+      { name: "Criolla or fruit vinegar", base: 2, unit: "tbsp" },
+      { name: "Onion, finely chopped", base: 0.5, unit: "cup", sub: "for the rice" },
+      { name: "Reserved guiso broth", base: 1.5, unit: "cup" },
+      { name: "Potatoes, sliced", base: 2, unit: "", sub: "for layering" },
+      { name: "Carrots, sliced", base: 2, unit: "" },
+      { name: "Onion, sliced", base: 1, unit: "" },
+      { name: "Sweet ají dulce peppers, sliced", base: 4, unit: "" },
+      { name: "Green peas", base: 0.5, unit: "cup" },
+      { name: "Green beans, chopped", base: 0.5, unit: "cup" },
+      { name: "Olives", base: 0.5, unit: "cup" },
+      { name: "Cabbage or eggplant, sliced", base: 1, unit: "cup", sub: "optional" },
+      { name: "Vijao or banana leaves, cleaned", base: 8, unit: "", sub: "for wrapping" },
+      { name: "Kitchen twine", base: 1, unit: "roll", sub: "as needed" },
+      { name: "Suero costeño, ají picante, aguapanela with lime", base: 1, unit: "", sub: "for serving" },
+    ],
+    servingsNote: (scale, fmt) => `${fmt(1.5*scale)} lbs pork, ${fmt(1.5*scale)} lbs chicken`,
+    steps: [
+      {
+        eyebrow: "GUISO · 1",
+        title: "Build the sofrito",
+        content: "Heat the <b>oil</b> in a large pot. Sauté the <b>ají dulce</b>, <b>onion</b>, <b>garlic</b>, and <b>cumin</b> until fragrant.",
+        timer: 5*60
+      },
+      {
+        eyebrow: "GUISO · 2",
+        title: "Stew the meats",
+        content: "Add the <b>pork</b> and <b>chicken</b> seasoned with <b>adobo</b>. Cook until browned, then add the <b>water or broth</b>. Simmer until the meats are tender and the sauce has concentrated. Reserve some of the broth for the rice.",
+        timer: 40*60
+      },
+      {
+        eyebrow: "RICE",
+        title: "Sauté the rice",
+        content: "In a separate pot, sauté the <b>rice</b> in the <b>achiote oil</b> with the chopped <b>onion</b>, <b>vinegar</b>, and reserved <b>guiso broth</b>. Cook just until the rice is partially cooked and golden, it will finish cooking as the pastel boils.",
+        timer: 8*60
+      },
+      {
+        eyebrow: "PREP",
+        title: "Prep the vegetables",
+        content: "Slice the <b>potatoes</b>, <b>carrots</b>, <b>onion</b>, and <b>ají dulce</b>. Have the <b>peas</b>, <b>green beans</b>, and <b>olives</b> ready to go.",
+        timer: null
+      },
+      {
+        eyebrow: "ASSEMBLE",
+        title: "Layer on the leaf",
+        content: "On a cleaned <b>vijao leaf</b>, layer <b>rice</b>, then the <b>meats</b>, sliced <b>vegetables</b>, and a bit more guiso, then close with another layer of rice.",
+        timer: null
+      },
+      {
+        eyebrow: "WRAP",
+        title: "Wrap and tie",
+        content: "Fold into a tight square or rectangular packet and tie securely with <b>kitchen twine</b>.",
+        timer: null
+      },
+      {
+        eyebrow: "BOIL",
+        title: "Boil until done",
+        content: "Boil the pasteles in salted, spiced water until the rice and vegetables are fully cooked through.",
+        timer: 90*60
+      },
+    ]
+  };
+</script>
+<script src="../assets/site.js"></script>
+<script src="../assets/recipe-engine.js"></script>
+
+</body>
+</html>
