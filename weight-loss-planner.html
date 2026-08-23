@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#12181a">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>Healthy Weight Loss Planner, La Boricua Costeña</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Work+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+<style>
+  .form-grid{ display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .form-grid.full{ grid-template-columns: 1fr; }
+  .field{ display: flex; flex-direction: column; gap: 6px; }
+  .field label{
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--cream-dim);
+  }
+  .field input, .field select{
+    background: var(--bg-raised-2);
+    border: 1px solid var(--line);
+    color: var(--cream);
+    border-radius: 10px;
+    padding: 11px 12px;
+    font-family: 'Work Sans', sans-serif;
+    font-size: 15px;
+  }
+  .field input:focus, .field select:focus{ border-color: var(--meal); outline: none; }
+  .unit-toggle{
+    display: flex;
+    background: var(--bg-raised-2);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    overflow: hidden;
+  }
+  .unit-toggle button{
+    flex: 1;
+    padding: 9px;
+    border: none;
+    background: transparent;
+    color: var(--cream-dim);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    cursor: pointer;
+  }
+  .unit-toggle button.active{ background: var(--meal); color: var(--bg); font-weight: 700; }
+  .sex-toggle{ display: flex; gap: 8px; }
+  .sex-toggle button{
+    flex: 1;
+    padding: 11px;
+    border: 1px solid var(--line);
+    background: var(--bg-raised-2);
+    color: var(--cream-dim);
+    border-radius: 10px;
+    font-family: 'Work Sans', sans-serif;
+    font-weight: 600;
+    cursor: pointer;
+  }
+  .sex-toggle button.active{ border-color: var(--meal); color: var(--meal); background: rgba(79,163,201,0.1); }
+
+  .results{ display: none; }
+  .results.show{ display: block; }
+  .result-big{
+    text-align: center;
+    padding: 24px 0 18px;
+  }
+  .result-big .num{
+    font-family: 'Fraunces', serif;
+    font-weight: 700;
+    font-size: 52px;
+    color: var(--meal);
+    line-height: 1;
+  }
+  .result-big .label{
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--cream-dim);
+    margin-top: 8px;
+  }
+  .stat-row{
+    display: flex;
+    justify-content: space-between;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--line);
+    font-size: 14.5px;
+  }
+  .stat-row:last-child{ border-bottom: none; }
+  .stat-row .v{ font-family: 'JetBrains Mono', monospace; font-weight: 700; color: var(--cream); }
+  .macro-grid{ display: flex; gap: 10px; margin-top: 4px; }
+  .macro-box{
+    flex: 1;
+    background: var(--bg-raised-2);
+    border-radius: 12px;
+    padding: 14px 10px;
+    text-align: center;
+  }
+  .macro-box .g{ font-family: 'JetBrains Mono', monospace; font-weight: 700; font-size: 20px; color: var(--cream); }
+  .macro-box .name{ font-size: 11px; color: var(--cream-dim); margin-top: 4px; text-transform: uppercase; letter-spacing: 0.06em; }
+  .calc-btn{
+    width: 100%;
+    padding: 17px;
+    border-radius: 999px;
+    border: none;
+    background: var(--meal);
+    color: var(--bg);
+    font-family: 'Work Sans', sans-serif;
+    font-weight: 700;
+    font-size: 16px;
+    cursor: pointer;
+    margin-top: 6px;
+  }
+  .calc-btn:hover{ background: var(--meal-deep); }
+  .floor-warning{
+    display: none;
+    background: rgba(226,112,58,0.1);
+    border: 1px solid rgba(226,112,58,0.35);
+    border-radius: 12px;
+    padding: 12px 14px;
+    font-size: 13px;
+    color: var(--coral);
+    margin-top: 14px;
+  }
+  .floor-warning.show{ display: block; }
+</style>
+</head>
+<body>
+
+<div class="app">
+  <div class="masthead">
+    <a class="place" href="index.html">← La Boricua Costeña</a>
+    <div class="place">Planner</div>
+  </div>
+
+  <div class="hero">
+    <h1>Weight Loss <em>Planner</em></h1>
+    <p class="subtitle">Steady, even fat loss, not a crash diet. This works out a calorie target and protein goal built to protect your muscle while you lose fat, which is what actually prevents loose or hanging skin, not the speed of the scale.</p>
+  </div>
+
+  <div class="card">
+    <div class="section-label meal">Your info</div>
+
+    <div style="height:14px"></div>
+
+    <div class="field" style="margin-bottom:14px;">
+      <label>Sex</label>
+      <div class="sex-toggle">
+        <button type="button" id="sexMale" class="active">Male</button>
+        <button type="button" id="sexFemale">Female</button>
+      </div>
+    </div>
+
+    <div class="form-grid" style="margin-bottom:14px;">
+      <div class="field">
+        <label>Age</label>
+        <input type="number" id="age" placeholder="years" min="15" max="90">
+      </div>
+      <div class="field">
+        <label>Activity level</label>
+        <select id="activity">
+          <option value="1.2">Sedentary (desk job, little exercise)</option>
+          <option value="1.375">Light (exercise 1 to 3 days/week)</option>
+          <option value="1.55" selected>Moderate (exercise 3 to 5 days/week)</option>
+          <option value="1.725">Active (exercise 6 to 7 days/week)</option>
+          <option value="1.9">Very active (hard daily training)</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="field" style="margin-bottom:6px;">
+      <label>Height</label>
+      <div class="unit-toggle" style="margin-bottom:8px; max-width:160px;">
+        <button type="button" id="heightFt" class="active">ft/in</button>
+        <button type="button" id="heightCm">cm</button>
+      </div>
+    </div>
+    <div class="form-grid" id="heightFtFields" style="margin-bottom:14px;">
+      <div class="field">
+        <label>Feet</label>
+        <input type="number" id="heightFeet" placeholder="5" min="3" max="8">
+      </div>
+      <div class="field">
+        <label>Inches</label>
+        <input type="number" id="heightInches" placeholder="7" min="0" max="11">
+      </div>
+    </div>
+    <div class="form-grid full" id="heightCmFields" style="display:none; margin-bottom:14px;">
+      <div class="field">
+        <label>Centimeters</label>
+        <input type="number" id="heightCmInput" placeholder="170">
+      </div>
+    </div>
+
+    <div class="field" style="margin-bottom:6px;">
+      <label>Weight</label>
+      <div class="unit-toggle" style="margin-bottom:8px; max-width:160px;">
+        <button type="button" id="weightLb" class="active">lbs</button>
+        <button type="button" id="weightKg">kg</button>
+      </div>
+    </div>
+    <div class="form-grid full">
+      <div class="field">
+        <label id="weightLabel">Pounds</label>
+        <input type="number" id="weightInput" placeholder="180">
+      </div>
+    </div>
+
+    <button class="calc-btn" id="calcBtn">Calculate my plan</button>
+    <div class="floor-warning" id="floorWarning">Your calculated deficit was steeper than what's considered safe, so this target has been adjusted up to a safer minimum. Please see a doctor or dietitian before going lower than this.</div>
+  </div>
+
+  <div class="results" id="results">
+    <div class="card">
+      <div class="result-big">
+        <div class="num" id="targetCalories">0</div>
+        <div class="label">Daily calorie target</div>
+      </div>
+      <div class="stat-row"><span>Maintenance calories</span><span class="v" id="maintCalories">0</span></div>
+      <div class="stat-row"><span>Daily deficit</span><span class="v" id="deficitAmt">0</span></div>
+      <div class="stat-row"><span>Estimated weekly loss</span><span class="v" id="weeklyLoss">0 lbs</span></div>
+    </div>
+
+    <div class="card">
+      <div class="section-label meal">Daily macros</div>
+      <div class="macro-grid">
+        <div class="macro-box">
+          <div class="g" id="proteinG">0g</div>
+          <div class="name">Protein</div>
+        </div>
+        <div class="macro-box">
+          <div class="g" id="carbsG">0g</div>
+          <div class="name">Carbs</div>
+        </div>
+        <div class="macro-box">
+          <div class="g" id="fatG">0g</div>
+          <div class="name">Fat</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="note-box meal">
+        <b>Why protein is high here,</b> eating roughly 1 gram of protein per pound of body weight, combined with resistance training two to three times a week, is what preserves muscle while you're in a calorie deficit. That's the actual mechanism that keeps skin looking tight and even as fat comes off, not losing weight fast.
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="note-box meal">
+        <b>Keep it sustainable,</b> this target is capped at a moderate deficit on purpose. Losing faster than about 1% of your body weight per week raises the risk of muscle loss, which is the real cause of a soft or hanging look after weight loss, along with fatigue and it being harder to stick with long term.
+      </div>
+    </div>
+
+    <a class="recipe-card meal" href="index.html#meal-prep" style="margin-top:4px;">
+      <div class="rc-text">
+        <h3>Browse Meal Prep recipes</h3>
+        <p>High-protein bowls, adjust servings to fit your calorie target</p>
+      </div>
+      <div class="arrow">→</div>
+    </a>
+  </div>
+
+  <footer>WEIGHT LOSS PLANNER · GENERAL ESTIMATE, NOT MEDICAL ADVICE</footer>
+</div>
+
+<script src="assets/site.js"></script>
+<script>
+(function(){
+  const sexMale = document.getElementById('sexMale');
+  const sexFemale = document.getElementById('sexFemale');
+  let sex = 'male';
+  sexMale.addEventListener('click', () => { sex = 'male'; sexMale.classList.add('active'); sexFemale.classList.remove('active'); });
+  sexFemale.addEventListener('click', () => { sex = 'female'; sexFemale.classList.add('active'); sexMale.classList.remove('active'); });
+
+  const heightFtBtn = document.getElementById('heightFt');
+  const heightCmBtn = document.getElementById('heightCm');
+  const heightFtFields = document.getElementById('heightFtFields');
+  const heightCmFields = document.getElementById('heightCmFields');
+  let heightUnit = 'ft';
+  heightFtBtn.addEventListener('click', () => {
+    heightUnit = 'ft'; heightFtBtn.classList.add('active'); heightCmBtn.classList.remove('active');
+    heightFtFields.style.display = 'grid'; heightCmFields.style.display = 'none';
+  });
+  heightCmBtn.addEventListener('click', () => {
+    heightUnit = 'cm'; heightCmBtn.classList.add('active'); heightFtBtn.classList.remove('active');
+    heightFtFields.style.display = 'none'; heightCmFields.style.display = 'grid';
+  });
+
+  const weightLbBtn = document.getElementById('weightLb');
+  const weightKgBtn = document.getElementById('weightKg');
+  const weightLabel = document.getElementById('weightLabel');
+  let weightUnit = 'lb';
+  weightLbBtn.addEventListener('click', () => {
+    weightUnit = 'lb'; weightLbBtn.classList.add('active'); weightKgBtn.classList.remove('active');
+    weightLabel.textContent = 'Pounds';
+  });
+  weightKgBtn.addEventListener('click', () => {
+    weightUnit = 'kg'; weightKgBtn.classList.add('active'); weightLbBtn.classList.remove('active');
+    weightLabel.textContent = 'Kilograms';
+  });
+
+  document.getElementById('calcBtn').addEventListener('click', () => {
+    const age = parseFloat(document.getElementById('age').value);
+    const activityMult = parseFloat(document.getElementById('activity').value);
+    let heightCm, weightKg, weightLb;
+
+    if (heightUnit === 'ft') {
+      const feet = parseFloat(document.getElementById('heightFeet').value) || 0;
+      const inches = parseFloat(document.getElementById('heightInches').value) || 0;
+      heightCm = (feet * 12 + inches) * 2.54;
+    } else {
+      heightCm = parseFloat(document.getElementById('heightCmInput').value);
+    }
+
+    const weightVal = parseFloat(document.getElementById('weightInput').value);
+    if (weightUnit === 'lb') {
+      weightLb = weightVal;
+      weightKg = weightVal * 0.453592;
+    } else {
+      weightKg = weightVal;
+      weightLb = weightVal / 0.453592;
+    }
+
+    if (!age || !heightCm || !weightKg || age < 15 || age > 90) {
+      alert('Please fill in your age, height, and weight to get a plan.');
+      return;
+    }
+
+    // Mifflin-St Jeor BMR
+    let bmr;
+    if (sex === 'male') {
+      bmr = 10 * weightKg + 6.25 * heightCm - 5 * age + 5;
+    } else {
+      bmr = 10 * weightKg + 6.25 * heightCm - 5 * age - 161;
+    }
+
+    const maintenance = bmr * activityMult;
+
+    // Moderate deficit: 20%, capped so it never exceeds 25% and never drops
+    // below a safety floor calorie level.
+    let deficit = maintenance * 0.20;
+    const maxDeficit = maintenance * 0.25;
+    if (deficit > maxDeficit) deficit = maxDeficit;
+
+    let target = maintenance - deficit;
+    const floor = sex === 'male' ? 1500 : 1200;
+    let floorHit = false;
+    if (target < floor) {
+      target = floor;
+      floorHit = true;
+    }
+    deficit = maintenance - target;
+
+    const weeklyLossLb = (deficit * 7) / 3500;
+
+    // Protein: ~1g per lb of body weight, capped to a sane share of calories.
+    let proteinG = Math.round(weightLb * 1.0);
+    let proteinCals = proteinG * 4;
+    if (proteinCals > target * 0.40) {
+      proteinCals = target * 0.40;
+      proteinG = Math.round(proteinCals / 4);
+    }
+
+    const fatCals = target * 0.30;
+    const fatG = Math.round(fatCals / 9);
+
+    const carbCals = Math.max(target - proteinCals - fatCals, 0);
+    const carbG = Math.round(carbCals / 4);
+
+    document.getElementById('targetCalories').textContent = Math.round(target).toLocaleString();
+    document.getElementById('maintCalories').textContent = Math.round(maintenance).toLocaleString() + ' kcal';
+    document.getElementById('deficitAmt').textContent = Math.round(deficit).toLocaleString() + ' kcal/day';
+    document.getElementById('weeklyLoss').textContent = weeklyLossLb.toFixed(1) + ' lbs';
+    document.getElementById('proteinG').textContent = proteinG + 'g';
+    document.getElementById('carbsG').textContent = carbG + 'g';
+    document.getElementById('fatG').textContent = fatG + 'g';
+
+    document.getElementById('floorWarning').classList.toggle('show', floorHit);
+    document.getElementById('results').classList.add('show');
+    document.getElementById('results').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+})();
+</script>
+
+</body>
+</html>
