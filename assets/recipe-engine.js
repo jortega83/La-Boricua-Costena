@@ -54,6 +54,20 @@
 
   renderIngredients();
 
+  // ---------- Print ----------
+  const printBtn = document.getElementById('printBtn');
+  const printStepsEl = document.getElementById('printSteps');
+  if(printBtn && printStepsEl){
+    printStepsEl.innerHTML = RECIPE.steps.map((s, i) => `
+      <div class="print-step">
+        <div class="peb">Step ${i+1}, ${s.eyebrow}</div>
+        <h4>${s.title}</h4>
+        <p>${s.content}</p>
+      </div>
+    `).join('');
+    printBtn.addEventListener('click', () => window.print());
+  }
+
   // ---------- Cook mode ----------
   const steps = RECIPE.steps;
   let currentStep = 0;

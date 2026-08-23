@@ -328,6 +328,95 @@ footer{
 .start-btn.rum:hover{ background: var(--rum); color: var(--bg); }
 .start-btn:active{ transform: scale(0.98); }
 
+/* ---------- Action row: Start cooking + Print ---------- */
+.action-row{
+  display: flex;
+  gap: 10px;
+  margin-top: 4px;
+}
+.action-row .start-btn{ margin-top: 0; flex: 2; }
+.print-btn{
+  flex: 1;
+  padding: 17px 14px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: transparent;
+  color: var(--cream);
+  font-family: 'Work Sans', sans-serif;
+  font-weight: 600;
+  font-size: 14.5px;
+  cursor: pointer;
+  transition: border-color 0.15s ease, color 0.15s ease;
+  white-space: nowrap;
+}
+.print-btn:hover{ border-color: var(--coral); color: var(--coral); }
+.print-btn.rum:hover{ border-color: var(--rum); color: var(--rum); }
+
+/* ---------- Meal prep (details/summary, no JS needed) ---------- */
+.meal-prep{
+  background: var(--bg-raised);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 4px 22px;
+  margin-bottom: 16px;
+}
+.meal-prep summary{
+  list-style: none;
+  cursor: pointer;
+  padding: 18px 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--teal);
+}
+.meal-prep.rum summary{ color: var(--rum); }
+.meal-prep summary::-webkit-details-marker{ display: none; }
+.meal-prep summary .chev{
+  font-family: 'JetBrains Mono', monospace;
+  color: var(--cream-dim);
+  transition: transform 0.15s ease;
+}
+.meal-prep[open] summary .chev{ transform: rotate(180deg); }
+.meal-prep .meal-prep-body{
+  padding-bottom: 18px;
+  font-size: 14px;
+  line-height: 1.65;
+  color: var(--cream-dim);
+}
+.meal-prep .meal-prep-body p{ margin: 0 0 10px; }
+.meal-prep .meal-prep-body p:last-child{ margin-bottom: 0; }
+.meal-prep .meal-prep-body b{ color: var(--cream); }
+
+/* ---------- Print ---------- */
+.print-only{ display: none; }
+
+@media print{
+  body::before{ display: none; }
+  .cook-overlay, .print-btn, .action-row .start-btn, .meal-prep summary .chev{ display: none !important; }
+  body{ background: #fff; color: #111; }
+  .app{ max-width: 100%; padding: 0 12px; }
+  .masthead, .card, .meal-prep{ border-color: #ccc; }
+  .card, .meal-prep{ background: #fff; break-inside: avoid; }
+  .hero .subtitle, .meta-row, .ingredients .name small, .step-content{ color: #333; }
+  .credit{ background: #fff; border-color: #999; color: #333; }
+  .ingredients .amt{ color: #111; }
+  .meal-prep{ display: block !important; }
+  .meal-prep .meal-prep-body{ display: block !important; color: #333; }
+  .print-only{ display: block; }
+  .print-only .print-step{ margin-bottom: 14px; break-inside: avoid; }
+  .print-only .print-step .peb{
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase;
+    color: #666;
+  }
+  .print-only .print-step h4{ font-family: 'Fraunces', serif; margin: 2px 0 4px; font-size: 16px; }
+  .print-only .print-step p{ margin: 0; font-size: 13.5px; color: #222; }
+}
+
 /* ---------- Cook Mode ---------- */
 .cook-overlay{
   position: fixed;
