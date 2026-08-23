@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Pasteles Boricua, La Boricua Costeña</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Work+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+
+<div class="app">
+  <div class="masthead">
+    <a class="place" href="../index.html">← La Boricua Costeña</a>
+    <div class="place">Navidad #1</div>
+  </div>
+
+  <div class="hero">
+    <h1>Pasteles <em>Boricua</em></h1>
+    <p class="subtitle">Puerto Rico's Christmas centerpiece, a savory root vegetable masa filled with stewed meat, wrapped in banana leaf, and boiled until tender. A labor of love, best made with extra hands in the kitchen.</p>
+    <div class="credit"><span class="dot"></span>Adapted from Delish D'Lites</div>
+  </div>
+
+  <div class="meta-row">
+    <span>PREP <b>3 hrs</b></span>
+    <span>COOK <b>1 hr</b></span>
+    <span>MAKES <b>12 pasteles</b></span>
+  </div>
+
+  <div class="card">
+    <div class="servings-row">
+      <div class="servings-label">Pasteles</div>
+      <div class="stepper">
+        <button id="dec" aria-label="Decrease servings">–</button>
+        <div class="count" id="servingsCount">12</div>
+        <button id="inc" aria-label="Increase servings">+</button>
+      </div>
+    </div>
+    <div class="servings-note"><span id="servingsNoteText">2½ lbs meat, 4½ lbs root vegetables</span></div>
+
+    <div style="height:20px"></div>
+
+    <div class="section-label rum">Ingredients</div>
+    <ul class="ingredients" id="ingredientsList"></ul>
+  </div>
+
+  <div class="card">
+    <div class="note-box rum">
+      <b>Good to know,</b> yautía, calabaza, and frozen banana leaves are usually found at a Latino or Caribbean market. Grated frozen masa is sometimes available there too, which saves a lot of prep time. Chickpeas can replace the meat for a vegetarian version.
+    </div>
+  </div>
+
+  <details class="meal-prep rum">
+    <summary>Meal prep &amp; storage <span class="chev">⌄</span></summary>
+    <div class="meal-prep-body">
+      <p><b>Make ahead,</b> the filling and masa can both be made a day ahead and refrigerated separately before assembling.</p>
+      <p><b>Freeze uncooked,</b> wrapped pasteles freeze great, up to 6 months in a freezer bag. This is the traditional way to stock up for the season.</p>
+      <p><b>Cook from frozen,</b> boil for 75 to 90 minutes instead of 45 to 60.</p>
+      <p><b>Store cooked,</b> refrigerate cooked, unwrapped pasteles in an airtight container for up to 4 days.</p>
+    </div>
+  </details>
+
+  <div class="action-row">
+    <button class="start-btn rum" id="startBtn">Start cooking →</button>
+    <button class="print-btn rum" id="printBtn">Print</button>
+  </div>
+
+  <div class="print-only" id="printSteps"></div>
+
+  <footer>PASTELES BORICUA · ADAPTED FROM DELISH D'LITES</footer>
+</div>
+
+<!-- COOK MODE -->
+<div class="cook-overlay" id="cookOverlay">
+  <div class="cook-top">
+    <button class="close-btn" id="closeBtn">✕</button>
+    <div class="step-count" id="stepCount">STEP 1 / 7</div>
+    <div style="width:38px"></div>
+  </div>
+
+  <div class="progress-track" id="progressTrack"></div>
+
+  <div class="cook-body" id="cookBody">
+    <div class="step-eyebrow" id="stepEyebrow">FILLING</div>
+    <h2 class="step-title" id="stepTitle"></h2>
+    <p class="step-content" id="stepContent"></p>
+
+    <div class="timer-wrap" id="timerWrap" style="display:none;">
+      <div class="dial">
+        <svg width="190" height="190" viewBox="0 0 190 190">
+          <circle class="track" cx="95" cy="95" r="82"></circle>
+          <circle class="fill" id="dialFill" cx="95" cy="95" r="82"></circle>
+        </svg>
+        <div class="dial-center">
+          <div class="dial-time" id="dialTime">00:00</div>
+          <div class="dial-label" id="dialLabel">READY</div>
+        </div>
+      </div>
+      <div class="timer-controls">
+        <button class="primary" id="timerToggle">Start timer</button>
+        <button id="timerReset">Reset</button>
+      </div>
+      <div class="timer-done-badge" id="timerDoneBadge"><span class="dot"></span>TIME'S UP</div>
+    </div>
+  </div>
+
+  <div class="done-screen" id="doneScreen">
+    <div class="glyph">🎄</div>
+    <h2>Pasteles listos.</h2>
+    <p>Cut the string, unwrap, and serve hot with a side of arroz con gandules. Feliz Navidad.</p>
+    <button class="start-btn rum" id="restartBtn" style="max-width:280px;">Make another batch</button>
+  </div>
+
+  <div class="cook-nav" id="cookNav">
+    <button id="prevBtn">Back</button>
+    <button class="next" id="nextBtn">Next step</button>
+  </div>
+</div>
+
+<script>
+  window.RECIPE = {
+    accent: 'rum',
+    baseServings: 12,
+    servingStep: 6,
+    minServings: 6,
+    maxServings: 48,
+    ingredients: [
+      { name: "Chicken thighs or pork shoulder, cubed", base: 2.5, unit: "lb", sub: "for the filling, chickpeas for vegetarian" },
+      { name: "Adobo seasoning", base: 1, unit: "tsp" },
+      { name: "Sazón with culantro y achiote", base: 2, unit: "packet", sub: "for the filling" },
+      { name: "Garlic powder", base: 2, unit: "tsp" },
+      { name: "Dried oregano", base: 1, unit: "tsp" },
+      { name: "Olive oil", base: 1, unit: "tbsp" },
+      { name: "Sofrito", base: 0.25, unit: "cup" },
+      { name: "Tomato paste", base: 1, unit: "tbsp" },
+      { name: "Chicken broth", base: 2.5, unit: "cup", sub: "low sodium" },
+      { name: "Chicken bouillon cube", base: 1, unit: "" },
+      { name: "Dried bay leaves", base: 3, unit: "" },
+      { name: "Pimento-stuffed olives", base: 0.25, unit: "cup" },
+      { name: "Yautía blanca (taro root), peeled and cubed", base: 2, unit: "lb", sub: "for the masa" },
+      { name: "Yuca root (cassava), peeled and cubed", base: 1, unit: "lb" },
+      { name: "Calabaza (tropical pumpkin), peeled and cubed", base: 1, unit: "lb" },
+      { name: "Green bananas or green plantains, peeled and cubed", base: 0.5, unit: "lb" },
+      { name: "Canola oil", base: 2, unit: "tbsp" },
+      { name: "Sazón with culantro y achiote", base: 2, unit: "packet", sub: "for the masa" },
+      { name: "Banana leaves", base: 1, unit: "package", sub: "frozen, thawed, for wrapping" },
+      { name: "Parchment paper squares", base: 12, unit: "sheets", sub: "12 inch squares" },
+      { name: "Butcher's twine", base: 1, unit: "roll", sub: "as needed, for tying" },
+    ],
+    servingsNote: (scale, fmt) => `${fmt(2.5*scale)} lbs meat, ${fmt(4.5*scale)} lbs root vegetables`,
+    steps: [
+      {
+        eyebrow: "SEASON",
+        title: "Season the meat",
+        content: "Cube the <b>chicken or pork</b>. Season with <b>adobo</b>, <b>sazón</b>, <b>garlic powder</b>, and <b>oregano</b>. Drizzle with a bit of the <b>olive oil</b> and stir to coat evenly.",
+        timer: null
+      },
+      {
+        eyebrow: "FILLING",
+        title: "Cook the filling",
+        content: "Heat the remaining <b>olive oil</b> in a saucepan over medium heat. Add the <b>sofrito</b>, stir briefly, then add the meat, <b>bay leaves</b>, and <b>tomato paste</b>. Stir in the <b>olives</b>, <b>bouillon cube</b>, and <b>chicken broth</b>. Bring to a boil, reduce to a simmer, cover, and cook.",
+        timer: 60*60
+      },
+      {
+        eyebrow: "COOL",
+        title: "Cool the filling",
+        content: "Once cooked, transfer the filling to the fridge to cool completely before you fill the pasteles.",
+        timer: 20*60
+      },
+      {
+        eyebrow: "MASA",
+        title: "Make the masa",
+        content: "Grate the <b>yautía</b>, <b>yuca</b>, <b>calabaza</b>, and <b>green bananas</b> (a food processor's fine shredder blade works well), then process into a fine paste. Mix in the <b>canola oil</b> and remaining <b>sazón</b> until well combined. Cover and refrigerate.",
+        timer: null
+      },
+      {
+        eyebrow: "PREP",
+        title: "Prep the wrappers",
+        content: "Cut the <b>banana leaves</b> into 8 to 9 inch pieces, removing the hard rib from one side. Cut the <b>parchment paper</b> into 12 inch squares.",
+        timer: null
+      },
+      {
+        eyebrow: "ASSEMBLE",
+        title: "Fill and wrap each pastel",
+        content: "Smear a little of the meat's cooking liquid onto a banana leaf. Spread about ½ cup <b>masa</b> in the center, top with ¼ cup <b>filling</b>, then fold and tuck as directed, using the parchment underneath to hold the shape. Stack two together and tie with <b>butcher's twine</b>.",
+        timer: null
+      },
+      {
+        eyebrow: "COOK",
+        title: "Boil until done",
+        content: "Bring a large pot of salted water to a boil. Add the pasteles and boil for 45 minutes to an hour (75 to 90 minutes if cooking from frozen). Drain, cut the strings, unwrap, and serve hot.",
+        timer: 50*60
+      },
+    ]
+  };
+</script>
+<script src="../assets/recipe-engine.js"></script>
+
+</body>
+</html>
