@@ -48,7 +48,7 @@
 
   <div class="card">
     <div class="note-box rum">
-      <b>Johanna's tip,</b> the spiced tea is what sets this version apart, don't skip letting it cool before blending or it can curdle the milks. Taste before bottling and adjust the ron to your crowd, it always tastes a little stronger once it's had a few hours to chill and settle.
+      <b>Johanna's tip,</b> the spiced tea is what sets this version apart, don't skip letting it cool before blending or it can curdle the milks. Taste before bottling and adjust the rum to your crowd, it always tastes a little stronger once it's had a few hours to chill and settle.
     </div>
   </div>
 
@@ -127,30 +127,30 @@
     minServings: 4,
     maxServings: 48,
     ingredients: [
-      { name: "Agua", base: 1, unit: "cup", sub: "para el té de especias" },
-      { name: "Palitos de canela", base: 2.5, unit: "", sub: "2 to 3, para el té" },
-      { name: "Anís estrella", base: 4.5, unit: "", sub: "4 to 5, para el té" },
-      { name: "Clavos de especias", base: 7.5, unit: "", sub: "7 to 8, para el té" },
-      { name: "Leche evaporada", base: 1.5, unit: "cup", sub: "1 lata" },
-      { name: "Leche condensada", base: 1.25, unit: "cup", sub: "1 lata" },
-      { name: "Leche de coco", base: 1.75, unit: "cup", sub: "1 lata" },
-      { name: "Crema de coco", base: 1.75, unit: "cup", sub: "1 lata" },
-      { name: "Ron blanco", base: 0.75, unit: "cup", sub: "al gusto, opcional" },
-      { name: "Vainilla", base: 1, unit: "tsp" },
-      { name: "Canela en polvo", base: 1, unit: "tsp", sub: "al gusto" },
-      { name: "Jengibre en polvo", base: 0.25, unit: "tsp" },
-      { name: "Nuez moscada", base: 0.25, unit: "tsp" },
+      { name: "Water", base: 1, unit: "cup", sub: "for the spiced tea" },
+      { name: "Cinnamon sticks", base: 2.5, unit: "", sub: "2 to 3, for the tea" },
+      { name: "Star anise", base: 4.5, unit: "", sub: "4 to 5, for the tea" },
+      { name: "Whole cloves", base: 7.5, unit: "", sub: "7 to 8, for the tea" },
+      { name: "Evaporated milk", base: 1.5, unit: "cup", sub: "1 can" },
+      { name: "Sweetened condensed milk", base: 1.25, unit: "cup", sub: "1 can" },
+      { name: "Coconut milk", base: 1.75, unit: "cup", sub: "1 can" },
+      { name: "Cream of coconut", base: 1.75, unit: "cup", sub: "1 can" },
+      { name: "White rum", base: 0.75, unit: "cup", sub: "to taste, optional" },
+      { name: "Vanilla extract", base: 1, unit: "tsp" },
+      { name: "Ground cinnamon", base: 1, unit: "tsp", sub: "to taste" },
+      { name: "Ground ginger", base: 0.25, unit: "tsp" },
+      { name: "Ground nutmeg", base: 0.25, unit: "tsp" },
     ],
     servingsNote: (scale, fmt) => `≈ ${fmt(7*scale)} cups`,
     steps: [
       {
-        eyebrow: "TÉ · 1",
+        eyebrow: "TEA · 1",
         title: "Make the spiced tea",
         content: "Bring the <b>water</b> to a boil with the <b>cinnamon sticks</b>, <b>star anise</b>, and <b>cloves</b>. Let it boil a few minutes, then remove from heat and steep.",
         timer: 10*60
       },
       {
-        eyebrow: "TÉ · 2",
+        eyebrow: "TEA · 2",
         title: "Strain and cool",
         content: "Strain the tea, discarding the whole spices. You should have about ½ cup of concentrated tea. Let it cool before using.",
         timer: 15*60
@@ -158,19 +158,19 @@
       {
         eyebrow: "BLEND · 1",
         title: "Combine the base",
-        content: "Add the cooled <b>spiced tea</b>, <b>leche evaporada</b>, <b>leche condensada</b>, <b>leche de coco</b>, and <b>crema de coco</b> to a blender.",
+        content: "Add the cooled <b>spiced tea</b>, <b>evaporated milk</b>, <b>condensed milk</b>, <b>coconut milk</b>, and <b>cream of coconut</b> to a blender.",
         timer: null
       },
       {
         eyebrow: "BLEND · 2",
         title: "Add rum and spice",
-        content: "Add the <b>ron</b>, <b>vainilla</b>, <b>canela</b>, <b>jengibre</b>, and <b>nuez moscada</b>. Blend on high until completely smooth, about a minute.",
+        content: "Add the <b>rum</b>, <b>vanilla</b>, <b>cinnamon</b>, <b>ginger</b>, and <b>nutmeg</b>. Blend on high until completely smooth, about a minute.",
         timer: 90
       },
       {
         eyebrow: "TASTE",
         title: "Taste and adjust",
-        content: "Give it a taste. Want it stronger or sweeter? Adjust the <b>ron</b> or <b>leche condensada</b> now, then blend again briefly.",
+        content: "Give it a taste. Want it stronger or sweeter? Adjust the <b>rum</b> or <b>condensed milk</b> now, then blend again briefly.",
         timer: null
       },
       {

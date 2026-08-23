@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-<title>Cóctel de Camarón Estilo Cartagena, La Boricua Costeña</title>
+<title>Shrimp Cocktail, Cartagena Style, La Boricua Costeña</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Work+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
@@ -19,63 +19,63 @@
 
   <div class="hero">
     <h1>Cóctel de <em>Camarón</em></h1>
-    <p class="subtitle">Camarones y langostinos cocidos en caldo sazonado, bañados en un aderezo fresco de salsa de tomate, salsa soya, jugo de limón, y agua de ajo. Clásico de playa costeño.</p>
-    <div class="credit coral"><span class="dot"></span>Receta de Rubí Cárdenas</div>
+    <p class="subtitle">Shrimp and langostinos cooked in seasoned broth, tossed in a fresh dressing of tomato sauce, soy sauce, lime juice, and garlic water. A classic beach snack from the coast.</p>
+    <div class="credit coral"><span class="dot"></span>Recipe by Rubí Cárdenas</div>
   </div>
 
   <div class="meta-row">
-    <span>TIEMPO <b>~30 min</b></span>
-    <span>ACTIVO <b>20 min</b></span>
-    <span>SIRVE FRÍO</span>
+    <span>TIME <b>~30 min</b></span>
+    <span>ACTIVE <b>20 min</b></span>
+    <span>SERVE COLD</span>
   </div>
 
   <div class="card">
     <div class="servings-row">
-      <div class="servings-label">Porciones</div>
+      <div class="servings-label">Servings</div>
       <div class="stepper">
         <button id="dec" aria-label="Decrease servings">–</button>
         <div class="count" id="servingsCount">6</div>
         <button id="inc" aria-label="Increase servings">+</button>
       </div>
     </div>
-    <div class="servings-note"><span id="servingsNoteText">500g camarones, 250g langostinos</span></div>
+    <div class="servings-note"><span id="servingsNoteText">500g shrimp, 250g langostinos</span></div>
 
     <div style="height:20px"></div>
 
-    <div class="section-label">Ingredientes</div>
+    <div class="section-label">Ingredients</div>
     <ul class="ingredients" id="ingredientsList"></ul>
   </div>
 
   <div class="card">
     <div class="note-box">
-      <b>Sobre el agua de ajo,</b> se hace dejando varios dientes de ajo machacados en agua de un día para otro. Si tienes prisa, usa ajo muy finamente picado en su lugar. El toque de agua de ajo es lo que le da ese sabor tan característico de la costa.
+      <b>About the garlic water,</b> it's made by letting crushed garlic cloves sit in water overnight. If you're short on time, use very finely minced garlic instead. That garlic water touch is what gives it that characteristic coastal flavor.
     </div>
   </div>
 
   <details class="meal-prep">
-    <summary>Preparación y almacenamiento <span class="chev">⌄</span></summary>
+    <summary>Meal prep &amp; storage <span class="chev">⌄</span></summary>
     <div class="meal-prep-body">
-      <p><b>Con anticipación,</b> prepara el agua de ajo desde la noche anterior. Los camarones también se pueden cocinar y refrigerar un día antes.</p>
-      <p><b>Guardar,</b> refrigerado en un recipiente hermético hasta por 2 días. Mejor consumido el mismo día que se prepara el aderezo.</p>
-      <p><b>No se congela bien,</b> el camarón y los vegetales pierden textura al descongelar, así que evita congelar el cóctel ya armado.</p>
+      <p><b>Make ahead,</b> prepare the garlic water the night before. The shrimp can also be cooked and refrigerated a day ahead.</p>
+      <p><b>Store,</b> refrigerated in an airtight container for up to 2 days. Best eaten the same day the dressing is made.</p>
+      <p><b>Doesn't freeze well,</b> the shrimp and vegetables lose their texture once thawed, so avoid freezing it once assembled.</p>
     </div>
   </details>
 
   <div class="action-row">
-    <button class="start-btn" id="startBtn">Empezar a cocinar →</button>
-    <button class="print-btn" id="printBtn">Imprimir</button>
+    <button class="start-btn" id="startBtn">Start cooking →</button>
+    <button class="print-btn" id="printBtn">Print</button>
   </div>
 
   <div class="print-only" id="printSteps"></div>
 
-  <footer>CÓCTEL DE CAMARÓN · RECETA DE RUBÍ CÁRDENAS</footer>
+  <footer>SHRIMP COCKTAIL · RECIPE BY RUBÍ CÁRDENAS</footer>
 </div>
 
 <!-- COOK MODE -->
 <div class="cook-overlay" id="cookOverlay">
   <div class="cook-top">
     <button class="close-btn" id="closeBtn">✕</button>
-    <div class="step-count" id="stepCount">PASO 1 / 6</div>
+    <div class="step-count" id="stepCount">STEP 1 / 6</div>
     <div style="width:38px"></div>
   </div>
 
@@ -94,27 +94,27 @@
         </svg>
         <div class="dial-center">
           <div class="dial-time" id="dialTime">00:00</div>
-          <div class="dial-label" id="dialLabel">LISTO</div>
+          <div class="dial-label" id="dialLabel">READY</div>
         </div>
       </div>
       <div class="timer-controls">
-        <button class="primary" id="timerToggle">Iniciar temporizador</button>
-        <button id="timerReset">Reiniciar</button>
+        <button class="primary" id="timerToggle">Start timer</button>
+        <button id="timerReset">Reset</button>
       </div>
-      <div class="timer-done-badge" id="timerDoneBadge"><span class="dot"></span>SE ACABÓ EL TIEMPO</div>
+      <div class="timer-done-badge" id="timerDoneBadge"><span class="dot"></span>TIME'S UP</div>
     </div>
   </div>
 
   <div class="done-screen" id="doneScreen">
     <div class="glyph">🍤</div>
-    <h2>Cóctel listo.</h2>
-    <p>Sirve bien frío con galletas saladas o patacones al lado. Buen provecho.</p>
-    <button class="start-btn" id="restartBtn" style="max-width:280px;">Preparar otra vez</button>
+    <h2>Cocktail's ready.</h2>
+    <p>Serve well chilled with saltine crackers or patacones on the side. Buen provecho.</p>
+    <button class="start-btn" id="restartBtn" style="max-width:280px;">Make it again</button>
   </div>
 
   <div class="cook-nav" id="cookNav">
-    <button id="prevBtn">Atrás</button>
-    <button class="next" id="nextBtn">Siguiente paso</button>
+    <button id="prevBtn">Back</button>
+    <button class="next" id="nextBtn">Next step</button>
   </div>
 </div>
 
@@ -126,56 +126,56 @@
     minServings: 2,
     maxServings: 24,
     ingredients: [
-      { name: "Camarones crudos", base: 500, unit: "g", sub: "pelados o con cáscara" },
-      { name: "Langostinos crudos", base: 250, unit: "g" },
-      { name: "Agua", base: 1, unit: "l", sub: "para el caldo" },
-      { name: "Sal", base: 1, unit: "tbsp", sub: "para el caldo, al gusto" },
-      { name: "Salsa de tomate (ketchup)", base: 1, unit: "cup" },
-      { name: "Salsa soya", base: 2, unit: "tbsp" },
-      { name: "Jugo de limón", base: 0.5, unit: "cup", sub: "≈ 4 a 5 limones" },
-      { name: "Agua de ajo", base: 0.25, unit: "cup" },
-      { name: "Mayonesa", base: 3, unit: "tbsp" },
-      { name: "Salsa picante", base: 1, unit: "tsp", sub: "al gusto" },
-      { name: "Cebolla morada, picada", base: 1, unit: "cup" },
-      { name: "Pimentón rojo, picado", base: 0.5, unit: "cup" },
-      { name: "Cilantro fresco, picado", base: 0.25, unit: "cup" },
+      { name: "Raw shrimp", base: 500, unit: "g", sub: "peeled or shell-on" },
+      { name: "Raw langostinos", base: 250, unit: "g" },
+      { name: "Water", base: 1, unit: "l", sub: "for the broth" },
+      { name: "Salt", base: 1, unit: "tbsp", sub: "for the broth, to taste" },
+      { name: "Tomato sauce (ketchup)", base: 1, unit: "cup" },
+      { name: "Soy sauce", base: 2, unit: "tbsp" },
+      { name: "Lime juice", base: 0.5, unit: "cup", sub: "≈ 4 to 5 limes" },
+      { name: "Garlic water", base: 0.25, unit: "cup" },
+      { name: "Mayonnaise", base: 3, unit: "tbsp" },
+      { name: "Hot sauce", base: 1, unit: "tsp", sub: "to taste" },
+      { name: "Red onion, chopped", base: 1, unit: "cup" },
+      { name: "Red bell pepper, chopped", base: 0.5, unit: "cup" },
+      { name: "Fresh cilantro, chopped", base: 0.25, unit: "cup" },
     ],
-    servingsNote: (scale, fmt) => `${fmt(500*scale)}g camarones, ${fmt(250*scale)}g langostinos`,
+    servingsNote: (scale, fmt) => `${fmt(500*scale)}g shrimp, ${fmt(250*scale)}g langostinos`,
     steps: [
       {
         eyebrow: "PREP",
-        title: "Preparar el agua de ajo",
-        content: "Si no la tienes lista, machaca varios dientes de <b>ajo</b> y déjalos reposar en agua de un día para otro. Si tienes prisa, usa ajo muy finamente picado en su lugar.",
+        title: "Prepare the garlic water",
+        content: "If you don't have it ready, crush a few cloves of <b>garlic</b> and let them sit in water overnight. If you're short on time, use very finely minced garlic instead.",
         timer: null
       },
       {
-        eyebrow: "CALDO",
-        title: "Hervir el caldo",
-        content: "En una olla mediana, lleva el <b>agua</b> a hervor con la <b>sal</b>.",
+        eyebrow: "BROTH",
+        title: "Bring the broth to a boil",
+        content: "In a medium pot, bring the <b>water</b> to a boil with the <b>salt</b>.",
         timer: 5*60
       },
       {
-        eyebrow: "COCINAR",
-        title: "Cocinar camarones y langostinos",
-        content: "Agrega los <b>camarones</b> y <b>langostinos</b> al agua hirviendo. Cocina solo hasta que cambien de color por completo, no los sobrecocines.",
+        eyebrow: "COOK",
+        title: "Cook the shrimp and langostinos",
+        content: "Add the <b>shrimp</b> and <b>langostinos</b> to the boiling water. Cook only until they turn fully pink, don't overcook them.",
         timer: 3*60
       },
       {
-        eyebrow: "ENFRIAR",
-        title: "Enfriar de inmediato",
-        content: "Escurre y pasa los camarones y langostinos a un recipiente con agua helada para detener la cocción. Escurre de nuevo y refrigera hasta que estén bien fríos.",
+        eyebrow: "CHILL",
+        title: "Chill immediately",
+        content: "Drain and transfer the shrimp and langostinos to a bowl of ice water to stop the cooking. Drain again and refrigerate until fully cold.",
         timer: 10*60
       },
       {
-        eyebrow: "ADEREZO",
-        title: "Preparar el aderezo",
-        content: "En un tazón, mezcla la <b>salsa de tomate</b>, <b>salsa soya</b>, <b>jugo de limón</b>, <b>agua de ajo</b>, <b>mayonesa</b>, y <b>salsa picante</b> al gusto.",
+        eyebrow: "DRESSING",
+        title: "Make the dressing",
+        content: "In a bowl, mix the <b>tomato sauce</b>, <b>soy sauce</b>, <b>lime juice</b>, <b>garlic water</b>, <b>mayonnaise</b>, and <b>hot sauce</b> to taste.",
         timer: null
       },
       {
-        eyebrow: "ARMAR",
-        title: "Combinar y servir",
-        content: "Agrega los camarones y langostinos fríos al aderezo junto con la <b>cebolla morada</b> y el <b>pimentón</b>. Mezcla bien, sirve en copas o vasos, y decora con <b>cilantro fresco</b>.",
+        eyebrow: "ASSEMBLE",
+        title: "Combine and serve",
+        content: "Add the cold shrimp and langostinos to the dressing along with the <b>red onion</b> and <b>bell pepper</b>. Mix well, serve in cups or glasses, and garnish with <b>fresh cilantro</b>.",
         timer: null
       },
     ]
