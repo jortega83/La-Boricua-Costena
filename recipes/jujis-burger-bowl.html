@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#12181a">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>Juji's Ground Beef Burger Bowl, La Boricua Costeña</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Work+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+
+<div class="app">
+  <div class="masthead">
+    <a class="place" href="../index.html">← La Boricua Costeña</a>
+    <div class="place">Americana #9</div>
+  </div>
+
+  <div class="hero">
+    <h1>Juji's Burger <em>Bowl</em></h1>
+    <p class="subtitle">All the flavor of a classic burger, no bun required. Seasoned beef, crispy roasted sweet potatoes, crunchy veggies, and a creamy tangy sauce made with Greek yogurt instead of mayo.</p>
+    <div class="credit"><span class="dot"></span>Receta de Juji</div>
+  </div>
+
+  <div class="meta-row">
+    <span>PREP <b>10 min</b></span>
+    <span>COOK <b>20 min</b></span>
+    <span>SERVES <b>4</b></span>
+  </div>
+
+  <div class="card">
+    <div class="servings-row">
+      <div class="servings-label">Servings</div>
+      <div class="stepper">
+        <button id="dec" aria-label="Decrease servings">–</button>
+        <div class="count" id="servingsCount">4</div>
+        <button id="inc" aria-label="Increase servings">+</button>
+      </div>
+    </div>
+    <div class="servings-note"><span id="servingsNoteText">1 lb lean ground beef</span></div>
+
+    <div style="height:20px"></div>
+
+    <div class="section-label rum">Ingredients</div>
+    <ul class="ingredients" id="ingredientsList"></ul>
+  </div>
+
+  <div class="card">
+    <div class="note-box rum">
+      <b>Juji's tip,</b> salt the sweet potatoes after they come out of the oven, not before. Salting first draws out moisture and makes them soggy instead of crispy. No ground beef? Ground turkey, chicken, or bison all work great here too.
+    </div>
+  </div>
+
+  <details class="meal-prep rum">
+    <summary>Meal prep &amp; storage <span class="chev">⌄</span></summary>
+    <div class="meal-prep-body">
+      <p><b>Make ahead,</b> great for meal prep. Cook the beef and roast the sweet potatoes ahead, then assemble fresh bowls through the week.</p>
+      <p><b>Store,</b> keep the beef, sweet potatoes, and sauce in separate airtight containers in the fridge for up to 4 days.</p>
+      <p><b>Keep fresh,</b> store the romaine, tomato, onion, and pickles separately so they stay crisp, add them just before eating.</p>
+      <p><b>Reheat,</b> warm the beef and sweet potatoes in the microwave, then build the bowl with the cold, fresh components.</p>
+    </div>
+  </details>
+
+  <div class="action-row">
+    <button class="start-btn rum" id="startBtn">Start cooking →</button>
+    <button class="print-btn rum" id="printBtn">Print</button>
+  </div>
+
+  <div class="print-only" id="printSteps"></div>
+
+  <footer>JUJI'S GROUND BEEF BURGER BOWL</footer>
+</div>
+
+<!-- COOK MODE -->
+<div class="cook-overlay" id="cookOverlay">
+  <div class="cook-top">
+    <button class="close-btn" id="closeBtn">✕</button>
+    <div class="step-count" id="stepCount">STEP 1 / 5</div>
+    <div style="width:38px"></div>
+  </div>
+
+  <div class="progress-track" id="progressTrack"></div>
+
+  <div class="cook-body" id="cookBody">
+    <div class="step-eyebrow" id="stepEyebrow">POTATOES</div>
+    <h2 class="step-title" id="stepTitle"></h2>
+    <p class="step-content" id="stepContent"></p>
+
+    <div class="timer-wrap" id="timerWrap" style="display:none;">
+      <div class="dial">
+        <svg width="190" height="190" viewBox="0 0 190 190">
+          <circle class="track" cx="95" cy="95" r="82"></circle>
+          <circle class="fill" id="dialFill" cx="95" cy="95" r="82"></circle>
+        </svg>
+        <div class="dial-center">
+          <div class="dial-time" id="dialTime">00:00</div>
+          <div class="dial-label" id="dialLabel">READY</div>
+        </div>
+      </div>
+      <div class="timer-controls">
+        <button class="primary" id="timerToggle">Start timer</button>
+        <button id="timerReset">Reset</button>
+      </div>
+      <div class="timer-done-badge" id="timerDoneBadge"><span class="dot"></span>TIME'S UP</div>
+    </div>
+  </div>
+
+  <div class="done-screen" id="doneScreen">
+    <div class="glyph">🥗</div>
+    <h2>Burger bowl's ready.</h2>
+    <p>Drizzle the sauce over the top or serve it on the side. Enjoy.</p>
+    <button class="start-btn rum" id="restartBtn" style="max-width:280px;">Cook it again</button>
+  </div>
+
+  <div class="cook-nav" id="cookNav">
+    <button id="prevBtn">Back</button>
+    <button class="next" id="nextBtn">Next step</button>
+  </div>
+</div>
+
+<script>
+  window.RECIPE = {
+    accent: 'rum',
+    baseServings: 4,
+    servingStep: 2,
+    minServings: 2,
+    maxServings: 12,
+    ingredients: [
+      { name: "Sweet potatoes, cut into 1 inch cubes", base: 2, unit: "" },
+      { name: "Olive oil", base: 0.5, unit: "tbsp", sub: "for the potatoes" },
+      { name: "Lean ground beef", base: 1, unit: "lb", sub: "93/7" },
+      { name: "Garlic powder", base: 0.5, unit: "tsp" },
+      { name: "Romaine lettuce, shredded or chopped", base: 2, unit: "head" },
+      { name: "Red onion, thinly sliced", base: 0.5, unit: "" },
+      { name: "Tomato, cut into chunks", base: 1, unit: "small" },
+      { name: "Dill pickle spears, sliced", base: 0.5, unit: "cup" },
+      { name: "Salt and pepper", base: 1, unit: "", sub: "to taste" },
+      { name: "Low-fat Greek yogurt", base: 0.5, unit: "cup", sub: "for the sauce" },
+      { name: "Ketchup", base: 2, unit: "tbsp", sub: "for the sauce" },
+      { name: "Pickle juice", base: 1, unit: "tbsp", sub: "for the sauce" },
+      { name: "Smoked paprika", base: 0.5, unit: "tsp", sub: "for the sauce" },
+      { name: "Garlic powder", base: 0.5, unit: "tsp", sub: "for the sauce" },
+      { name: "Onion powder", base: 0.5, unit: "tsp", sub: "for the sauce" },
+      { name: "Salt", base: 0.25, unit: "tsp", sub: "for the sauce" },
+    ],
+    servingsNote: (scale, fmt) => `${fmt(1*scale)} lb lean ground beef`,
+    steps: [
+      {
+        eyebrow: "POTATOES",
+        title: "Roast the sweet potatoes",
+        content: "Preheat the oven to 400°F. Toss the <b>sweet potato</b> cubes with the <b>olive oil</b> and spread on a baking sheet. Bake, flipping halfway through.",
+        timer: 20*60
+      },
+      {
+        eyebrow: "SEASON",
+        title: "Salt right away",
+        content: "As soon as the sweet potatoes come out of the oven, season generously with <b>salt and pepper</b>. Salting now, not before roasting, is what keeps them crispy.",
+        timer: null
+      },
+      {
+        eyebrow: "BEEF",
+        title: "Cook the beef",
+        content: "While the potatoes bake, cook the <b>ground beef</b> with the <b>garlic powder</b> in a skillet over medium heat, breaking it up as it cooks until browned and no longer pink.",
+        timer: 10*60
+      },
+      {
+        eyebrow: "SAUCE",
+        title: "Make the sauce",
+        content: "Whisk together the <b>Greek yogurt</b>, <b>ketchup</b>, <b>pickle juice</b>, <b>smoked paprika</b>, <b>garlic powder</b>, <b>onion powder</b>, and <b>salt</b> until smooth.",
+        timer: null
+      },
+      {
+        eyebrow: "ASSEMBLE",
+        title: "Build the bowl",
+        content: "Add the <b>romaine</b> to the bottom of a bowl, then top with the <b>ground beef</b>, roasted <b>sweet potatoes</b>, <b>onion</b>, <b>tomato</b>, and <b>pickles</b>. Serve the sauce on the side or drizzle over the top.",
+        timer: null
+      },
+    ]
+  };
+</script>
+<script src="../assets/site.js"></script>
+<script src="../assets/recipe-engine.js"></script>
+
+</body>
+</html>

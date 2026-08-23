@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#12181a">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>Chipotle Chicken Meal Prep, La Boricua Costeña</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Work+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+
+<div class="app">
+  <div class="masthead">
+    <a class="place" href="../index.html">← La Boricua Costeña</a>
+    <div class="place">Meal Prep #1</div>
+  </div>
+
+  <div class="hero">
+    <h1>Chipotle <em>Chicken</em> Bowl</h1>
+    <p class="subtitle">Smoky chipotle-marinated chicken over cilantro lime rice with black beans, fajita veggies, and corn salsa. Portions out into containers for the whole week.</p>
+  </div>
+
+  <div class="meta-row">
+    <span>MARINATE <b>2 hrs, up to overnight</b></span>
+    <span>ACTIVE <b>40 min</b></span>
+    <span>MAKES <b>4 bowls</b></span>
+  </div>
+
+  <div class="card">
+    <div class="servings-row">
+      <div class="servings-label">Bowls</div>
+      <div class="stepper">
+        <button id="dec" aria-label="Decrease servings">–</button>
+        <div class="count" id="servingsCount">4</div>
+        <button id="inc" aria-label="Increase servings">+</button>
+      </div>
+    </div>
+    <div class="servings-note"><span id="servingsNoteText">1.5 lbs chicken breast</span></div>
+
+    <div style="height:20px"></div>
+
+    <div class="section-label meal">Ingredients</div>
+    <ul class="ingredients" id="ingredientsList"></ul>
+  </div>
+
+  <div class="card">
+    <div class="note-box meal">
+      <b>Good to know,</b> canned chipotle peppers in adobo are the key ingredient, found in the international aisle. Save the leftover peppers and sauce in the freezer for the next batch.
+    </div>
+  </div>
+
+  <details class="meal-prep meal">
+    <summary>Meal prep &amp; storage <span class="chev">⌄</span></summary>
+    <div class="meal-prep-body">
+      <p><b>Store,</b> keep the warm components (chicken, rice, beans, corn) together in an airtight container in the fridge for up to 4 days.</p>
+      <p><b>Keep separate,</b> store fresh toppings like lettuce and any avocado separately so they don't get soggy or brown.</p>
+      <p><b>Reheat,</b> microwave the warm components until heated through, then add cold toppings fresh.</p>
+      <p><b>Freeze,</b> the cooked chicken freezes well on its own for up to 3 months.</p>
+    </div>
+  </details>
+
+  <div class="action-row">
+    <button class="start-btn meal" id="startBtn">Start cooking →</button>
+    <button class="print-btn meal" id="printBtn">Print</button>
+  </div>
+
+  <div class="print-only" id="printSteps"></div>
+
+  <footer>CHIPOTLE CHICKEN MEAL PREP</footer>
+</div>
+
+<!-- COOK MODE -->
+<div class="cook-overlay" id="cookOverlay">
+  <div class="cook-top">
+    <button class="close-btn" id="closeBtn">✕</button>
+    <div class="step-count" id="stepCount">STEP 1 / 6</div>
+    <div style="width:38px"></div>
+  </div>
+
+  <div class="progress-track" id="progressTrack"></div>
+
+  <div class="cook-body" id="cookBody">
+    <div class="step-eyebrow" id="stepEyebrow">MARINADE</div>
+    <h2 class="step-title" id="stepTitle"></h2>
+    <p class="step-content" id="stepContent"></p>
+
+    <div class="timer-wrap" id="timerWrap" style="display:none;">
+      <div class="dial">
+        <svg width="190" height="190" viewBox="0 0 190 190">
+          <circle class="track" cx="95" cy="95" r="82"></circle>
+          <circle class="fill" id="dialFill" cx="95" cy="95" r="82"></circle>
+        </svg>
+        <div class="dial-center">
+          <div class="dial-time" id="dialTime">00:00</div>
+          <div class="dial-label" id="dialLabel">READY</div>
+        </div>
+      </div>
+      <div class="timer-controls">
+        <button class="primary" id="timerToggle">Start timer</button>
+        <button id="timerReset">Reset</button>
+      </div>
+      <div class="timer-done-badge" id="timerDoneBadge"><span class="dot"></span>TIME'S UP</div>
+    </div>
+  </div>
+
+  <div class="done-screen" id="doneScreen">
+    <div class="glyph">🌯</div>
+    <h2>Bowls are ready.</h2>
+    <p>Divide everything into containers and you've got lunch for the week. Enjoy.</p>
+    <button class="start-btn meal" id="restartBtn" style="max-width:280px;">Cook it again</button>
+  </div>
+
+  <div class="cook-nav" id="cookNav">
+    <button id="prevBtn">Back</button>
+    <button class="next" id="nextBtn">Next step</button>
+  </div>
+</div>
+
+<script>
+  window.RECIPE = {
+    accent: 'meal',
+    baseServings: 4,
+    servingStep: 2,
+    minServings: 2,
+    maxServings: 12,
+    ingredients: [
+      { name: "Chicken breast", base: 1.5, unit: "lb" },
+      { name: "Chipotle peppers in adobo, minced", base: 2, unit: "", sub: "from a 7 oz can" },
+      { name: "Adobo sauce", base: 2, unit: "tbsp", sub: "from the can" },
+      { name: "Olive oil", base: 3, unit: "tbsp", sub: "for the marinade" },
+      { name: "Lime juice", base: 3, unit: "tbsp" },
+      { name: "Ground cumin", base: 1, unit: "tsp" },
+      { name: "Dried oregano", base: 1, unit: "tsp" },
+      { name: "Garlic cloves, minced", base: 2, unit: "" },
+      { name: "Salt and pepper", base: 1, unit: "", sub: "to taste" },
+      { name: "White or brown rice", base: 2, unit: "cup", sub: "uncooked, for cilantro lime rice" },
+      { name: "Cilantro, chopped", base: 0.25, unit: "cup" },
+      { name: "Black beans", base: 1, unit: "can", sub: "15 oz, rinsed and drained" },
+      { name: "Bell peppers, sliced", base: 2, unit: "", sub: "for fajita veggies" },
+      { name: "Onion, sliced", base: 1, unit: "" },
+      { name: "Corn kernels", base: 1, unit: "cup", sub: "fresh, frozen, or canned" },
+      { name: "Avocado or guacamole", base: 1, unit: "", sub: "optional topping" },
+      { name: "Shredded cheese", base: 1, unit: "cup", sub: "optional topping" },
+    ],
+    servingsNote: (scale, fmt) => `${fmt(1.5*scale)} lbs chicken breast`,
+    steps: [
+      {
+        eyebrow: "MARINADE",
+        title: "Marinate the chicken",
+        content: "Blend or whisk the <b>chipotle peppers</b>, <b>adobo sauce</b>, <b>olive oil</b>, <b>lime juice</b>, <b>cumin</b>, <b>oregano</b>, <b>garlic</b>, <b>salt</b>, and <b>pepper</b>. Coat the <b>chicken</b> and marinate.",
+        timer: 2*60*60
+      },
+      {
+        eyebrow: "RICE",
+        title: "Cook the rice",
+        content: "Cook the <b>rice</b> according to package directions. Once done, fluff with a fork and stir in the <b>cilantro</b>.",
+        timer: 18*60
+      },
+      {
+        eyebrow: "COOK",
+        title: "Cook the chicken",
+        content: "Heat a grill pan or skillet over medium-high heat. Cook the marinated chicken until charred and cooked through to 165°F internally.",
+        timer: 12*60
+      },
+      {
+        eyebrow: "REST",
+        title: "Rest and chop",
+        content: "Let the chicken rest, then chop into bite-sized pieces.",
+        timer: 5*60
+      },
+      {
+        eyebrow: "VEGGIES",
+        title: "Sauté the fajita veggies",
+        content: "In the same pan, sauté the <b>bell peppers</b> and <b>onion</b> until just tender. Warm the <b>black beans</b> and <b>corn</b> separately.",
+        timer: 6*60
+      },
+      {
+        eyebrow: "ASSEMBLE",
+        title: "Build the bowls",
+        content: "Divide the <b>cilantro lime rice</b>, <b>chicken</b>, <b>beans</b>, <b>fajita veggies</b>, and <b>corn</b> into containers. Add <b>avocado</b> and <b>cheese</b> fresh when ready to eat.",
+        timer: null
+      },
+    ]
+  };
+</script>
+<script src="../assets/site.js"></script>
+<script src="../assets/recipe-engine.js"></script>
+
+</body>
+</html>

@@ -6,7 +6,7 @@
 <meta name="theme-color" content="#12181a">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<title>Thu's White Rice, La Boricua Costeña</title>
+<title>Baked Sweet Potato, La Boricua Costeña</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Work+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
@@ -17,19 +17,18 @@
 <div class="app">
   <div class="masthead">
     <a class="place" href="../index.html">← La Boricua Costeña</a>
-    <div class="place">Arroces #4</div>
+    <div class="place">Americana #8</div>
   </div>
 
   <div class="hero">
-    <h1>Thu's <em>White Rice</em></h1>
-    <p class="subtitle">Fluffy medium-grain rice, toasted first in olive oil for a bit of nutty flavor, then steamed until tender. The everyday base for habichuelas guisadas and just about everything else.</p>
-    <div class="credit"><span class="dot"></span>Receta de Thu</div>
+    <h1>Baked <em>Sweet Potato</em></h1>
+    <p class="subtitle">Puffed up, caramelized at the edges, crispy skin. The trick is leaving them bare on the sheet, not wrapped in foil, so the skin actually crisps instead of steaming soft.</p>
   </div>
 
   <div class="meta-row">
     <span>ACTIVE <b>5 min</b></span>
-    <span>COOK <b>25 min</b></span>
-    <span>REST <b>10 min</b></span>
+    <span>ROAST <b>40 to 50 min</b></span>
+    <span>SERVES <b>4</b></span>
   </div>
 
   <div class="card">
@@ -37,11 +36,11 @@
       <div class="servings-label">Servings</div>
       <div class="stepper">
         <button id="dec" aria-label="Decrease servings">–</button>
-        <div class="count" id="servingsCount">6</div>
+        <div class="count" id="servingsCount">4</div>
         <button id="inc" aria-label="Increase servings">+</button>
       </div>
     </div>
-    <div class="servings-note"><span id="servingsNoteText">2 cups rice</span></div>
+    <div class="servings-note"><span id="servingsNoteText">4 sweet potatoes</span></div>
 
     <div style="height:20px"></div>
 
@@ -51,18 +50,17 @@
 
   <div class="card">
     <div class="note-box rum">
-      <b>Good to know,</b> medium-grain rice (Arroz Rico or Calrose) is traditional, though long-grain works fine too. If you're using a caldero, a golden crust of pegao will form on the bottom, don't fight it, that's the good part.
+      <b>Where to buy,</b> Whole Foods is a good source for consistently sized, good quality sweet potatoes. Pick ones that are similar in size so they finish roasting around the same time.
     </div>
   </div>
 
   <details class="meal-prep rum">
     <summary>Meal prep &amp; storage <span class="chev">⌄</span></summary>
     <div class="meal-prep-body">
-      <p><b>Make ahead,</b> cooks in under 30 minutes, but leftovers reheat well if you want to prep ahead.</p>
-      <p><b>Store,</b> airtight container in the fridge for 5 to 7 days.</p>
-      <p><b>Reheat,</b> add a splash of water and microwave, or warm in a covered pan on the stove.</p>
-      <p><b>Freeze,</b> freezes well for up to 3 months. Thaw overnight in the fridge, then reheat with a little water.</p>
-      <p><b>Leftover idea,</b> day-old arroz blanco is perfect for arroz mamposteao, sautéed with beans, vegetables, and a protein like ham or chorizo.</p>
+      <p><b>Make ahead,</b> bake a big batch and reheat through the week, they hold up well.</p>
+      <p><b>Store,</b> airtight container in the fridge for up to 5 days.</p>
+      <p><b>Reheat,</b> oven at 350°F until warmed through, or microwave for a quicker option.</p>
+      <p><b>Leftover flesh,</b> scoop out extra and use it in pancakes, hummus, or quesadillas, or blend it into a soup or sauce.</p>
     </div>
   </details>
 
@@ -73,21 +71,21 @@
 
   <div class="print-only" id="printSteps"></div>
 
-  <footer>THU'S WHITE RICE</footer>
+  <footer>BAKED SWEET POTATO</footer>
 </div>
 
 <!-- COOK MODE -->
 <div class="cook-overlay" id="cookOverlay">
   <div class="cook-top">
     <button class="close-btn" id="closeBtn">✕</button>
-    <div class="step-count" id="stepCount">STEP 1 / 5</div>
+    <div class="step-count" id="stepCount">STEP 1 / 4</div>
     <div style="width:38px"></div>
   </div>
 
   <div class="progress-track" id="progressTrack"></div>
 
   <div class="cook-body" id="cookBody">
-    <div class="step-eyebrow" id="stepEyebrow">RINSE</div>
+    <div class="step-eyebrow" id="stepEyebrow">PREP</div>
     <h2 class="step-title" id="stepTitle"></h2>
     <p class="step-content" id="stepContent"></p>
 
@@ -111,9 +109,9 @@
   </div>
 
   <div class="done-screen" id="doneScreen">
-    <div class="glyph">🍚</div>
-    <h2>Arroz listo.</h2>
-    <p>Fluff with a fork and serve alongside habichuelas guisadas or anything with a good sauce. Buen provecho.</p>
+    <div class="glyph">🍠</div>
+    <h2>Sweet potatoes are ready.</h2>
+    <p>Split them open, fluff the inside, and top with butter, salt, and chives, or whatever you like.</p>
     <button class="start-btn rum" id="restartBtn" style="max-width:280px;">Cook it again</button>
   </div>
 
@@ -126,47 +124,42 @@
 <script>
   window.RECIPE = {
     accent: 'rum',
-    baseServings: 6,
+    baseServings: 4,
     servingStep: 2,
-    minServings: 2,
-    maxServings: 18,
+    minServings: 1,
+    maxServings: 12,
     ingredients: [
-      { name: "Medium-grain white rice", base: 2, unit: "cup" },
-      { name: "Extra-virgin olive oil", base: 1, unit: "tbsp" },
-      { name: "Water", base: 2.5, unit: "cup" },
-      { name: "Salt", base: 0.25, unit: "tsp", sub: "plus more to taste" },
+      { name: "Sweet potatoes", base: 4, unit: "" },
+      { name: "Butter", base: 4, unit: "tbsp", sub: "for topping" },
+      { name: "Sea salt", base: 1, unit: "tsp", sub: "to taste" },
+      { name: "Chives, chopped", base: 2, unit: "tbsp", sub: "optional" },
+      { name: "Greek yogurt, guacamole, or cilantro lime dressing", base: 1, unit: "", sub: "optional toppings" },
     ],
-    servingsNote: (scale, fmt) => `${fmt(2*scale)} cups rice`,
+    servingsNote: (scale, fmt) => `${fmt(4*scale)} sweet potatoes`,
     steps: [
       {
-        eyebrow: "RINSE",
-        title: "Rinse the rice",
-        content: "Rinse the <b>rice</b> in a fine-mesh strainer under cold water, stirring occasionally, until the water runs clear.",
-        timer: 90
+        eyebrow: "PREP",
+        title: "Preheat and prep",
+        content: "Preheat the oven to 425°F and line a rimmed baking sheet with foil or parchment. Use a fork to poke several holes into each <b>sweet potato</b>.",
+        timer: null
       },
       {
-        eyebrow: "TOAST",
-        title: "Toast in the oil",
-        content: "Heat the <b>olive oil</b> in a large saucepan or caldero over medium-high heat until shimmering. Add the rice and cook, stirring frequently, until the edges of the grains turn translucent.",
-        timer: 2*60
+        eyebrow: "ROAST",
+        title: "Roast bare on the sheet",
+        content: "Place the sweet potatoes directly on the baking sheet, not wrapped in foil, and roast until puffed up and easily pierced with a fork.",
+        timer: 45*60
       },
       {
-        eyebrow: "BOIL",
-        title: "Add water and boil",
-        content: "Stir in the <b>water</b> and <b>salt</b> and bring to a boil over high heat. Reduce to medium-low and simmer uncovered until the liquid falls below the surface of the rice and small holes form.",
-        timer: 6*60
+        eyebrow: "CHECK",
+        title: "Check for doneness",
+        content: "They're done when the skin has puffed and a fork slides in easily. If they need more time, keep roasting in 5 minute increments.",
+        timer: null
       },
       {
-        eyebrow: "STEAM",
-        title: "Cover and cook",
-        content: "Reduce the heat to low, cover, and cook.",
-        timer: 17*60
-      },
-      {
-        eyebrow: "REST",
-        title: "Rest off heat",
-        content: "Remove from heat and let the rice rest covered until fully tender. Fluff with a fork and season with salt to taste.",
-        timer: 10*60
+        eyebrow: "SERVE",
+        title: "Split and top",
+        content: "Split each sweet potato open, fluff the inside with a fork, and top with <b>butter</b>, <b>salt</b>, <b>chives</b>, or your favorite toppings.",
+        timer: null
       },
     ]
   };

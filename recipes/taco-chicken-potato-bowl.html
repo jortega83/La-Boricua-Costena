@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#12181a">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>High Protein Taco Chicken Potato Bowl, La Boricua Costeña</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Work+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+
+<div class="app">
+  <div class="masthead">
+    <a class="place" href="../index.html">← La Boricua Costeña</a>
+    <div class="place">Meal Prep #4</div>
+  </div>
+
+  <div class="hero">
+    <h1>Taco Chicken <em>Potato Bowl</em></h1>
+    <p class="subtitle">Crispy taco-seasoned potatoes, seared chicken, fresh pico de gallo, and a smoky coriander lime sauce. High protein, low fuss, built for the week ahead.</p>
+  </div>
+
+  <div class="meta-row">
+    <span>ACTIVE <b>20 min</b></span>
+    <span>POTATOES <b>18 to 24 min</b></span>
+    <span>MAKES <b>5 bowls</b></span>
+  </div>
+
+  <div class="card">
+    <div class="servings-row">
+      <div class="servings-label">Bowls</div>
+      <div class="stepper">
+        <button id="dec" aria-label="Decrease servings">–</button>
+        <div class="count" id="servingsCount">5</div>
+        <button id="inc" aria-label="Increase servings">+</button>
+      </div>
+    </div>
+    <div class="servings-note"><span id="servingsNoteText">1.5 lbs chicken, 2 lbs potatoes</span></div>
+
+    <div style="height:20px"></div>
+
+    <div class="section-label meal">Ingredients</div>
+    <ul class="ingredients" id="ingredientsList"></ul>
+  </div>
+
+  <div class="card">
+    <div class="note-box meal">
+      <b>Good to know,</b> an air fryer gets the potatoes crispiest, but a 425°F oven works well too, just add a few extra minutes. Diced small and even is key for quick, uniform cooking.
+    </div>
+  </div>
+
+  <details class="meal-prep meal">
+    <summary>Meal prep &amp; storage <span class="chev">⌄</span></summary>
+    <div class="meal-prep-body">
+      <p><b>Store,</b> keep the potatoes and chicken together in airtight containers in the fridge for up to 4 days.</p>
+      <p><b>Keep separate,</b> store the pico de gallo and sauce separately, add them fresh when serving.</p>
+      <p><b>Reheat,</b> microwave the potatoes and chicken together in 1 minute bursts until hot, then top with the fresh, cold components.</p>
+      <p><b>Freeze,</b> the cooked chicken and potatoes freeze well for up to 2 months.</p>
+    </div>
+  </details>
+
+  <div class="action-row">
+    <button class="start-btn meal" id="startBtn">Start cooking →</button>
+    <button class="print-btn meal" id="printBtn">Print</button>
+  </div>
+
+  <div class="print-only" id="printSteps"></div>
+
+  <footer>HIGH PROTEIN TACO CHICKEN POTATO BOWL</footer>
+</div>
+
+<!-- COOK MODE -->
+<div class="cook-overlay" id="cookOverlay">
+  <div class="cook-top">
+    <button class="close-btn" id="closeBtn">✕</button>
+    <div class="step-count" id="stepCount">STEP 1 / 6</div>
+    <div style="width:38px"></div>
+  </div>
+
+  <div class="progress-track" id="progressTrack"></div>
+
+  <div class="cook-body" id="cookBody">
+    <div class="step-eyebrow" id="stepEyebrow">POTATOES</div>
+    <h2 class="step-title" id="stepTitle"></h2>
+    <p class="step-content" id="stepContent"></p>
+
+    <div class="timer-wrap" id="timerWrap" style="display:none;">
+      <div class="dial">
+        <svg width="190" height="190" viewBox="0 0 190 190">
+          <circle class="track" cx="95" cy="95" r="82"></circle>
+          <circle class="fill" id="dialFill" cx="95" cy="95" r="82"></circle>
+        </svg>
+        <div class="dial-center">
+          <div class="dial-time" id="dialTime">00:00</div>
+          <div class="dial-label" id="dialLabel">READY</div>
+        </div>
+      </div>
+      <div class="timer-controls">
+        <button class="primary" id="timerToggle">Start timer</button>
+        <button id="timerReset">Reset</button>
+      </div>
+      <div class="timer-done-badge" id="timerDoneBadge"><span class="dot"></span>TIME'S UP</div>
+    </div>
+  </div>
+
+  <div class="done-screen" id="doneScreen">
+    <div class="glyph">🥔</div>
+    <h2>Bowls are ready.</h2>
+    <p>Layer potatoes, chicken, and pico de gallo into containers for the week ahead. Enjoy.</p>
+    <button class="start-btn meal" id="restartBtn" style="max-width:280px;">Cook it again</button>
+  </div>
+
+  <div class="cook-nav" id="cookNav">
+    <button id="prevBtn">Back</button>
+    <button class="next" id="nextBtn">Next step</button>
+  </div>
+</div>
+
+<script>
+  window.RECIPE = {
+    accent: 'meal',
+    baseServings: 5,
+    servingStep: 1,
+    minServings: 2,
+    maxServings: 12,
+    ingredients: [
+      { name: "Yukon gold or russet potatoes, diced small", base: 2, unit: "lb" },
+      { name: "Olive oil", base: 2, unit: "tbsp", sub: "for the potatoes" },
+      { name: "Taco seasoning", base: 2, unit: "tbsp", sub: "divided, for potatoes and chicken" },
+      { name: "Chicken breast, diced", base: 1.5, unit: "lb" },
+      { name: "Olive oil", base: 1, unit: "tbsp", sub: "for searing the chicken" },
+      { name: "Roma tomatoes, diced", base: 3, unit: "", sub: "for pico de gallo" },
+      { name: "Red onion, finely diced", base: 0.5, unit: "", sub: "for pico de gallo" },
+      { name: "Cilantro, chopped", base: 0.25, unit: "cup", sub: "for pico de gallo" },
+      { name: "Lime juice", base: 2, unit: "tbsp", sub: "for pico de gallo" },
+      { name: "Greek yogurt or sour cream", base: 0.5, unit: "cup", sub: "for the sauce" },
+      { name: "Chipotle or smoked paprika", base: 1, unit: "tsp", sub: "for the sauce" },
+      { name: "Salt", base: 1, unit: "tsp", sub: "to taste" },
+    ],
+    servingsNote: (scale, fmt) => `${fmt(1.5*scale)} lbs chicken, ${fmt(2*scale)} lbs potatoes`,
+    steps: [
+      {
+        eyebrow: "POTATOES",
+        title: "Season and roast the potatoes",
+        content: "Toss the diced <b>potatoes</b> with <b>olive oil</b> and half the <b>taco seasoning</b>. Air fry at 390°F or roast at 425°F until golden and cooked through, tossing halfway.",
+        timer: 20*60
+      },
+      {
+        eyebrow: "CHICKEN",
+        title: "Season the chicken",
+        content: "Toss the diced <b>chicken</b> with the remaining <b>taco seasoning</b>.",
+        timer: null
+      },
+      {
+        eyebrow: "SEAR",
+        title: "Sear the chicken",
+        content: "Heat the <b>olive oil</b> in a pan over medium-high heat. Sear the chicken until browned and cooked through.",
+        timer: 4*60
+      },
+      {
+        eyebrow: "PICO",
+        title: "Make the pico de gallo",
+        content: "Combine the <b>tomatoes</b>, <b>red onion</b>, <b>cilantro</b>, and <b>lime juice</b> in a bowl. Season with salt to taste.",
+        timer: null
+      },
+      {
+        eyebrow: "SAUCE",
+        title: "Make the sauce",
+        content: "Mix the <b>Greek yogurt</b> with the <b>chipotle powder</b> and <b>salt</b>. Adjust to taste.",
+        timer: null
+      },
+      {
+        eyebrow: "ASSEMBLE",
+        title: "Build the bowls",
+        content: "Divide the <b>potatoes</b> and <b>chicken</b> into containers. Add the <b>pico de gallo</b> and <b>sauce</b> fresh when ready to eat.",
+        timer: null
+      },
+    ]
+  };
+</script>
+<script src="../assets/site.js"></script>
+<script src="../assets/recipe-engine.js"></script>
+
+</body>
+</html>
