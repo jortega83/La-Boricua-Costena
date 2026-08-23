@@ -78,7 +78,7 @@
 <div class="cook-overlay" id="cookOverlay">
   <div class="cook-top">
     <button class="close-btn" id="closeBtn">✕</button>
-    <div class="step-count" id="stepCount">STEP 1 / 6</div>
+    <div class="step-count" id="stepCount">STEP 1 / 8</div>
     <div style="width:38px"></div>
   </div>
 
@@ -139,6 +139,8 @@
       { name: "Garlic cloves, minced", base: 2, unit: "" },
       { name: "Salt and pepper", base: 1, unit: "", sub: "to taste" },
       { name: "White or brown rice", base: 2, unit: "cup", sub: "uncooked, for cilantro lime rice" },
+      { name: "Water", base: 3.5, unit: "cup", sub: "for cooking the rice" },
+      { name: "Salt", base: 0.5, unit: "tsp", sub: "for the rice" },
       { name: "Cilantro, chopped", base: 0.25, unit: "cup" },
       { name: "Black beans", base: 1, unit: "can", sub: "15 oz, rinsed and drained" },
       { name: "Bell peppers, sliced", base: 2, unit: "", sub: "for fajita veggies" },
@@ -158,8 +160,14 @@
       {
         eyebrow: "RICE",
         title: "Cook the rice",
-        content: "Cook the <b>rice</b> according to package directions. Once done, fluff with a fork and stir in the <b>cilantro</b>.",
+        content: "Combine the <b>rice</b>, <b>water</b>, and <b>salt</b> in a pot. Bring to a boil, then cover, reduce heat to low, and simmer without lifting the lid.",
         timer: 18*60
+      },
+      {
+        eyebrow: "RICE",
+        title: "Rest and fluff",
+        content: "Remove from heat and let the rice rest covered, then fluff with a fork and stir in the <b>cilantro</b>.",
+        timer: 5*60
       },
       {
         eyebrow: "SEAR",
@@ -176,8 +184,14 @@
       {
         eyebrow: "VEGGIES",
         title: "Sauté the fajita veggies",
-        content: "In the same pan, sauté the <b>bell peppers</b> and <b>onion</b> until just tender. Warm the <b>black beans</b> and <b>corn</b> separately.",
+        content: "In the same pan, add a drizzle of oil if needed and sauté the <b>bell peppers</b> and <b>onion</b> over medium-high heat until just tender with a little color.",
         timer: 6*60
+      },
+      {
+        eyebrow: "WARM",
+        title: "Warm the beans and corn",
+        content: "In a small pot, warm the <b>black beans</b> over medium-low heat, stirring occasionally. Warm the <b>corn</b> the same way in a separate pot, or microwave both in short bursts, stirring in between.",
+        timer: 4*60
       },
       {
         eyebrow: "ASSEMBLE",

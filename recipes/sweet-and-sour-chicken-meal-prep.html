@@ -78,7 +78,7 @@
 <div class="cook-overlay" id="cookOverlay">
   <div class="cook-top">
     <button class="close-btn" id="closeBtn">✕</button>
-    <div class="step-count" id="stepCount">STEP 1 / 6</div>
+    <div class="step-count" id="stepCount">STEP 1 / 7</div>
     <div style="width:38px"></div>
   </div>
 
@@ -142,6 +142,8 @@
       { name: "Soy sauce", base: 2, unit: "tbsp", sub: "for the sauce" },
       { name: "Garlic, minced", base: 2, unit: "clove", sub: "for the sauce" },
       { name: "White rice", base: 2, unit: "cup", sub: "uncooked, for serving" },
+      { name: "Water", base: 3.5, unit: "cup", sub: "for cooking the rice" },
+      { name: "Salt", base: 0.5, unit: "tsp", sub: "for the rice" },
     ],
     servingsNote: (scale, fmt) => `${fmt(1.5*scale)} lbs chicken breast`,
     steps: [
@@ -154,8 +156,14 @@
       {
         eyebrow: "RICE",
         title: "Cook the rice",
-        content: "Cook the <b>rice</b> according to package directions.",
+        content: "Combine the <b>rice</b>, <b>water</b>, and <b>salt</b> in a pot. Bring to a boil, then cover, reduce heat to low, and simmer without lifting the lid.",
         timer: 18*60
+      },
+      {
+        eyebrow: "RICE",
+        title: "Rest and fluff",
+        content: "Remove from heat and let the rice rest covered, then fluff with a fork before serving.",
+        timer: 5*60
       },
       {
         eyebrow: "COAT",
