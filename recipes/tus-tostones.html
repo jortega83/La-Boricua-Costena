@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#12181a">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>Tu's Tostones, La Boricua Costeña</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Work+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+
+<div class="app">
+  <div class="masthead">
+    <a class="place" href="../index.html">← La Boricua Costeña</a>
+    <div class="place">Bocadillos #1</div>
+  </div>
+
+  <div class="hero">
+    <h1>Tu's <em>Tostones</em></h1>
+    <p class="subtitle">Green plantains fried twice, smashed flat in between, for a crispy outside and tender middle. Dip them in garlic water before the second fry for extra flavor and crunch.</p>
+    <div class="credit"><span class="dot"></span>Receta de Tu</div>
+  </div>
+
+  <div class="meta-row">
+    <span>ACTIVE <b>20 min</b></span>
+    <span>FRY <b>10 min</b></span>
+    <span>SERVES <b>4</b></span>
+  </div>
+
+  <div class="card">
+    <div class="servings-row">
+      <div class="servings-label">Servings</div>
+      <div class="stepper">
+        <button id="dec" aria-label="Decrease servings">–</button>
+        <div class="count" id="servingsCount">4</div>
+        <button id="inc" aria-label="Increase servings">+</button>
+      </div>
+    </div>
+    <div class="servings-note"><span id="servingsNoteText">4 green plantains</span></div>
+
+    <div style="height:20px"></div>
+
+    <div class="section-label rum">Ingredients</div>
+    <ul class="ingredients" id="ingredientsList"></ul>
+  </div>
+
+  <div class="card">
+    <div class="note-box rum">
+      <b>Tu's tip,</b> use plantains that are truly green, not yellow, or they won't hold their shape when smashed. Serve hot with mojo, ajilimójili, or just a squeeze of lime and extra salt.
+    </div>
+  </div>
+
+  <details class="meal-prep rum">
+    <summary>Meal prep &amp; storage <span class="chev">⌄</span></summary>
+    <div class="meal-prep-body">
+      <p><b>Make ahead,</b> tostones don't hold well once fried, best made fresh right before serving.</p>
+      <p><b>First fry ahead,</b> you can do the first fry and smash a few hours ahead, then finish with the second fry just before eating.</p>
+      <p><b>Store,</b> leftovers keep in the fridge for a day or two, but they lose their crunch.</p>
+      <p><b>Reheat,</b> oven or air fryer at 375°F for a few minutes to re-crisp, avoid the microwave.</p>
+    </div>
+  </details>
+
+  <div class="action-row">
+    <button class="start-btn rum" id="startBtn">Start cooking →</button>
+    <button class="print-btn rum" id="printBtn">Print</button>
+  </div>
+
+  <div class="print-only" id="printSteps"></div>
+
+  <footer>TU'S TOSTONES</footer>
+</div>
+
+<!-- COOK MODE -->
+<div class="cook-overlay" id="cookOverlay">
+  <div class="cook-top">
+    <button class="close-btn" id="closeBtn">✕</button>
+    <div class="step-count" id="stepCount">STEP 1 / 6</div>
+    <div style="width:38px"></div>
+  </div>
+
+  <div class="progress-track" id="progressTrack"></div>
+
+  <div class="cook-body" id="cookBody">
+    <div class="step-eyebrow" id="stepEyebrow">PREP</div>
+    <h2 class="step-title" id="stepTitle"></h2>
+    <p class="step-content" id="stepContent"></p>
+
+    <div class="timer-wrap" id="timerWrap" style="display:none;">
+      <div class="dial">
+        <svg width="190" height="190" viewBox="0 0 190 190">
+          <circle class="track" cx="95" cy="95" r="82"></circle>
+          <circle class="fill" id="dialFill" cx="95" cy="95" r="82"></circle>
+        </svg>
+        <div class="dial-center">
+          <div class="dial-time" id="dialTime">00:00</div>
+          <div class="dial-label" id="dialLabel">READY</div>
+        </div>
+      </div>
+      <div class="timer-controls">
+        <button class="primary" id="timerToggle">Start timer</button>
+        <button id="timerReset">Reset</button>
+      </div>
+      <div class="timer-done-badge" id="timerDoneBadge"><span class="dot"></span>TIME'S UP</div>
+    </div>
+  </div>
+
+  <div class="done-screen" id="doneScreen">
+    <div class="glyph">🍽️</div>
+    <h2>Tostones listos.</h2>
+    <p>Salt them the moment they come out of the oil and eat them hot. Buen provecho.</p>
+    <button class="start-btn rum" id="restartBtn" style="max-width:280px;">Make another batch</button>
+  </div>
+
+  <div class="cook-nav" id="cookNav">
+    <button id="prevBtn">Back</button>
+    <button class="next" id="nextBtn">Next step</button>
+  </div>
+</div>
+
+<script>
+  window.RECIPE = {
+    accent: 'rum',
+    baseServings: 4,
+    servingStep: 2,
+    minServings: 2,
+    maxServings: 16,
+    ingredients: [
+      { name: "Green plantains", base: 4, unit: "" },
+      { name: "Vegetable oil, for frying", base: 3, unit: "cup" },
+      { name: "Salt", base: 1, unit: "tsp", sub: "to taste" },
+      { name: "Garlic cloves, crushed", base: 3, unit: "", sub: "for the garlic water, optional" },
+      { name: "Water", base: 1, unit: "cup", sub: "for the garlic water, optional" },
+    ],
+    servingsNote: (scale, fmt) => `${fmt(4*scale)} green plantains`,
+    steps: [
+      {
+        eyebrow: "PREP",
+        title: "Peel and cut",
+        content: "Peel the <b>plantains</b> and cut into 1-inch thick pieces.",
+        timer: null
+      },
+      {
+        eyebrow: "FRY · 1",
+        title: "First fry",
+        content: "Heat the <b>oil</b> to about 325°F. Fry the plantain pieces until pale golden and just starting to soften, not browned yet.",
+        timer: 4*60
+      },
+      {
+        eyebrow: "SMASH",
+        title: "Smash flat",
+        content: "Remove and let cool a couple minutes, then smash each piece flat between two pieces of plastic wrap using a plate, cup, or tostonera.",
+        timer: null
+      },
+      {
+        eyebrow: "SOAK",
+        title: "Dip in garlic water",
+        content: "If using, mix the crushed <b>garlic</b> with the <b>water</b> and briefly dip each smashed plantain in it.",
+        timer: null
+      },
+      {
+        eyebrow: "FRY · 2",
+        title: "Second fry",
+        content: "Raise the oil to about 350 to 375°F. Fry the smashed plantains again until deeply golden and crisp on both sides.",
+        timer: 3*60
+      },
+      {
+        eyebrow: "SERVE",
+        title: "Drain and salt",
+        content: "Remove and drain on paper towels. Sprinkle with <b>salt</b> immediately while hot and serve right away.",
+        timer: null
+      },
+    ]
+  };
+</script>
+<script src="../assets/site.js"></script>
+<script src="../assets/recipe-engine.js"></script>
+
+</body>
+</html>
