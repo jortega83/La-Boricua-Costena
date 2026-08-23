@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#12181a">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>Patacón Costeño con Todo, La Boricua Costeña</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Work+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+
+<div class="app">
+  <div class="masthead">
+    <a class="place" href="../index.html">← La Boricua Costeña</a>
+    <div class="place">Callejera #1</div>
+  </div>
+
+  <div class="hero">
+    <h1>Patacón Costeño <em>con Todo</em></h1>
+    <p class="subtitle">The king of Caribbean coast street food, twice-fried green plantain smashed flat and stacked into a giant sandwich with shredded beef, chicken, cheese, and all the toppings. Eaten any hour of the day in Cartagena.</p>
+  </div>
+
+  <div class="meta-row">
+    <span>BEEF <b>~2 hrs</b></span>
+    <span>ACTIVE <b>40 min</b></span>
+    <span>MAKES <b>4 patacones</b></span>
+  </div>
+
+  <div class="card">
+    <div class="servings-row">
+      <div class="servings-label">Patacones</div>
+      <div class="stepper">
+        <button id="dec" aria-label="Decrease servings">–</button>
+        <div class="count" id="servingsCount">4</div>
+        <button id="inc" aria-label="Increase servings">+</button>
+      </div>
+    </div>
+    <div class="servings-note"><span id="servingsNoteText">4 green plantains</span></div>
+
+    <div style="height:20px"></div>
+
+    <div class="section-label">Ingredients</div>
+    <ul class="ingredients" id="ingredientsList"></ul>
+  </div>
+
+  <div class="card">
+    <div class="note-box">
+      <b>Good to know,</b> soaking the smashed plantains briefly in garlic water before the second fry is a coastal trick that adds flavor and extra crunch. Queso costeño is traditional, but mozzarella or a mild white cheese works well too.
+    </div>
+  </div>
+
+  <details class="meal-prep">
+    <summary>Meal prep &amp; storage <span class="chev">⌄</span></summary>
+    <div class="meal-prep-body">
+      <p><b>Make ahead,</b> the shredded beef and chicken can be cooked a day or two ahead and refrigerated, this is the part that takes the longest.</p>
+      <p><b>Store,</b> shredded meats keep in the fridge for up to 4 days, or freeze for up to 3 months.</p>
+      <p><b>Fry fresh,</b> patacones don't hold well once fried, best assembled and eaten right away.</p>
+      <p><b>Reheat meats,</b> stovetop or microwave with a splash of water, then fry fresh plantains to assemble.</p>
+    </div>
+  </details>
+
+  <div class="action-row">
+    <button class="start-btn" id="startBtn">Start cooking →</button>
+    <button class="print-btn" id="printBtn">Print</button>
+  </div>
+
+  <div class="print-only" id="printSteps"></div>
+
+  <footer>PATACÓN COSTEÑO CON TODO</footer>
+</div>
+
+<!-- COOK MODE -->
+<div class="cook-overlay" id="cookOverlay">
+  <div class="cook-top">
+    <button class="close-btn" id="closeBtn">✕</button>
+    <div class="step-count" id="stepCount">STEP 1 / 7</div>
+    <div style="width:38px"></div>
+  </div>
+
+  <div class="progress-track" id="progressTrack"></div>
+
+  <div class="cook-body" id="cookBody">
+    <div class="step-eyebrow" id="stepEyebrow">MEAT</div>
+    <h2 class="step-title" id="stepTitle"></h2>
+    <p class="step-content" id="stepContent"></p>
+
+    <div class="timer-wrap" id="timerWrap" style="display:none;">
+      <div class="dial">
+        <svg width="190" height="190" viewBox="0 0 190 190">
+          <circle class="track" cx="95" cy="95" r="82"></circle>
+          <circle class="fill" id="dialFill" cx="95" cy="95" r="82"></circle>
+        </svg>
+        <div class="dial-center">
+          <div class="dial-time" id="dialTime">00:00</div>
+          <div class="dial-label" id="dialLabel">READY</div>
+        </div>
+      </div>
+      <div class="timer-controls">
+        <button class="primary" id="timerToggle">Start timer</button>
+        <button id="timerReset">Reset</button>
+      </div>
+      <div class="timer-done-badge" id="timerDoneBadge"><span class="dot"></span>TIME'S UP</div>
+    </div>
+  </div>
+
+  <div class="done-screen" id="doneScreen">
+    <div class="glyph">🌯</div>
+    <h2>Patacón listo.</h2>
+    <p>Secure it with a toothpick and eat it while it's hot and crisp. Buen provecho.</p>
+    <button class="start-btn" id="restartBtn" style="max-width:280px;">Make another</button>
+  </div>
+
+  <div class="cook-nav" id="cookNav">
+    <button id="prevBtn">Back</button>
+    <button class="next" id="nextBtn">Next step</button>
+  </div>
+</div>
+
+<script>
+  window.RECIPE = {
+    accent: 'coral',
+    baseServings: 4,
+    servingStep: 2,
+    minServings: 2,
+    maxServings: 12,
+    ingredients: [
+      { name: "Beef flank or brisket, for shredding", base: 1, unit: "lb", sub: "for carne desmechada" },
+      { name: "Chicken breast", base: 1, unit: "lb", sub: "for shredding" },
+      { name: "Onion, quartered", base: 1, unit: "" },
+      { name: "Carrot", base: 1, unit: "" },
+      { name: "Garlic cloves", base: 3, unit: "" },
+      { name: "Bay leaves", base: 2, unit: "" },
+      { name: "Salt and pepper", base: 1, unit: "", sub: "to taste" },
+      { name: "Green plantains", base: 4, unit: "" },
+      { name: "Vegetable oil, for frying", base: 3, unit: "cup" },
+      { name: "Garlic water", base: 0.5, unit: "cup", sub: "water with crushed garlic and salt" },
+      { name: "Shredded cheese", base: 1, unit: "cup", sub: "queso costeño or mozzarella" },
+      { name: "Mayonnaise", base: 0.25, unit: "cup" },
+      { name: "Ketchup or pink sauce", base: 0.25, unit: "cup" },
+      { name: "Lettuce, shredded", base: 1, unit: "cup" },
+      { name: "Tomato, sliced", base: 1, unit: "" },
+      { name: "Ají picante", base: 1, unit: "", sub: "to taste" },
+    ],
+    servingsNote: (scale, fmt) => `${fmt(4*scale)} green plantains`,
+    steps: [
+      {
+        eyebrow: "MEAT",
+        title: "Cook and shred the beef",
+        content: "Simmer the <b>beef</b> with the <b>onion</b>, <b>carrot</b>, <b>garlic</b>, <b>bay leaves</b>, and enough water to cover, seasoned with salt and pepper, until fully tender. Shred with two forks. Cook the <b>chicken</b> the same way if making it mixto, and shred as well.",
+        timer: 90*60
+      },
+      {
+        eyebrow: "FRY · 1",
+        title: "First fry",
+        content: "Peel the <b>plantains</b> and cut into large chunks. Fry in the <b>oil</b> over medium heat until softened and pale golden, not browned yet.",
+        timer: 5*60
+      },
+      {
+        eyebrow: "SMASH",
+        title: "Smash flat",
+        content: "Remove the plantain pieces and let cool a couple minutes, then smash each one flat between two pieces of plastic wrap using a plate or tostonera.",
+        timer: null
+      },
+      {
+        eyebrow: "SOAK",
+        title: "Dip in garlic water",
+        content: "Dip each smashed plantain briefly in the <b>garlic water</b>. This is the coastal trick for extra flavor and crunch.",
+        timer: null
+      },
+      {
+        eyebrow: "FRY · 2",
+        title: "Second fry",
+        content: "Fry the smashed plantains again in the hot oil until deeply golden and crisp on both sides.",
+        timer: 3*60
+      },
+      {
+        eyebrow: "DRAIN",
+        title: "Drain and salt",
+        content: "Remove the patacones and drain on paper towels. Sprinkle with salt while hot.",
+        timer: null
+      },
+      {
+        eyebrow: "ASSEMBLE",
+        title: "Build the sandwich",
+        content: "Set two patacones as the base. Layer <b>mayonnaise</b>, the shredded <b>beef</b>, <b>chicken</b>, <b>cheese</b>, <b>lettuce</b>, <b>tomato</b>, and <b>ají</b>. Top with <b>ketchup or pink sauce</b> and close with two more patacones on top. Secure with a toothpick.",
+        timer: null
+      },
+    ]
+  };
+</script>
+<script src="../assets/site.js"></script>
+<script src="../assets/recipe-engine.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#12181a">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>Habichuelas Guisadas, La Boricua Costeña</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Work+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+
+<div class="app">
+  <div class="masthead">
+    <a class="place" href="../index.html">← La Boricua Costeña</a>
+    <div class="place">Frijoles #1</div>
+  </div>
+
+  <div class="hero">
+    <h1>Habichuelas <em>Guisadas</em></h1>
+    <p class="subtitle">Pink beans stewed in a sofrito and tomato broth with ham, olives, and potatoes. The dish that belongs on the plate any time there's rice, quick enough for a weeknight.</p>
+  </div>
+
+  <div class="meta-row">
+    <span>ACTIVE <b>15 min</b></span>
+    <span>SIMMER <b>15 min</b></span>
+    <span>SERVES <b>6</b></span>
+  </div>
+
+  <div class="card">
+    <div class="servings-row">
+      <div class="servings-label">Servings</div>
+      <div class="stepper">
+        <button id="dec" aria-label="Decrease servings">–</button>
+        <div class="count" id="servingsCount">6</div>
+        <button id="inc" aria-label="Increase servings">+</button>
+      </div>
+    </div>
+    <div class="servings-note"><span id="servingsNoteText">1 can pink beans</span></div>
+
+    <div style="height:20px"></div>
+
+    <div class="section-label rum">Ingredients</div>
+    <ul class="ingredients" id="ingredientsList"></ul>
+  </div>
+
+  <div class="card">
+    <div class="note-box rum">
+      <b>Good to know,</b> pink beans (habichuelas rosadas) are traditional, but red kidney beans work well too. Calabaza (Caribbean pumpkin) can stand in for the potatoes if you want it extra creamy, it breaks down a bit as it cooks and thickens the broth.
+    </div>
+  </div>
+
+  <details class="meal-prep rum">
+    <summary>Meal prep &amp; storage <span class="chev">⌄</span></summary>
+    <div class="meal-prep-body">
+      <p><b>Make ahead,</b> tastes even better the next day once the flavors have had time to sit.</p>
+      <p><b>Store,</b> airtight container in the fridge for up to 5 days.</p>
+      <p><b>Reheat,</b> stovetop over low heat or microwave, with a splash of water if it's thickened up too much.</p>
+      <p><b>Freeze,</b> freezes wonderfully for up to 3 months. Thaw overnight in the fridge before reheating.</p>
+    </div>
+  </details>
+
+  <div class="action-row">
+    <button class="start-btn rum" id="startBtn">Start cooking →</button>
+    <button class="print-btn rum" id="printBtn">Print</button>
+  </div>
+
+  <div class="print-only" id="printSteps"></div>
+
+  <footer>HABICHUELAS GUISADAS</footer>
+</div>
+
+<!-- COOK MODE -->
+<div class="cook-overlay" id="cookOverlay">
+  <div class="cook-top">
+    <button class="close-btn" id="closeBtn">✕</button>
+    <div class="step-count" id="stepCount">STEP 1 / 5</div>
+    <div style="width:38px"></div>
+  </div>
+
+  <div class="progress-track" id="progressTrack"></div>
+
+  <div class="cook-body" id="cookBody">
+    <div class="step-eyebrow" id="stepEyebrow">SOFRITO</div>
+    <h2 class="step-title" id="stepTitle"></h2>
+    <p class="step-content" id="stepContent"></p>
+
+    <div class="timer-wrap" id="timerWrap" style="display:none;">
+      <div class="dial">
+        <svg width="190" height="190" viewBox="0 0 190 190">
+          <circle class="track" cx="95" cy="95" r="82"></circle>
+          <circle class="fill" id="dialFill" cx="95" cy="95" r="82"></circle>
+        </svg>
+        <div class="dial-center">
+          <div class="dial-time" id="dialTime">00:00</div>
+          <div class="dial-label" id="dialLabel">READY</div>
+        </div>
+      </div>
+      <div class="timer-controls">
+        <button class="primary" id="timerToggle">Start timer</button>
+        <button id="timerReset">Reset</button>
+      </div>
+      <div class="timer-done-badge" id="timerDoneBadge"><span class="dot"></span>TIME'S UP</div>
+    </div>
+  </div>
+
+  <div class="done-screen" id="doneScreen">
+    <div class="glyph">🫘</div>
+    <h2>Habichuelas listas.</h2>
+    <p>Spoon it hot over a bed of rice and let the sauce soak in. Buen provecho.</p>
+    <button class="start-btn rum" id="restartBtn" style="max-width:280px;">Cook it again</button>
+  </div>
+
+  <div class="cook-nav" id="cookNav">
+    <button id="prevBtn">Back</button>
+    <button class="next" id="nextBtn">Next step</button>
+  </div>
+</div>
+
+<script>
+  window.RECIPE = {
+    accent: 'rum',
+    baseServings: 6,
+    servingStep: 2,
+    minServings: 2,
+    maxServings: 18,
+    ingredients: [
+      { name: "Olive oil", base: 1, unit: "tbsp" },
+      { name: "Sofrito", base: 3, unit: "tbsp" },
+      { name: "Ham, cubed", base: 4, unit: "oz" },
+      { name: "Pimiento-stuffed olives, sliced", base: 0.25, unit: "cup" },
+      { name: "Bay leaf", base: 1, unit: "" },
+      { name: "Tomato sauce", base: 8, unit: "oz", sub: "1 can" },
+      { name: "Chicken bouillon cube", base: 1, unit: "" },
+      { name: "Sazón with culantro y achiote", base: 1, unit: "packet" },
+      { name: "Pink beans, with liquid", base: 15, unit: "oz", sub: "1 can" },
+      { name: "Water", base: 0.5, unit: "cup" },
+      { name: "Potatoes, peeled and cubed", base: 2, unit: "" },
+      { name: "Salt and pepper", base: 1, unit: "", sub: "to taste" },
+    ],
+    servingsNote: (scale, fmt) => `${fmt(1*scale)} can pink beans`,
+    steps: [
+      {
+        eyebrow: "SOFRITO",
+        title: "Cook the sofrito",
+        content: "Heat the <b>olive oil</b> in a soup pot over medium heat. Add the <b>sofrito</b> and cook until soft and fragrant.",
+        timer: 3*60
+      },
+      {
+        eyebrow: "HAM",
+        title: "Add the ham",
+        content: "Add the <b>ham</b> and cook, stirring occasionally.",
+        timer: 3*60
+      },
+      {
+        eyebrow: "SEASON",
+        title: "Build the broth",
+        content: "Stir in the <b>olives</b>, <b>bay leaf</b>, <b>tomato sauce</b>, <b>bouillon cube</b>, and <b>sazón</b> until well combined.",
+        timer: 60
+      },
+      {
+        eyebrow: "SIMMER · 1",
+        title: "Add beans and potatoes",
+        content: "Pour in the <b>beans</b> with their liquid, the <b>water</b>, and the <b>potatoes</b>. Bring to a boil.",
+        timer: 5*60
+      },
+      {
+        eyebrow: "SIMMER · 2",
+        title: "Cover and simmer",
+        content: "Reduce the heat, cover, and simmer until the potatoes are fork-tender. Season with <b>salt and pepper</b> to taste and serve over rice.",
+        timer: 15*60
+      },
+    ]
+  };
+</script>
+<script src="../assets/site.js"></script>
+<script src="../assets/recipe-engine.js"></script>
+
+</body>
+</html>

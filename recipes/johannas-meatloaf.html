@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#12181a">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>Johanna's Meatloaf, La Boricua Costeña</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Work+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+
+<div class="app">
+  <div class="masthead">
+    <a class="place" href="../index.html">← La Boricua Costeña</a>
+    <div class="place">Americana #4</div>
+  </div>
+
+  <div class="hero">
+    <h1>Johanna's <em>Meatloaf</em></h1>
+    <p class="subtitle">Beef and pork, kept moist with a milk-soaked panade, topped with a tangy ketchup glaze that caramelizes in the oven. Comfort food, done right.</p>
+    <div class="credit"><span class="dot"></span>Receta de Johanna</div>
+  </div>
+
+  <div class="meta-row">
+    <span>ACTIVE <b>20 min</b></span>
+    <span>BAKE <b>60 to 65 min</b></span>
+    <span>SERVES <b>6 to 8</b></span>
+  </div>
+
+  <div class="card">
+    <div class="servings-row">
+      <div class="servings-label">Servings</div>
+      <div class="stepper">
+        <button id="dec" aria-label="Decrease servings">–</button>
+        <div class="count" id="servingsCount">6</div>
+        <button id="inc" aria-label="Increase servings">+</button>
+      </div>
+    </div>
+    <div class="servings-note"><span id="servingsNoteText">2 lbs beef, 0.5 lb pork</span></div>
+
+    <div style="height:20px"></div>
+
+    <div class="section-label rum">Ingredients</div>
+    <ul class="ingredients" id="ingredientsList"></ul>
+  </div>
+
+  <div class="card">
+    <div class="note-box rum">
+      <b>Johanna's tip,</b> don't overmix the meat, work it just until combined or the loaf turns dense. The milk-soaked breadcrumb panade is what keeps it moist, don't skip it.
+    </div>
+  </div>
+
+  <details class="meal-prep rum">
+    <summary>Meal prep &amp; storage <span class="chev">⌄</span></summary>
+    <div class="meal-prep-body">
+      <p><b>Make ahead,</b> the loaf can be shaped and refrigerated, unbaked, up to a day ahead. Glaze right before baking.</p>
+      <p><b>Store,</b> airtight container in the fridge for up to 4 days.</p>
+      <p><b>Reheat,</b> sliced, covered, in a 300°F oven until warmed through, or microwave individual slices.</p>
+      <p><b>Freeze,</b> freezes well, cooked or uncooked, for up to 3 months. Thaw overnight in the fridge before baking or reheating.</p>
+    </div>
+  </details>
+
+  <div class="action-row">
+    <button class="start-btn rum" id="startBtn">Start cooking →</button>
+    <button class="print-btn rum" id="printBtn">Print</button>
+  </div>
+
+  <div class="print-only" id="printSteps"></div>
+
+  <footer>JOHANNA'S MEATLOAF</footer>
+</div>
+
+<!-- COOK MODE -->
+<div class="cook-overlay" id="cookOverlay">
+  <div class="cook-top">
+    <button class="close-btn" id="closeBtn">✕</button>
+    <div class="step-count" id="stepCount">STEP 1 / 7</div>
+    <div style="width:38px"></div>
+  </div>
+
+  <div class="progress-track" id="progressTrack"></div>
+
+  <div class="cook-body" id="cookBody">
+    <div class="step-eyebrow" id="stepEyebrow">PREP</div>
+    <h2 class="step-title" id="stepTitle"></h2>
+    <p class="step-content" id="stepContent"></p>
+
+    <div class="timer-wrap" id="timerWrap" style="display:none;">
+      <div class="dial">
+        <svg width="190" height="190" viewBox="0 0 190 190">
+          <circle class="track" cx="95" cy="95" r="82"></circle>
+          <circle class="fill" id="dialFill" cx="95" cy="95" r="82"></circle>
+        </svg>
+        <div class="dial-center">
+          <div class="dial-time" id="dialTime">00:00</div>
+          <div class="dial-label" id="dialLabel">READY</div>
+        </div>
+      </div>
+      <div class="timer-controls">
+        <button class="primary" id="timerToggle">Start timer</button>
+        <button id="timerReset">Reset</button>
+      </div>
+      <div class="timer-done-badge" id="timerDoneBadge"><span class="dot"></span>TIME'S UP</div>
+    </div>
+  </div>
+
+  <div class="done-screen" id="doneScreen">
+    <div class="glyph">🍞</div>
+    <h2>Meatloaf's ready.</h2>
+    <p>Let it rest before slicing so it holds together, then serve with mashed potatoes. Enjoy.</p>
+    <button class="start-btn rum" id="restartBtn" style="max-width:280px;">Cook it again</button>
+  </div>
+
+  <div class="cook-nav" id="cookNav">
+    <button id="prevBtn">Back</button>
+    <button class="next" id="nextBtn">Next step</button>
+  </div>
+</div>
+
+<script>
+  window.RECIPE = {
+    accent: 'rum',
+    baseServings: 6,
+    servingStep: 2,
+    minServings: 4,
+    maxServings: 16,
+    ingredients: [
+      { name: "Ground beef", base: 2, unit: "lb" },
+      { name: "Ground pork", base: 0.5, unit: "lb" },
+      { name: "Breadcrumbs", base: 1, unit: "cup" },
+      { name: "Milk", base: 0.5, unit: "cup" },
+      { name: "Eggs", base: 2, unit: "" },
+      { name: "Onion, finely chopped", base: 1, unit: "" },
+      { name: "Garlic cloves, minced", base: 3, unit: "" },
+      { name: "Worcestershire sauce", base: 2, unit: "tbsp" },
+      { name: "Salt", base: 1.5, unit: "tsp" },
+      { name: "Black pepper", base: 1, unit: "tsp" },
+      { name: "Fresh parsley, chopped", base: 2, unit: "tbsp" },
+      { name: "Ketchup", base: 0.75, unit: "cup", sub: "for the glaze" },
+      { name: "Brown sugar", base: 3, unit: "tbsp", sub: "for the glaze" },
+      { name: "Dijon mustard", base: 1, unit: "tbsp", sub: "for the glaze" },
+      { name: "Worcestershire sauce", base: 1, unit: "tsp", sub: "for the glaze" },
+    ],
+    servingsNote: (scale, fmt) => `${fmt(2*scale)} lbs beef, ${fmt(0.5*scale)} lb pork`,
+    steps: [
+      {
+        eyebrow: "PREP",
+        title: "Preheat and make the panade",
+        content: "Preheat the oven to 350°F. Soak the <b>breadcrumbs</b> in the <b>milk</b> in a large bowl, let sit until softened.",
+        timer: 5*60
+      },
+      {
+        eyebrow: "MIX",
+        title: "Combine the meat mixture",
+        content: "Add the <b>beef</b>, <b>pork</b>, <b>eggs</b>, <b>onion</b>, <b>garlic</b>, <b>Worcestershire sauce</b>, <b>salt</b>, <b>pepper</b>, and <b>parsley</b> to the soaked breadcrumbs. Mix with your hands just until combined, don't overwork it.",
+        timer: null
+      },
+      {
+        eyebrow: "SHAPE",
+        title: "Shape the loaf",
+        content: "Shape the mixture into a loaf on a parchment-lined baking sheet, or press into a loaf pan.",
+        timer: null
+      },
+      {
+        eyebrow: "GLAZE",
+        title: "Make the glaze",
+        content: "Whisk together the <b>ketchup</b>, <b>brown sugar</b>, <b>mustard</b>, and <b>Worcestershire sauce</b>. Brush about half over the top of the loaf.",
+        timer: null
+      },
+      {
+        eyebrow: "BAKE · 1",
+        title: "Bake",
+        content: "Bake until mostly cooked through.",
+        timer: 45*60
+      },
+      {
+        eyebrow: "BAKE · 2",
+        title: "Glaze again and finish",
+        content: "Brush on the remaining <b>glaze</b> and continue baking until the internal temperature reaches 160°F.",
+        timer: 18*60
+      },
+      {
+        eyebrow: "REST",
+        title: "Rest before slicing",
+        content: "Let the meatloaf rest before slicing, this helps it hold together.",
+        timer: 10*60
+      },
+    ]
+  };
+</script>
+<script src="../assets/site.js"></script>
+<script src="../assets/recipe-engine.js"></script>
+
+</body>
+</html>
