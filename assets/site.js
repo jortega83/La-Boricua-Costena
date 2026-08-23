@@ -1,5 +1,5 @@
-// Shared across every page: a floating back-to-top button, and
-// (on the homepage only) small recipe-count badges next to each collection.
+// Shared across every page: a floating back-to-top button that
+// appears once the user has scrolled down a bit.
 
 (function(){
   const btn = document.createElement('button');
@@ -19,16 +19,4 @@
       btn.classList.remove('show');
     }
   }, { passive: true });
-
-  // Homepage only: tag each collection heading with how many recipes it has.
-  document.querySelectorAll('.collection').forEach(col => {
-    const count = col.querySelectorAll('.recipe-card:not(.placeholder)').length;
-    const h2 = col.querySelector('.collection-head h2');
-    if (h2 && count) {
-      const span = document.createElement('span');
-      span.className = 'count-badge';
-      span.textContent = count;
-      h2.appendChild(span);
-    }
-  });
 })();
