@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Pargo Rojo Frito, La Boricua Costeña</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Work+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+
+<div class="app">
+  <div class="masthead">
+    <a class="place" href="../index.html">← La Boricua Costeña</a>
+    <div class="place">Pescado #1</div>
+  </div>
+
+  <div class="hero">
+    <h1>Pargo Rojo <em>Frito</em></h1>
+    <p class="subtitle">A whole red snapper, scored, marinated in garlic and lime, and fried until deeply golden and crisp, just like the fish stands in Cartagena. Best served with arroz con coco and patacones.</p>
+    <div class="credit coral"><span class="dot"></span>Cartagena style</div>
+  </div>
+
+  <div class="meta-row">
+    <span>MARINATE <b>30 min, up to 2 hrs</b></span>
+    <span>FRY <b>10 to 12 min</b></span>
+    <span>SERVES <b>2 to 3 per fish</b></span>
+  </div>
+
+  <div class="card">
+    <div class="servings-row">
+      <div class="servings-label">Whole fish</div>
+      <div class="stepper">
+        <button id="dec" aria-label="Decrease fish count">–</button>
+        <div class="count" id="servingsCount">1</div>
+        <button id="inc" aria-label="Increase fish count">+</button>
+      </div>
+    </div>
+    <div class="servings-note"><span id="servingsNoteText">1.5 to 2 lb snapper, serves 2 to 3</span></div>
+
+    <div style="height:20px"></div>
+
+    <div class="section-label">Ingredients</div>
+    <ul class="ingredients" id="ingredientsList"></ul>
+  </div>
+
+  <div class="card">
+    <div class="note-box">
+      <b>Serve it right,</b> plate the hot pargo alongside dark arroz con coco and freshly fried patacones. A simple sliced tomato and avocado salad with lime rounds it out. Ask if you'd like the arroz con coco or patacones recipes added too.
+    </div>
+  </div>
+
+  <details class="meal-prep">
+    <summary>Meal prep &amp; storage <span class="chev">⌄</span></summary>
+    <div class="meal-prep-body">
+      <p><b>Make ahead,</b> the fish can be scored and marinated up to a day in advance, refrigerated, then fried right before serving.</p>
+      <p><b>Best fresh,</b> fried fish is at its best right out of the oil. It doesn't hold or reheat as well as most dishes.</p>
+      <p><b>Reheat,</b> if needed, use an oven at 375°F for about 10 minutes to help re-crisp it. Avoid the microwave, it turns the skin soft.</p>
+      <p><b>Freeze,</b> don't freeze it fried. If you want to prep ahead, freeze the raw, cleaned fish and thaw fully before scoring and frying.</p>
+    </div>
+  </details>
+
+  <div class="action-row">
+    <button class="start-btn" id="startBtn">Start cooking →</button>
+    <button class="print-btn" id="printBtn">Print</button>
+  </div>
+
+  <div class="print-only" id="printSteps"></div>
+
+  <footer>PARGO ROJO FRITO · CARTAGENA STYLE</footer>
+</div>
+
+<!-- COOK MODE -->
+<div class="cook-overlay" id="cookOverlay">
+  <div class="cook-top">
+    <button class="close-btn" id="closeBtn">✕</button>
+    <div class="step-count" id="stepCount">STEP 1 / 6</div>
+    <div style="width:38px"></div>
+  </div>
+
+  <div class="progress-track" id="progressTrack"></div>
+
+  <div class="cook-body" id="cookBody">
+    <div class="step-eyebrow" id="stepEyebrow">PREP</div>
+    <h2 class="step-title" id="stepTitle"></h2>
+    <p class="step-content" id="stepContent"></p>
+
+    <div class="timer-wrap" id="timerWrap" style="display:none;">
+      <div class="dial">
+        <svg width="190" height="190" viewBox="0 0 190 190">
+          <circle class="track" cx="95" cy="95" r="82"></circle>
+          <circle class="fill" id="dialFill" cx="95" cy="95" r="82"></circle>
+        </svg>
+        <div class="dial-center">
+          <div class="dial-time" id="dialTime">00:00</div>
+          <div class="dial-label" id="dialLabel">READY</div>
+        </div>
+      </div>
+      <div class="timer-controls">
+        <button class="primary" id="timerToggle">Start timer</button>
+        <button id="timerReset">Reset</button>
+      </div>
+      <div class="timer-done-badge" id="timerDoneBadge"><span class="dot"></span>TIME'S UP</div>
+    </div>
+  </div>
+
+  <div class="done-screen" id="doneScreen">
+    <div class="glyph">🐟</div>
+    <h2>Pargo listo.</h2>
+    <p>Serve it hot with arroz con coco, patacones, and a squeeze of lime. Buen provecho.</p>
+    <button class="start-btn" id="restartBtn" style="max-width:280px;">Cook it again</button>
+  </div>
+
+  <div class="cook-nav" id="cookNav">
+    <button id="prevBtn">Back</button>
+    <button class="next" id="nextBtn">Next step</button>
+  </div>
+</div>
+
+<script>
+  window.RECIPE = {
+    accent: 'coral',
+    baseServings: 1,
+    servingStep: 1,
+    minServings: 1,
+    maxServings: 6,
+    ingredients: [
+      { name: "Whole red snapper", base: 1, unit: "", sub: "1.5 to 2 lbs, scaled, gutted, and cleaned" },
+      { name: "Lime", base: 1, unit: "large", sub: "juiced" },
+      { name: "Garlic cloves, minced or grated", base: 2, unit: "" },
+      { name: "Salt and black pepper", base: 1, unit: "", sub: "to taste" },
+      { name: "Vegetable or canola oil", base: 3, unit: "cup", sub: "enough to submerge half the fish, adjust to your pan" },
+    ],
+    servingsNote: (scale, fmt) => `${fmt(1*scale)} whole snapper, 1.5 to 2 lbs each`,
+    steps: [
+      {
+        eyebrow: "PREP",
+        title: "Prepare the fish",
+        content: "Rinse the <b>red snapper</b> and pat it completely dry with paper towels.",
+        timer: null
+      },
+      {
+        eyebrow: "SCORE",
+        title: "Score the flesh",
+        content: "Use a sharp knife to cut 3 to 4 deep diagonal slashes on each side of the fish, cutting down close to the bone. This helps the heat cook the inside and lets the seasoning penetrate.",
+        timer: null
+      },
+      {
+        eyebrow: "MARINATE",
+        title: "Season and marinate",
+        content: "Rub the <b>lime juice</b>, <b>garlic</b>, <b>salt</b>, and <b>pepper</b> all over the fish, packing it into the cavity and deep into the slashes. Marinate in the refrigerator for at least 30 minutes, up to 2 hours.",
+        timer: 30*60
+      },
+      {
+        eyebrow: "HEAT",
+        title: "Heat the oil",
+        content: "Heat about 1 to 2 inches of <b>oil</b> in a large heavy-bottomed skillet or cast-iron pan over medium-high heat, until it reaches about 350°F (175°C).",
+        timer: 5*60
+      },
+      {
+        eyebrow: "FRY",
+        title: "Fry the fish",
+        content: "Carefully lay the fish into the hot oil. Fry undisturbed for about 5 to 6 minutes until the bottom is deeply golden and crispy, then carefully flip and cook the other side for another 5 to 6 minutes.",
+        timer: 6*60
+      },
+      {
+        eyebrow: "DRAIN",
+        title: "Drain and serve",
+        content: "Remove the fish from the oil and rest it on a plate lined with paper towels to drain excess oil. Serve hot.",
+        timer: null
+      },
+    ]
+  };
+</script>
+<script src="../assets/recipe-engine.js"></script>
+
+</body>
+</html>

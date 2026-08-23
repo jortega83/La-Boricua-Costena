@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Cóctel de Camarón Estilo Cartagena, La Boricua Costeña</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Work+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+
+<div class="app">
+  <div class="masthead">
+    <a class="place" href="../index.html">← La Boricua Costeña</a>
+    <div class="place">Mariscos #1</div>
+  </div>
+
+  <div class="hero">
+    <h1>Cóctel de <em>Camarón</em></h1>
+    <p class="subtitle">Camarones y langostinos cocidos en caldo sazonado, bañados en un aderezo fresco de salsa de tomate, salsa soya, jugo de limón, y agua de ajo. Clásico de playa costeño.</p>
+    <div class="credit coral"><span class="dot"></span>Receta de Rubí Cárdenas</div>
+  </div>
+
+  <div class="meta-row">
+    <span>TIEMPO <b>~30 min</b></span>
+    <span>ACTIVO <b>20 min</b></span>
+    <span>SIRVE FRÍO</span>
+  </div>
+
+  <div class="card">
+    <div class="servings-row">
+      <div class="servings-label">Porciones</div>
+      <div class="stepper">
+        <button id="dec" aria-label="Decrease servings">–</button>
+        <div class="count" id="servingsCount">6</div>
+        <button id="inc" aria-label="Increase servings">+</button>
+      </div>
+    </div>
+    <div class="servings-note"><span id="servingsNoteText">500g camarones, 250g langostinos</span></div>
+
+    <div style="height:20px"></div>
+
+    <div class="section-label">Ingredientes</div>
+    <ul class="ingredients" id="ingredientsList"></ul>
+  </div>
+
+  <div class="card">
+    <div class="note-box">
+      <b>Sobre el agua de ajo,</b> se hace dejando varios dientes de ajo machacados en agua de un día para otro. Si tienes prisa, usa ajo muy finamente picado en su lugar. El toque de agua de ajo es lo que le da ese sabor tan característico de la costa.
+    </div>
+  </div>
+
+  <details class="meal-prep">
+    <summary>Preparación y almacenamiento <span class="chev">⌄</span></summary>
+    <div class="meal-prep-body">
+      <p><b>Con anticipación,</b> prepara el agua de ajo desde la noche anterior. Los camarones también se pueden cocinar y refrigerar un día antes.</p>
+      <p><b>Guardar,</b> refrigerado en un recipiente hermético hasta por 2 días. Mejor consumido el mismo día que se prepara el aderezo.</p>
+      <p><b>No se congela bien,</b> el camarón y los vegetales pierden textura al descongelar, así que evita congelar el cóctel ya armado.</p>
+    </div>
+  </details>
+
+  <div class="action-row">
+    <button class="start-btn" id="startBtn">Empezar a cocinar →</button>
+    <button class="print-btn" id="printBtn">Imprimir</button>
+  </div>
+
+  <div class="print-only" id="printSteps"></div>
+
+  <footer>CÓCTEL DE CAMARÓN · RECETA DE RUBÍ CÁRDENAS</footer>
+</div>
+
+<!-- COOK MODE -->
+<div class="cook-overlay" id="cookOverlay">
+  <div class="cook-top">
+    <button class="close-btn" id="closeBtn">✕</button>
+    <div class="step-count" id="stepCount">PASO 1 / 6</div>
+    <div style="width:38px"></div>
+  </div>
+
+  <div class="progress-track" id="progressTrack"></div>
+
+  <div class="cook-body" id="cookBody">
+    <div class="step-eyebrow" id="stepEyebrow">PREP</div>
+    <h2 class="step-title" id="stepTitle"></h2>
+    <p class="step-content" id="stepContent"></p>
+
+    <div class="timer-wrap" id="timerWrap" style="display:none;">
+      <div class="dial">
+        <svg width="190" height="190" viewBox="0 0 190 190">
+          <circle class="track" cx="95" cy="95" r="82"></circle>
+          <circle class="fill" id="dialFill" cx="95" cy="95" r="82"></circle>
+        </svg>
+        <div class="dial-center">
+          <div class="dial-time" id="dialTime">00:00</div>
+          <div class="dial-label" id="dialLabel">LISTO</div>
+        </div>
+      </div>
+      <div class="timer-controls">
+        <button class="primary" id="timerToggle">Iniciar temporizador</button>
+        <button id="timerReset">Reiniciar</button>
+      </div>
+      <div class="timer-done-badge" id="timerDoneBadge"><span class="dot"></span>SE ACABÓ EL TIEMPO</div>
+    </div>
+  </div>
+
+  <div class="done-screen" id="doneScreen">
+    <div class="glyph">🍤</div>
+    <h2>Cóctel listo.</h2>
+    <p>Sirve bien frío con galletas saladas o patacones al lado. Buen provecho.</p>
+    <button class="start-btn" id="restartBtn" style="max-width:280px;">Preparar otra vez</button>
+  </div>
+
+  <div class="cook-nav" id="cookNav">
+    <button id="prevBtn">Atrás</button>
+    <button class="next" id="nextBtn">Siguiente paso</button>
+  </div>
+</div>
+
+<script>
+  window.RECIPE = {
+    accent: 'coral',
+    baseServings: 6,
+    servingStep: 2,
+    minServings: 2,
+    maxServings: 24,
+    ingredients: [
+      { name: "Camarones crudos", base: 500, unit: "g", sub: "pelados o con cáscara" },
+      { name: "Langostinos crudos", base: 250, unit: "g" },
+      { name: "Agua", base: 1, unit: "l", sub: "para el caldo" },
+      { name: "Sal", base: 1, unit: "tbsp", sub: "para el caldo, al gusto" },
+      { name: "Salsa de tomate (ketchup)", base: 1, unit: "cup" },
+      { name: "Salsa soya", base: 2, unit: "tbsp" },
+      { name: "Jugo de limón", base: 0.5, unit: "cup", sub: "≈ 4 a 5 limones" },
+      { name: "Agua de ajo", base: 0.25, unit: "cup" },
+      { name: "Mayonesa", base: 3, unit: "tbsp" },
+      { name: "Salsa picante", base: 1, unit: "tsp", sub: "al gusto" },
+      { name: "Cebolla morada, picada", base: 1, unit: "cup" },
+      { name: "Pimentón rojo, picado", base: 0.5, unit: "cup" },
+      { name: "Cilantro fresco, picado", base: 0.25, unit: "cup" },
+    ],
+    servingsNote: (scale, fmt) => `${fmt(500*scale)}g camarones, ${fmt(250*scale)}g langostinos`,
+    steps: [
+      {
+        eyebrow: "PREP",
+        title: "Preparar el agua de ajo",
+        content: "Si no la tienes lista, machaca varios dientes de <b>ajo</b> y déjalos reposar en agua de un día para otro. Si tienes prisa, usa ajo muy finamente picado en su lugar.",
+        timer: null
+      },
+      {
+        eyebrow: "CALDO",
+        title: "Hervir el caldo",
+        content: "En una olla mediana, lleva el <b>agua</b> a hervor con la <b>sal</b>.",
+        timer: 5*60
+      },
+      {
+        eyebrow: "COCINAR",
+        title: "Cocinar camarones y langostinos",
+        content: "Agrega los <b>camarones</b> y <b>langostinos</b> al agua hirviendo. Cocina solo hasta que cambien de color por completo, no los sobrecocines.",
+        timer: 3*60
+      },
+      {
+        eyebrow: "ENFRIAR",
+        title: "Enfriar de inmediato",
+        content: "Escurre y pasa los camarones y langostinos a un recipiente con agua helada para detener la cocción. Escurre de nuevo y refrigera hasta que estén bien fríos.",
+        timer: 10*60
+      },
+      {
+        eyebrow: "ADEREZO",
+        title: "Preparar el aderezo",
+        content: "En un tazón, mezcla la <b>salsa de tomate</b>, <b>salsa soya</b>, <b>jugo de limón</b>, <b>agua de ajo</b>, <b>mayonesa</b>, y <b>salsa picante</b> al gusto.",
+        timer: null
+      },
+      {
+        eyebrow: "ARMAR",
+        title: "Combinar y servir",
+        content: "Agrega los camarones y langostinos fríos al aderezo junto con la <b>cebolla morada</b> y el <b>pimentón</b>. Mezcla bien, sirve en copas o vasos, y decora con <b>cilantro fresco</b>.",
+        timer: null
+      },
+    ]
+  };
+</script>
+<script src="../assets/recipe-engine.js"></script>
+
+</body>
+</html>
