@@ -16,6 +16,10 @@
   --rum-deep: #a97c34;
   --rose: #c85c6b;
 
+  /* Meal Prep accent */
+  --meal: #4fa3c9;
+  --meal-deep: #3a7fa0;
+
   --radius: 18px;
 }
 
@@ -172,6 +176,7 @@ body::before{
   margin: 0 0 12px;
 }
 .section-label.rum{ color: var(--rum); }
+.section-label.meal{ color: var(--meal); }
 
 .meta-row{
   display: flex;
@@ -221,6 +226,7 @@ footer{
 }
 .collection-head .flag.co{ color: var(--coral); border-color: rgba(226,112,58,0.35); }
 .collection-head .flag.pr{ color: var(--rum); border-color: rgba(212,162,76,0.35); }
+.collection-head .flag.meal{ color: var(--meal); border-color: rgba(79,163,201,0.35); }
 .collection-head .flag.us{ color: var(--teal); border-color: rgba(79,163,154,0.35); }
 
 .recipe-card{
@@ -238,6 +244,7 @@ footer{
 }
 .recipe-card:hover{ border-color: var(--coral); transform: translateY(-1px); box-shadow: 0 6px 18px rgba(0,0,0,0.32); }
 .recipe-card.pr:hover{ border-color: var(--rum); }
+.recipe-card.meal:hover{ border-color: var(--meal); }
 .recipe-card.us:hover{ border-color: var(--teal); }
 .recipe-card .rc-text h3{
   font-family: 'Fraunces', serif;
@@ -347,6 +354,8 @@ footer{
 .note-box b{ color: var(--teal); }
 .note-box.rum{ background: rgba(212,162,76,0.08); border-color: rgba(212,162,76,0.28); }
 .note-box.rum b{ color: var(--rum); }
+.note-box.meal{ background: rgba(79,163,201,0.08); border-color: rgba(79,163,201,0.28); }
+.note-box.meal b{ color: var(--meal); }
 
 .start-btn{
   width: 100%;
@@ -365,6 +374,7 @@ footer{
 }
 .start-btn:hover{ background: var(--coral); color: var(--cream); }
 .start-btn.rum:hover{ background: var(--rum); color: var(--bg); }
+.start-btn.meal:hover{ background: var(--meal); color: var(--bg); }
 .start-btn:active{ transform: scale(0.98); }
 
 /* ---------- Action row: Start cooking + Print ---------- */
@@ -390,6 +400,7 @@ footer{
 }
 .print-btn:hover{ border-color: var(--coral); color: var(--coral); }
 .print-btn.rum:hover{ border-color: var(--rum); color: var(--rum); }
+.print-btn.meal:hover{ border-color: var(--meal); color: var(--meal); }
 
 /* ---------- Meal prep (details/summary, no JS needed) ---------- */
 .meal-prep{
@@ -413,6 +424,7 @@ footer{
   color: var(--teal);
 }
 .meal-prep.rum summary{ color: var(--rum); }
+.meal-prep.meal summary{ color: var(--meal); }
 .meal-prep summary::-webkit-details-marker{ display: none; }
 .meal-prep summary .chev{
   font-family: 'JetBrains Mono', monospace;
@@ -536,6 +548,8 @@ footer{
 .progress-track .seg.current{ background: var(--coral); }
 .progress-track.rum .seg.done{ background: var(--rum-deep); }
 .progress-track.rum .seg.current{ background: var(--rum); }
+.progress-track.meal .seg.done{ background: var(--meal-deep); }
+.progress-track.meal .seg.current{ background: var(--meal); }
 
 .cook-body{
   flex: 1;
@@ -556,6 +570,7 @@ footer{
   margin-bottom: 10px;
 }
 .step-eyebrow.rum{ color: var(--rum); }
+.step-eyebrow.meal{ color: var(--meal); }
 .step-title{
   font-family: 'Fraunces', serif;
   font-weight: 600;
@@ -592,6 +607,7 @@ footer{
   transition: stroke-dashoffset 1s linear;
 }
 .dial .fill.rum{ stroke: var(--rum); }
+.dial .fill.meal{ stroke: var(--meal); }
 .dial-center{
   position: absolute;
   inset: 0;
@@ -638,6 +654,7 @@ footer{
   font-weight: 700;
 }
 .timer-controls button.primary.rum{ background: var(--rum); border-color: var(--rum); }
+.timer-controls button.primary.meal{ background: var(--meal); border-color: var(--meal); }
 .timer-done-badge{
   display: none;
   align-items:center; gap:6px;
@@ -677,6 +694,7 @@ footer{
 }
 .cook-nav button.next:hover{ background: var(--coral); border-color: var(--coral); color: var(--cream);}
 .cook-nav button.next.rum:hover{ background: var(--rum); border-color: var(--rum); }
+.cook-nav button.next.meal:hover{ background: var(--meal); border-color: var(--meal); }
 .cook-nav button:disabled{ opacity: 0.35; cursor: default; }
 
 .done-screen{

@@ -5,7 +5,7 @@
   const RECIPE = window.RECIPE;
   if(!RECIPE) return;
 
-  const accentClass = RECIPE.accent === 'rum' ? 'rum' : '';
+  const accentClass = (RECIPE.accent && RECIPE.accent !== 'coral') ? RECIPE.accent : '';
 
   function fmtAmount(n){
     const whole = Math.floor(n);
