@@ -185,6 +185,7 @@ footer{
 }
 .collection-head .flag.co{ color: var(--coral); border-color: rgba(226,112,58,0.35); }
 .collection-head .flag.pr{ color: var(--rum); border-color: rgba(212,162,76,0.35); }
+.collection-head .flag.us{ color: var(--teal); border-color: rgba(79,163,154,0.35); }
 
 .recipe-card{
   display: flex;
@@ -200,6 +201,7 @@ footer{
 }
 .recipe-card:hover{ border-color: var(--coral); transform: translateY(-1px); }
 .recipe-card.pr:hover{ border-color: var(--rum); }
+.recipe-card.us:hover{ border-color: var(--teal); }
 .recipe-card .rc-text h3{
   font-family: 'Fraunces', serif;
   font-weight: 600;
