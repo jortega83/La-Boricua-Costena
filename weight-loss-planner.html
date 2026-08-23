@@ -129,6 +129,65 @@
     margin-top: 14px;
   }
   .floor-warning.show{ display: block; }
+
+  .plan-day{
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--line);
+    font-size: 14px;
+  }
+  .plan-day:last-child{ border-bottom: none; }
+  .plan-day .day{
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--meal);
+    min-width: 68px;
+  }
+  .plan-day .activity{ color: var(--cream); flex: 1; text-align: right; }
+
+  .meal-slot{ padding: 14px 0; border-bottom: 1px solid var(--line); }
+  .meal-slot:last-child{ border-bottom: none; }
+  .meal-slot .meal-head{
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 6px;
+  }
+  .meal-slot .meal-name{
+    font-family: 'Fraunces', serif;
+    font-weight: 600;
+    font-size: 16px;
+  }
+  .meal-slot .meal-macros{
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11.5px;
+    color: var(--cream-dim);
+  }
+  .meal-slot .meal-idea{ font-size: 13.5px; color: var(--cream-dim); line-height: 1.5; }
+  .meal-slot .meal-links{ display: flex; gap: 8px; flex-wrap: wrap; margin-top: 4px; }
+  .meal-slot .meal-links a{
+    font-size: 13px;
+    color: var(--meal);
+    border: 1px solid rgba(79,163,201,0.35);
+    border-radius: 999px;
+    padding: 5px 12px;
+  }
+  .meal-slot .meal-links a:hover{ border-color: var(--meal); background: rgba(79,163,201,0.08); }
+
+  .no-print{}
+  @media print{
+    .no-print{ display: none !important; }
+    body{ background: #fff; color: #111; }
+    .app{ max-width: 100%; padding: 0 12px; }
+    .card{ background: #fff; border-color: #ccc; break-inside: avoid; }
+    .plan-day .activity, .meal-slot .meal-idea{ color: #333; }
+    .macro-box{ background: #f2f2f2; }
+    .meal-slot .meal-links a{ color: #333; border-color: #999; }
+  }
 </style>
 </head>
 <body>
@@ -144,7 +203,7 @@
     <p class="subtitle">Steady, even fat loss, not a crash diet. This works out a calorie target and protein goal built to protect your muscle while you lose fat, which is what actually prevents loose or hanging skin, not the speed of the scale.</p>
   </div>
 
-  <div class="card">
+  <div class="card no-print">
     <div class="section-label meal">Your info</div>
 
     <div style="height:14px"></div>
@@ -256,6 +315,21 @@
         <b>Keep it sustainable,</b> this target is capped at a moderate deficit on purpose. Losing faster than about 1% of your body weight per week raises the risk of muscle loss, which is the real cause of a soft or hanging look after weight loss, along with fatigue and it being harder to stick with long term.
       </div>
     </div>
+
+    <div class="card">
+      <div class="section-label meal">Sample daily meal plan</div>
+      <div id="mealPlanList"></div>
+    </div>
+
+    <div class="card">
+      <div class="section-label meal">Weekly exercise plan</div>
+      <div id="exercisePlanList"></div>
+      <div class="note-box meal" style="margin-top:14px;">
+        <b>Before you start,</b> check with a doctor before beginning a new exercise program, especially if you have any existing health conditions. Start at a level that feels manageable and build up gradually.
+      </div>
+    </div>
+
+    <button class="calc-btn no-print" id="printPlanBtn">Print my plan</button>
 
     <a class="recipe-card meal" href="index.html#meal-prep" style="margin-top:4px;">
       <div class="rc-text">
@@ -381,10 +455,148 @@
     document.getElementById('carbsG').textContent = carbG + 'g';
     document.getElementById('fatG').textContent = fatG + 'g';
 
+    renderMealPlan(target, proteinG);
+    renderExercisePlan(activityMult, age);
+
     document.getElementById('floorWarning').classList.toggle('show', floorHit);
     document.getElementById('results').classList.add('show');
     document.getElementById('results').scrollIntoView({ behavior: 'smooth', block: 'start' });
   });
+
+  function renderMealPlan(target, proteinG) {
+    const meals = [
+      {
+        name: 'Breakfast', pct: 0.25,
+        ideas: [
+          'Two eggs scrambled with spinach, whole grain toast, and half an avocado',
+          'Greek yogurt with berries, a drizzle of honey, and a scoop of protein powder'
+        ]
+      },
+      {
+        name: 'Lunch', pct: 0.30,
+        recipes: [
+          { name: 'Chipotle Chicken Bowl', href: 'recipes/chipotle-chicken-meal-prep.html' },
+          { name: 'Greek Chicken Bowl', href: 'recipes/greek-chicken-bowl-meal-prep.html' },
+          { name: 'Curry Chicken Salad', href: 'recipes/curry-chicken-salad.html' }
+        ]
+      },
+      {
+        name: 'Dinner', pct: 0.30,
+        recipes: [
+          { name: 'Teriyaki Chicken Bowl', href: 'recipes/teriyaki-chicken-bowl-meal-prep.html' },
+          { name: 'Mediterranean Chicken Bowl', href: 'recipes/mediterranean-chicken-bowl-meal-prep.html' },
+          { name: "Tu's Grilled Chicken", href: 'recipes/tus-grilled-chicken.html' }
+        ]
+      },
+      {
+        name: 'Snack', pct: 0.15,
+        ideas: [
+          'Apple slices with a tablespoon of peanut butter',
+          'A protein shake or a small handful of almonds'
+        ]
+      }
+    ];
+
+    const container = document.getElementById('mealPlanList');
+    container.innerHTML = '';
+    meals.forEach(meal => {
+      const kcal = Math.round(target * meal.pct);
+      const protein = Math.round(proteinG * meal.pct);
+      const slot = document.createElement('div');
+      slot.className = 'meal-slot';
+
+      let bodyHtml = '';
+      if (meal.recipes) {
+        const links = meal.recipes.map(r => `<a href="${r.href}">${r.name}</a>`).join('');
+        bodyHtml = `<div class="meal-idea">Pick one, and use the servings stepper on the recipe to size the portion to fit.</div>
+                     <div class="meal-links">${links}</div>`;
+      } else {
+        bodyHtml = `<div class="meal-idea">${meal.ideas.join(', or ')}.</div>`;
+      }
+
+      slot.innerHTML = `
+        <div class="meal-head">
+          <span class="meal-name">${meal.name}</span>
+          <span class="meal-macros">~${kcal} kcal · ${protein}g protein</span>
+        </div>
+        ${bodyHtml}
+      `;
+      container.appendChild(slot);
+    });
+  }
+
+  function renderExercisePlan(activityMult, age) {
+    let plan;
+    if (activityMult <= 1.2) {
+      plan = [
+        ['Mon', 'Full body strength, beginner (30 min)'],
+        ['Tue', 'Walk, 20 to 30 min'],
+        ['Wed', 'Rest'],
+        ['Thu', 'Full body strength, beginner (30 min)'],
+        ['Fri', 'Walk, 20 to 30 min'],
+        ['Sat', 'Light activity of your choice'],
+        ['Sun', 'Rest'],
+      ];
+    } else if (activityMult <= 1.375) {
+      plan = [
+        ['Mon', 'Full body strength (40 min)'],
+        ['Tue', 'Brisk walk or light cardio (30 min)'],
+        ['Wed', 'Full body strength (40 min)'],
+        ['Thu', 'Rest or gentle stretching'],
+        ['Fri', 'Full body strength (40 min)'],
+        ['Sat', 'Cardio of your choice (30 min)'],
+        ['Sun', 'Rest'],
+      ];
+    } else if (activityMult <= 1.55) {
+      plan = [
+        ['Mon', 'Upper body strength (45 min)'],
+        ['Tue', 'Cardio, moderate intensity (30 min)'],
+        ['Wed', 'Lower body strength (45 min)'],
+        ['Thu', 'Active recovery, walk or stretch'],
+        ['Fri', 'Full body strength (45 min)'],
+        ['Sat', 'Cardio of your choice (30 to 45 min)'],
+        ['Sun', 'Rest'],
+      ];
+    } else if (activityMult <= 1.725) {
+      plan = [
+        ['Mon', 'Upper body strength (45 min)'],
+        ['Tue', 'Cardio, moderate to high intensity (35 min)'],
+        ['Wed', 'Lower body strength (45 min)'],
+        ['Thu', 'Cardio or conditioning (30 min)'],
+        ['Fri', 'Full body strength (45 min)'],
+        ['Sat', 'Cardio of your choice (35 min)'],
+        ['Sun', 'Active recovery or rest'],
+      ];
+    } else {
+      plan = [
+        ['Mon', 'Upper body strength (50 min)'],
+        ['Tue', 'High intensity cardio (35 min)'],
+        ['Wed', 'Lower body strength (50 min)'],
+        ['Thu', 'Cardio or conditioning (35 min)'],
+        ['Fri', 'Full body strength (50 min)'],
+        ['Sat', 'Cardio or sport of your choice (40 min)'],
+        ['Sun', 'Active recovery or rest'],
+      ];
+    }
+
+    const container = document.getElementById('exercisePlanList');
+    container.innerHTML = '';
+    plan.forEach(([day, activity]) => {
+      const row = document.createElement('div');
+      row.className = 'plan-day';
+      row.innerHTML = `<span class="day">${day}</span><span class="activity">${activity}</span>`;
+      container.appendChild(row);
+    });
+
+    if (age >= 50) {
+      const note = document.createElement('div');
+      note.className = 'plan-day';
+      note.innerHTML = `<span class="day"></span><span class="activity" style="text-align:left; color:var(--cream-dim); font-size:12.5px;">Favor low-impact cardio like walking, cycling, or swimming, and prioritize joint-friendly strength movements.</span>`;
+      container.appendChild(note);
+    }
+  }
+
+  document.getElementById('printPlanBtn').addEventListener('click', () => window.print());
 })();
 </script>
 
