@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-<title>Coquito — La Boricua Costeña</title>
+<title>Coquito, La Boricua Costeña</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Work+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
@@ -19,7 +19,7 @@
 
   <div class="hero">
     <h1>Co<em>quito</em></h1>
-    <p class="subtitle">Puerto Rico's Christmas eggnog — no eggs, all coconut and rum. Blend it, chill it, and let it round out overnight. Serve cold with a cinnamon stick.</p>
+    <p class="subtitle">Puerto Rico's Christmas eggnog, no eggs, all coconut and rum. Blend it, chill it, and let it round out overnight. Serve cold with a cinnamon stick.</p>
     <div class="credit"><span class="dot"></span>Receta de Johanna</div>
   </div>
 
@@ -48,11 +48,26 @@
 
   <div class="card">
     <div class="note-box rum">
-      <b>Johanna's tip —</b> taste before bottling and adjust the rum to your crowd. It always tastes a little stronger once it's had a few hours to chill and settle, so go easy at first.
+      <b>Johanna's tip,</b> taste before bottling and adjust the rum to your crowd. It always tastes a little stronger once it's had a few hours to chill and settle, so go easy at first.
     </div>
   </div>
 
-  <button class="start-btn rum" id="startBtn">Start cooking →</button>
+  <details class="meal-prep rum">
+    <summary>Meal prep &amp; storage <span class="chev">⌄</span></summary>
+    <div class="meal-prep-body">
+      <p><b>Make ahead,</b> this is meant to be made ahead. It tastes best after resting at least a few hours, ideally overnight.</p>
+      <p><b>Store,</b> keep refrigerated in sealed bottles for up to 2 weeks.</p>
+      <p><b>Shake before serving,</b> it separates a little in the fridge, that's normal.</p>
+      <p><b>Freeze,</b> not recommended, the dairy can separate and change texture once thawed.</p>
+    </div>
+  </details>
+
+  <div class="action-row">
+    <button class="start-btn rum" id="startBtn">Start cooking →</button>
+    <button class="print-btn rum" id="printBtn">Print</button>
+  </div>
+
+  <div class="print-only" id="printSteps"></div>
 
   <footer>COQUITO · RECETA DE JOHANNA</footer>
 </div>
@@ -94,7 +109,7 @@
   <div class="done-screen" id="doneScreen">
     <div class="glyph">🥃</div>
     <h2>Coquito listo.</h2>
-    <p>Bottle it, keep it cold, and give it a shake before pouring — it separates a little in the fridge. Buen provecho.</p>
+    <p>Bottle it, keep it cold, and give it a shake before pouring, it separates a little in the fridge. Buen provecho.</p>
     <button class="start-btn rum" id="restartBtn" style="max-width:280px;">Make another batch</button>
   </div>
 
@@ -151,7 +166,7 @@
       {
         eyebrow: "CHILL",
         title: "Chill before serving",
-        content: "Refrigerate for at least <b>4 hours</b> — overnight is better. It thickens and the flavors round out as it sits. Shake before serving and garnish with a cinnamon stick.",
+        content: "Refrigerate for at least <b>4 hours</b>, overnight is better. It thickens and the flavors round out as it sits. Shake before serving and garnish with a cinnamon stick.",
         timer: 4*60*60
       },
     ]

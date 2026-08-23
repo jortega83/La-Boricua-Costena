@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Arroz con Gandules, La Boricua Costeña</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Work+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+
+<div class="app">
+  <div class="masthead">
+    <a class="place" href="../index.html">← La Boricua Costeña</a>
+    <div class="place">Arroz #2</div>
+  </div>
+
+  <div class="hero">
+    <h1>Arroz con <em>Gandules</em></h1>
+    <p class="subtitle">Puerto Rico's national dish, rice and pigeon peas built on sofrito, sazón, and alcaparrado, finished with that coveted crispy pegao on the bottom.</p>
+    <div class="credit"><span class="dot"></span>Adapted from Kitchen Gidget</div>
+  </div>
+
+  <div class="meta-row">
+    <span>TIME <b>~45 min</b></span>
+    <span>ACTIVE <b>15 min</b></span>
+    <span>GRAIN <b>medium or long</b></span>
+  </div>
+
+  <div class="card">
+    <div class="servings-row">
+      <div class="servings-label">Servings</div>
+      <div class="stepper">
+        <button id="dec" aria-label="Decrease servings">–</button>
+        <div class="count" id="servingsCount">8</div>
+        <button id="inc" aria-label="Increase servings">+</button>
+      </div>
+    </div>
+    <div class="servings-note"><span id="servingsNoteText">3 cups rice</span></div>
+
+    <div style="height:20px"></div>
+
+    <div class="section-label rum">Ingredients</div>
+    <ul class="ingredients" id="ingredientsList"></ul>
+  </div>
+
+  <div class="card">
+    <div class="note-box rum">
+      <b>Good to know,</b> alcaparrado is a jarred mix of olives, capers, and pimentos found in the Latin aisle; if you can't find it, use sliced pimiento-stuffed manzanilla olives instead. Ham flavoring/bouillon is optional, leave it out for a vegetarian version.
+    </div>
+  </div>
+
+  <details class="meal-prep rum">
+    <summary>Meal prep &amp; storage <span class="chev">⌄</span></summary>
+    <div class="meal-prep-body">
+      <p><b>Make ahead,</b> great for meal prep. Cook a full batch and portion it out for the week.</p>
+      <p><b>Store,</b> airtight container in the fridge for up to 4 days.</p>
+      <p><b>Reheat,</b> stovetop or microwave with a splash of water to bring back the moisture.</p>
+      <p><b>Freeze,</b> freezes well for up to 3 months. Thaw overnight in the fridge, then reheat with a little extra water.</p>
+    </div>
+  </details>
+
+  <div class="action-row">
+    <button class="start-btn rum" id="startBtn">Start cooking →</button>
+    <button class="print-btn rum" id="printBtn">Print</button>
+  </div>
+
+  <div class="print-only" id="printSteps"></div>
+
+  <footer>ARROZ CON GANDULES · ADAPTED FROM KITCHEN GIDGET</footer>
+</div>
+
+<!-- COOK MODE -->
+<div class="cook-overlay" id="cookOverlay">
+  <div class="cook-top">
+    <button class="close-btn" id="closeBtn">✕</button>
+    <div class="step-count" id="stepCount">STEP 1 / 7</div>
+    <div style="width:38px"></div>
+  </div>
+
+  <div class="progress-track" id="progressTrack"></div>
+
+  <div class="cook-body" id="cookBody">
+    <div class="step-eyebrow" id="stepEyebrow">PREP</div>
+    <h2 class="step-title" id="stepTitle"></h2>
+    <p class="step-content" id="stepContent"></p>
+
+    <div class="timer-wrap" id="timerWrap" style="display:none;">
+      <div class="dial">
+        <svg width="190" height="190" viewBox="0 0 190 190">
+          <circle class="track" cx="95" cy="95" r="82"></circle>
+          <circle class="fill" id="dialFill" cx="95" cy="95" r="82"></circle>
+        </svg>
+        <div class="dial-center">
+          <div class="dial-time" id="dialTime">00:00</div>
+          <div class="dial-label" id="dialLabel">READY</div>
+        </div>
+      </div>
+      <div class="timer-controls">
+        <button class="primary" id="timerToggle">Start timer</button>
+        <button id="timerReset">Reset</button>
+      </div>
+      <div class="timer-done-badge" id="timerDoneBadge"><span class="dot"></span>TIME'S UP</div>
+    </div>
+  </div>
+
+  <div class="done-screen" id="doneScreen">
+    <div class="glyph">🍚</div>
+    <h2>Arroz listo.</h2>
+    <p>Fluff it up, don't fight over the pegao too much, and serve with pernil if you've got it. Buen provecho.</p>
+    <button class="start-btn rum" id="restartBtn" style="max-width:280px;">Cook it again</button>
+  </div>
+
+  <div class="cook-nav" id="cookNav">
+    <button id="prevBtn">Back</button>
+    <button class="next" id="nextBtn">Next step</button>
+  </div>
+</div>
+
+<script>
+  window.RECIPE = {
+    accent: 'rum',
+    baseServings: 8,
+    servingStep: 2,
+    minServings: 2,
+    maxServings: 32,
+    ingredients: [
+      { name: "Medium or long grain white rice", base: 3, unit: "cup", sub: "rinsed" },
+      { name: "Vegetable oil", base: 3, unit: "tbsp" },
+      { name: "Sofrito", base: 2, unit: "tbsp", sub: "heaping" },
+      { name: "Tomato sauce", base: 0.5, unit: "cup", sub: "≈ 4 oz" },
+      { name: "Gandules (pigeon peas)", base: 1.75, unit: "cup", sub: "1 can, 15 oz, partially drained" },
+      { name: "Alcaparrado", base: 2, unit: "tbsp", sub: "heaping, or sliced manzanilla olives" },
+      { name: "Sazón with achiote", base: 1, unit: "packet" },
+      { name: "Ham flavoring/bouillon", base: 0.5, unit: "packet", sub: "optional" },
+      { name: "Adobo seasoning", base: 1, unit: "tsp" },
+      { name: "Garlic powder", base: 0.25, unit: "tsp" },
+      { name: "Ground cumin", base: 0.25, unit: "tsp" },
+      { name: "Ground oregano", base: 0.125, unit: "tsp" },
+      { name: "Salt and pepper", base: 2, unit: "tsp", sub: "salt, to taste, start here" },
+      { name: "Hot water", base: 5, unit: "cup" },
+    ],
+    servingsNote: (scale, fmt) => `${fmt(3*scale)} cups rice`,
+    steps: [
+      {
+        eyebrow: "PREP",
+        title: "Rinse the rice",
+        content: "Rinse the <b>rice</b> in a fine-mesh strainer until the water runs mostly clear. Drain and set aside.",
+        timer: null
+      },
+      {
+        eyebrow: "SOFRITO",
+        title: "Sauté the sofrito",
+        content: "Heat the <b>oil</b> in a large caldero or pot over medium-high heat. Add the <b>sofrito</b> and cook, stirring, until fragrant.",
+        timer: 120
+      },
+      {
+        eyebrow: "BASE",
+        title: "Add tomato sauce",
+        content: "Stir in the <b>tomato sauce</b> and let it simmer with the sofrito for a couple minutes.",
+        timer: 120
+      },
+      {
+        eyebrow: "SEASON",
+        title: "Add gandules and seasonings",
+        content: "Stir in the <b>gandules</b>, <b>alcaparrado</b>, <b>sazón</b>, <b>ham flavoring</b>, <b>adobo</b>, <b>garlic powder</b>, <b>cumin</b>, <b>oregano</b>, and <b>salt</b>. Cook for a couple minutes so everything melds.",
+        timer: 150
+      },
+      {
+        eyebrow: "BOIL",
+        title: "Add water and rice",
+        content: "Pour in the <b>hot water</b>, bring to a boil, then stir in the <b>rice</b>. Boil uncovered until the water level drops below the surface of the rice.",
+        timer: 300
+      },
+      {
+        eyebrow: "STEAM",
+        title: "Cover and cook on low",
+        content: "Reduce heat to low, cover tightly, and let it cook undisturbed until the rice is tender and the gandules and olives rise to the top.",
+        timer: 25*60
+      },
+      {
+        eyebrow: "REST",
+        title: "Rest, then fluff",
+        content: "Remove from heat and let it <b>rest covered</b> for about 10 minutes. Then fluff with a fork and serve.",
+        timer: 10*60
+      },
+    ]
+  };
+</script>
+<script src="../assets/recipe-engine.js"></script>
+
+</body>
+</html>
