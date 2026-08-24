@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#161a23">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>Sourdough Buttermilk Waffles, La Boricua Costeña</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Work+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+
+<div class="app">
+  <div class="masthead">
+    <a class="place" href="../index.html">← La Boricua Costeña</a>
+    <div class="place">Americana #15</div>
+  </div>
+  <div class="tile-strip"></div>
+
+  <div class="hero">
+    <h1>Sourdough <em>Buttermilk Waffles</em></h1>
+    <p class="subtitle">Light, airy, crispy on the outside. An overnight starter-and-buttermilk soak makes these the best waffles you'll make. Eat with bacon, creme fraiche, bananas, and maple syrup.</p>
+    <div class="credit"><span class="dot"></span>Receta de Chris E</div>
+  </div>
+
+  <div class="meta-row">
+    <span>SOAK <b>overnight</b></span>
+    <span>ACTIVE <b>15 min</b></span>
+    <span>MAKES <b>8 waffles</b></span>
+  </div>
+
+  <div class="card">
+    <div class="servings-row">
+      <div class="servings-label">Waffles</div>
+      <div class="stepper">
+        <button id="dec" aria-label="Decrease servings">–</button>
+        <div class="count" id="servingsCount">8</div>
+        <button id="inc" aria-label="Increase servings">+</button>
+      </div>
+    </div>
+    <div class="servings-note"><span id="servingsNoteText">1 cup starter</span></div>
+
+    <div style="height:20px"></div>
+
+    <div class="section-label rum">Ingredients</div>
+    <ul class="ingredients" id="ingredientsList"></ul>
+  </div>
+
+  <div class="card">
+    <div class="note-box rum">
+      <b>Good to know,</b> the starter for the overnight soak doesn't need to be lively or freshly fed, unfed or discard works just fine here. That's what makes this such a good way to use up extra starter.
+    </div>
+  </div>
+
+  <details class="meal-prep rum">
+    <summary>Storage &amp; keeping <span class="chev">⌄</span></summary>
+    <div class="meal-prep-body">
+      <p><b>Make ahead,</b> the overnight soak is already built into this recipe, mix it the night before and you're most of the way there by morning.</p>
+      <p><b>Store,</b> cooked waffles keep in the fridge for up to 3 days.</p>
+      <p><b>Freeze,</b> freeze in a single layer, then bag once solid, up to 2 months.</p>
+      <p><b>Reheat,</b> straight from the fridge or freezer in a toaster or oven to bring back the crisp, avoid the microwave.</p>
+    </div>
+  </details>
+
+  <div class="action-row">
+    <button class="start-btn rum" id="startBtn">Start cooking →</button>
+    <button class="print-btn rum" id="printBtn">Print</button>
+  </div>
+
+  <div class="print-only" id="printSteps"></div>
+
+  <footer>SOURDOUGH BUTTERMILK WAFFLES</footer>
+</div>
+
+<!-- COOK MODE -->
+<div class="cook-overlay" id="cookOverlay">
+  <div class="cook-top">
+    <button class="close-btn" id="closeBtn">✕</button>
+    <div class="step-count" id="stepCount">STEP 1 / 5</div>
+    <div style="width:38px"></div>
+  </div>
+
+  <div class="progress-track" id="progressTrack"></div>
+
+  <div class="cook-body" id="cookBody">
+    <div class="step-eyebrow" id="stepEyebrow">NIGHT BEFORE</div>
+    <h2 class="step-title" id="stepTitle"></h2>
+    <p class="step-content" id="stepContent"></p>
+
+    <div class="timer-wrap" id="timerWrap" style="display:none;">
+      <div class="dial">
+        <svg width="190" height="190" viewBox="0 0 190 190">
+          <circle class="track" cx="95" cy="95" r="82"></circle>
+          <circle class="fill" id="dialFill" cx="95" cy="95" r="82"></circle>
+        </svg>
+        <div class="dial-center">
+          <div class="dial-time" id="dialTime">00:00</div>
+          <div class="dial-label" id="dialLabel">READY</div>
+        </div>
+      </div>
+      <div class="timer-controls">
+        <button class="primary" id="timerToggle">Start timer</button>
+        <button id="timerReset">Reset</button>
+      </div>
+      <div class="timer-done-badge" id="timerDoneBadge"><span class="dot"></span>TIME'S UP</div>
+    </div>
+  </div>
+
+  <div class="done-screen" id="doneScreen">
+    <div class="glyph">🧇</div>
+    <h2>Waffles are ready.</h2>
+    <p>Top with bacon, creme fraiche, bananas, and maple syrup. Enjoy.</p>
+    <button class="start-btn rum" id="restartBtn" style="max-width:280px;">Make another batch</button>
+  </div>
+
+  <div class="cook-nav" id="cookNav">
+    <button id="prevBtn">Back</button>
+    <button class="next" id="nextBtn">Next step</button>
+  </div>
+</div>
+
+<script>
+  window.RECIPE = {
+    accent: 'rum',
+    baseServings: 8,
+    servingStep: 4,
+    minServings: 4,
+    maxServings: 16,
+    ingredients: [
+      { name: "White or bread flour", base: 2, unit: "cup", sub: "for the overnight soak" },
+      { name: "Sugar, honey, or syrup", base: 2, unit: "tbsp", sub: "for the overnight soak" },
+      { name: "Buttermilk", base: 2, unit: "cup", sub: "for the overnight soak" },
+      { name: "Sourdough starter", base: 1, unit: "cup", sub: "unfed is fine, for the overnight soak" },
+      { name: "Eggs", base: 4, unit: "", sub: "next morning" },
+      { name: "Butter, melted, or oil", base: 1, unit: "cup", sub: "next morning" },
+      { name: "Sea salt", base: 1, unit: "tsp", sub: "next morning" },
+      { name: "Baking soda", base: 1, unit: "tsp", sub: "next morning" },
+    ],
+    servingsNote: (scale, fmt) => `${fmt(1*scale)} cup starter`,
+    steps: [
+      {
+        eyebrow: "NIGHT BEFORE",
+        title: "Mix the overnight soak",
+        content: "Mix the <b>flour</b>, <b>sugar</b>, <b>buttermilk</b>, and <b>starter</b> together. Cover and leave at room temperature overnight.",
+        timer: null
+      },
+      {
+        eyebrow: "MORNING",
+        title: "Add the rest",
+        content: "The next morning, add the <b>eggs</b>, melted <b>butter</b>, <b>salt</b>, and <b>baking soda</b> to the soaked batter.",
+        timer: null
+      },
+      {
+        eyebrow: "MIX",
+        title: "Mix until fluffy",
+        content: "Mix everything together until light and fluffy.",
+        timer: 2*60
+      },
+      {
+        eyebrow: "COOK",
+        title: "Cook in the waffle iron",
+        content: "Preheat your waffle iron. Pour in the batter and cook until golden and crisp.",
+        timer: 5*60
+      },
+      {
+        eyebrow: "SERVE",
+        title: "Serve hot",
+        content: "Serve immediately with <b>bacon</b>, <b>creme fraiche</b>, <b>bananas</b>, and <b>maple syrup</b>.",
+        timer: null
+      },
+    ]
+  };
+</script>
+<script src="../assets/site.js"></script>
+<script src="../assets/recipe-engine.js"></script>
+
+</body>
+</html>

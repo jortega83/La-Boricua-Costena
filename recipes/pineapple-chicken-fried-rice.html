@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#161a23">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>Pineapple Chicken Fried Rice, La Boricua Costeña</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Work+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+
+<div class="app">
+  <div class="masthead">
+    <a class="place" href="../index.html">← La Boricua Costeña</a>
+    <div class="place">Americana #12</div>
+  </div>
+  <div class="tile-strip"></div>
+
+  <div class="hero">
+    <h1>Pineapple Chicken <em>Fried Rice</em></h1>
+    <p class="subtitle">Sweet and a little spicy, with ground chicken, scrambled eggs, sweet pineapple, and cilantro. One skillet, ready in about 35 minutes, better than takeout.</p>
+  </div>
+
+  <div class="meta-row">
+    <span>PREP <b>15 min</b></span>
+    <span>COOK <b>20 min</b></span>
+    <span>SERVES <b>6</b></span>
+  </div>
+
+  <div class="card">
+    <div class="servings-row">
+      <div class="servings-label">Servings</div>
+      <div class="stepper">
+        <button id="dec" aria-label="Decrease servings">–</button>
+        <div class="count" id="servingsCount">6</div>
+        <button id="inc" aria-label="Increase servings">+</button>
+      </div>
+    </div>
+    <div class="servings-note"><span id="servingsNoteText">4 cups day-old rice</span></div>
+
+    <div style="height:20px"></div>
+
+    <div class="section-label rum">Ingredients</div>
+    <ul class="ingredients" id="ingredientsList"></ul>
+  </div>
+
+  <div class="card">
+    <div class="note-box rum">
+      <b>Good to know,</b> use chilled, day-old rice, not freshly cooked. Fresh rice is too moist and turns soggy and clumpy in the skillet. If you're short on time, spread fresh rice on a sheet pan and chill it in the freezer for 15 minutes before using. No ground chicken on hand? Leave it out and serve this as a side dish instead.
+    </div>
+  </div>
+
+  <details class="meal-prep rum">
+    <summary>Meal prep &amp; storage <span class="chev">⌄</span></summary>
+    <div class="meal-prep-body">
+      <p><b>Make ahead,</b> great for meal prep, cook a full batch and portion it out for the week.</p>
+      <p><b>Store,</b> airtight container in the fridge for up to 4 days.</p>
+      <p><b>Freeze,</b> freezes well for up to 3 months.</p>
+      <p><b>Reheat,</b> thaw overnight in the fridge if frozen, then warm small portions in the microwave for about a minute, or a full batch in a skillet over medium heat, stirring frequently. If it's dry, stir in a splash of water, broth, or soy sauce.</p>
+    </div>
+  </details>
+
+  <div class="action-row">
+    <button class="start-btn rum" id="startBtn">Start cooking →</button>
+    <button class="print-btn rum" id="printBtn">Print</button>
+  </div>
+
+  <div class="print-only" id="printSteps"></div>
+
+  <footer>PINEAPPLE CHICKEN FRIED RICE</footer>
+</div>
+
+<!-- COOK MODE -->
+<div class="cook-overlay" id="cookOverlay">
+  <div class="cook-top">
+    <button class="close-btn" id="closeBtn">✕</button>
+    <div class="step-count" id="stepCount">STEP 1 / 7</div>
+    <div style="width:38px"></div>
+  </div>
+
+  <div class="progress-track" id="progressTrack"></div>
+
+  <div class="cook-body" id="cookBody">
+    <div class="step-eyebrow" id="stepEyebrow">EGGS</div>
+    <h2 class="step-title" id="stepTitle"></h2>
+    <p class="step-content" id="stepContent"></p>
+
+    <div class="timer-wrap" id="timerWrap" style="display:none;">
+      <div class="dial">
+        <svg width="190" height="190" viewBox="0 0 190 190">
+          <circle class="track" cx="95" cy="95" r="82"></circle>
+          <circle class="fill" id="dialFill" cx="95" cy="95" r="82"></circle>
+        </svg>
+        <div class="dial-center">
+          <div class="dial-time" id="dialTime">00:00</div>
+          <div class="dial-label" id="dialLabel">READY</div>
+        </div>
+      </div>
+      <div class="timer-controls">
+        <button class="primary" id="timerToggle">Start timer</button>
+        <button id="timerReset">Reset</button>
+      </div>
+      <div class="timer-done-badge" id="timerDoneBadge"><span class="dot"></span>TIME'S UP</div>
+    </div>
+  </div>
+
+  <div class="done-screen" id="doneScreen">
+    <div class="glyph">🍍</div>
+    <h2>Fried rice is ready.</h2>
+    <p>Serve with lime wedges and a drizzle of sesame oil. Enjoy.</p>
+    <button class="start-btn rum" id="restartBtn" style="max-width:280px;">Cook it again</button>
+  </div>
+
+  <div class="cook-nav" id="cookNav">
+    <button id="prevBtn">Back</button>
+    <button class="next" id="nextBtn">Next step</button>
+  </div>
+</div>
+
+<script>
+  window.RECIPE = {
+    accent: 'rum',
+    baseServings: 6,
+    servingStep: 2,
+    minServings: 2,
+    maxServings: 18,
+    ingredients: [
+      { name: "Avocado oil", base: 3.5, unit: "tbsp", sub: "divided" },
+      { name: "Eggs, whisked with salt and pepper", base: 3, unit: "" },
+      { name: "Ground chicken", base: 8, unit: "oz" },
+      { name: "Onion, diced", base: 0.5, unit: "cup" },
+      { name: "Carrot, shredded", base: 0.5, unit: "cup" },
+      { name: "Garlic cloves, minced", base: 3, unit: "" },
+      { name: "Fresh ginger, grated", base: 0.5, unit: "tsp", sub: "or 1/4 tsp ground ginger" },
+      { name: "Chilled day-old cooked rice", base: 4, unit: "cup" },
+      { name: "Pineapple chunks, drained", base: 8, unit: "oz", sub: "1 can, or 1 cup fresh diced" },
+      { name: "Soy sauce", base: 2, unit: "tbsp" },
+      { name: "Chili garlic sauce", base: 2, unit: "tsp" },
+      { name: "Green onions, sliced", base: 0.5, unit: "bunch" },
+      { name: "Cilantro, chopped", base: 0.5, unit: "cup" },
+      { name: "Lime wedges", base: 1, unit: "", sub: "for serving" },
+      { name: "Sesame oil", base: 1, unit: "tsp", sub: "for serving" },
+    ],
+    servingsNote: (scale, fmt) => `${fmt(4*scale)} cups day-old rice`,
+    steps: [
+      {
+        eyebrow: "EGGS",
+        title: "Scramble the eggs",
+        content: "Heat 1 tablespoon of the <b>oil</b> in a large non-stick skillet over medium heat. Pour in the <b>eggs</b> and cook, stirring, until scrambled and lightly set. Transfer to a plate.",
+        timer: 3*60
+      },
+      {
+        eyebrow: "CHICKEN",
+        title: "Cook the chicken",
+        content: "Add 2 to 3 tablespoons more <b>oil</b> to the skillet. When hot, add the <b>ground chicken</b> and cook until crumbled and no longer pink.",
+        timer: 6*60
+      },
+      {
+        eyebrow: "VEGGIES",
+        title: "Add onion and carrot",
+        content: "Add the <b>onion</b> and <b>carrot</b>. Cook, stirring frequently, until softened.",
+        timer: 4*60
+      },
+      {
+        eyebrow: "AROMATICS",
+        title: "Add garlic and ginger",
+        content: "Stir in the <b>garlic</b> and <b>ginger</b>, and cook until fragrant.",
+        timer: 30
+      },
+      {
+        eyebrow: "RICE",
+        title: "Add the rice",
+        content: "Stir in the <b>rice</b> and cook, breaking it up with a wooden spoon, until heated through.",
+        timer: 3*60
+      },
+      {
+        eyebrow: "SAUCE",
+        title: "Add pineapple and sauce",
+        content: "Add the <b>pineapple</b>, <b>soy sauce</b>, and <b>chili garlic sauce</b>. Stir for about 30 seconds to warm through. Taste and season with salt and pepper as needed.",
+        timer: 30
+      },
+      {
+        eyebrow: "FINISH",
+        title: "Fold in eggs and herbs",
+        content: "Gently stir in the scrambled <b>eggs</b>, <b>green onions</b>, and <b>cilantro</b>. Serve with <b>lime wedges</b> and a drizzle of <b>sesame oil</b>.",
+        timer: null
+      },
+    ]
+  };
+</script>
+<script src="../assets/site.js"></script>
+<script src="../assets/recipe-engine.js"></script>
+
+</body>
+</html>

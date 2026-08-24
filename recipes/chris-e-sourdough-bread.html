@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#161a23">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>Chris E's Sourdough Bread, La Boricua Costeña</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Work+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+
+<div class="app">
+  <div class="masthead">
+    <a class="place" href="../index.html">← La Boricua Costeña</a>
+    <div class="place">Americana #13</div>
+  </div>
+  <div class="tile-strip"></div>
+
+  <div class="hero">
+    <h1>Chris E's <em>Sourdough</em></h1>
+    <p class="subtitle">A high-hydration, no-knead loaf built over two days, levain the night before, a long slow bulk ferment, and a hot dutch oven bake for a dark, crackling crust.</p>
+    <div class="credit"><span class="dot"></span>Receta de Chris E</div>
+  </div>
+
+  <div class="meta-row">
+    <span>ACTIVE <b>~1 hr, spread over 2 days</b></span>
+    <span>FERMENT <b>8 to 10 hrs total</b></span>
+    <span>MAKES <b>2 loaves</b></span>
+  </div>
+
+  <div class="card">
+    <div class="servings-row">
+      <div class="servings-label">Loaves</div>
+      <div class="stepper">
+        <button id="dec" aria-label="Decrease servings">–</button>
+        <div class="count" id="servingsCount">2</div>
+        <button id="inc" aria-label="Increase servings">+</button>
+      </div>
+    </div>
+    <div class="servings-note"><span id="servingsNoteText">1kg strong white + 300g whole grain flour</span></div>
+
+    <div style="height:20px"></div>
+
+    <div class="section-label rum">Ingredients</div>
+    <ul class="ingredients" id="ingredientsList"></ul>
+  </div>
+
+  <div class="card">
+    <div class="note-box rum">
+      <b>Keep your starter happy,</b> feed it once a day with equal parts flour and water if you bake weekly, or give it one big feed and refrigerate it if you bake less often, just take it out and feed it daily for three days before you build your levain. A lively starter should smell like banana yogurt, thick and bubbly, not thin and vinegary.
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="note-box rum">
+      <b>No dutch oven?</b> Sprinkle a preheated baking tray with cornmeal, bake the loaf at 250°C (480°F) with a second tray of water underneath to create steam. Remove the water tray after 30 minutes to let the crust brown directly.
+    </div>
+  </div>
+
+  <details class="meal-prep rum">
+    <summary>Storage &amp; keeping <span class="chev">⌄</span></summary>
+    <div class="meal-prep-body">
+      <p><b>Rest before slicing,</b> wait at least an hour after baking, the crumb is still setting.</p>
+      <p><b>Keep it sliceable,</b> wrap the loaf tightly in plastic wrap the day after baking.</p>
+      <p><b>Freeze,</b> freeze in slices rather than as a whole loaf, so you can pull out just what you need.</p>
+      <p><b>Extra starter?</b> Use it for crumpets, waffles, or pizza dough instead of discarding it.</p>
+    </div>
+  </details>
+
+  <div class="card">
+    <div class="section-label rum">More from this series</div>
+    <a class="recipe-card pr" href="sourdough-crumpets.html" style="margin-bottom:10px;">
+      <div class="rc-text">
+        <h3>Sourdough Crumpets</h3>
+        <p>A great way to use up starter discard</p>
+      </div>
+      <div class="arrow">→</div>
+    </a>
+    <a class="recipe-card pr" href="sourdough-buttermilk-waffles.html" style="margin-bottom:10px;">
+      <div class="rc-text">
+        <h3>Sourdough Buttermilk Waffles</h3>
+        <p>Light, airy, crispy on the outside</p>
+      </div>
+      <div class="arrow">→</div>
+    </a>
+    <a class="recipe-card pr" href="sourdough-pizza.html">
+      <div class="rc-text">
+        <h3>Sourdough Pizza</h3>
+        <p>Charred base, pan-fried and broiled</p>
+      </div>
+      <div class="arrow">→</div>
+    </a>
+  </div>
+
+  <div class="action-row">
+    <button class="start-btn rum" id="startBtn">Start cooking →</button>
+    <button class="print-btn rum" id="printBtn">Print</button>
+  </div>
+
+  <div class="print-only" id="printSteps"></div>
+
+  <footer>CHRIS E'S SOURDOUGH BREAD</footer>
+</div>
+
+<!-- COOK MODE -->
+<div class="cook-overlay" id="cookOverlay">
+  <div class="cook-top">
+    <button class="close-btn" id="closeBtn">✕</button>
+    <div class="step-count" id="stepCount">STEP 1 / 14</div>
+    <div style="width:38px"></div>
+  </div>
+
+  <div class="progress-track" id="progressTrack"></div>
+
+  <div class="cook-body" id="cookBody">
+    <div class="step-eyebrow" id="stepEyebrow">DAY 1</div>
+    <h2 class="step-title" id="stepTitle"></h2>
+    <p class="step-content" id="stepContent"></p>
+
+    <div class="timer-wrap" id="timerWrap" style="display:none;">
+      <div class="dial">
+        <svg width="190" height="190" viewBox="0 0 190 190">
+          <circle class="track" cx="95" cy="95" r="82"></circle>
+          <circle class="fill" id="dialFill" cx="95" cy="95" r="82"></circle>
+        </svg>
+        <div class="dial-center">
+          <div class="dial-time" id="dialTime">00:00</div>
+          <div class="dial-label" id="dialLabel">READY</div>
+        </div>
+      </div>
+      <div class="timer-controls">
+        <button class="primary" id="timerToggle">Start timer</button>
+        <button id="timerReset">Reset</button>
+      </div>
+      <div class="timer-done-badge" id="timerDoneBadge"><span class="dot"></span>TIME'S UP</div>
+    </div>
+  </div>
+
+  <div class="done-screen" id="doneScreen">
+    <div class="glyph">🍞</div>
+    <h2>Bread is ready.</h2>
+    <p>Let it rest at least an hour before slicing so the crumb finishes setting. Enjoy.</p>
+    <button class="start-btn rum" id="restartBtn" style="max-width:280px;">Bake it again</button>
+  </div>
+
+  <div class="cook-nav" id="cookNav">
+    <button id="prevBtn">Back</button>
+    <button class="next" id="nextBtn">Next step</button>
+  </div>
+</div>
+
+<script>
+  window.RECIPE = {
+    accent: 'rum',
+    baseServings: 2,
+    servingStep: 2,
+    minServings: 2,
+    maxServings: 8,
+    ingredients: [
+      { name: "Active sourdough starter", base: 1, unit: "tbsp", sub: "for the levain" },
+      { name: "Flour, mix of white and wholemeal", base: 200, unit: "g", sub: "for the levain" },
+      { name: "Water", base: 200, unit: "g", sub: "for the levain" },
+      { name: "Warm water", base: 700, unit: "g", sub: "for the dough, plus a little extra if needed" },
+      { name: "Strong white bread flour", base: 700, unit: "g", sub: "for the dough" },
+      { name: "Wholemeal, spelt, or rye flour", base: 300, unit: "g", sub: "for the dough" },
+      { name: "Fine sea salt", base: 20, unit: "g" },
+      { name: "Semolina or rice flour", base: 1, unit: "", sub: "for dusting the proving basket and board" },
+    ],
+    servingsNote: (scale, fmt) => `${fmt(700*scale)}g strong white + ${fmt(300*scale)}g whole grain flour`,
+    steps: [
+      {
+        eyebrow: "DAY 1 · MORNING",
+        title: "Feed the starter",
+        content: "Give your <b>starter</b> a good feed and leave it, covered, out of the fridge.",
+        timer: null
+      },
+      {
+        eyebrow: "DAY 1 · NIGHT",
+        title: "Build the levain",
+        content: "Just before bed, mix 1 tablespoon of <b>starter</b> with the <b>flour</b> and <b>water</b> for the levain. It doesn't need to be warm. Leave it out overnight, by morning it should look bubbly, and a teaspoon of it should float in a cup of water.",
+        timer: 10*60*60
+      },
+      {
+        eyebrow: "DAY 2 · MIX",
+        title: "Mix the dough",
+        content: "Whisk 200g of the <b>levain</b> into the <b>warm water</b>. Using your hands, mix in the <b>flours</b> until fully incorporated with no dry bits, it should feel shaggy and thickly porridgy, not soupy or stiff.",
+        timer: null
+      },
+      {
+        eyebrow: "AUTOLYSE",
+        title: "Rest the dough",
+        content: "Leave the dough to rest. This is the autolyse, it lets the flour absorb water before the salt goes in.",
+        timer: 30*60
+      },
+      {
+        eyebrow: "SALT",
+        title: "Add the salt",
+        content: "Add the <b>salt</b> and squeeze it into the dough, breaking apart the gluten strands so they reform stronger. Once evenly incorporated, rest again.",
+        timer: 30*60
+      },
+      {
+        eyebrow: "BULK FERMENT",
+        title: "Slap and fold",
+        content: "Over the next 3 to 6 hours, perform a slap and fold or stretch and fold every 30 minutes, getting gentler with the dough as time goes on. It's ready when it looks billowy, smooth, bouncy, and bubbling, soft and tacky, not wet.",
+        timer: 4*60*60
+      },
+      {
+        eyebrow: "PRESHAPE",
+        title: "Divide and preshape",
+        content: "Tip the dough onto the table and split in two with a scraper. Lightly shape each half into a smooth round ball, then leave uncovered to rest, they'll expand and flatten slightly.",
+        timer: 30*60
+      },
+      {
+        eyebrow: "SHAPE",
+        title: "Final shape",
+        content: "Dust the tops with flour, flip gently, and shape each into a tight ball, trapping air inside. Dust a proving basket liberally with semolina or rice flour, and lay the dough seam-side up in the basket.",
+        timer: null
+      },
+      {
+        eyebrow: "PROOF",
+        title: "Final proof",
+        content: "Leave uncovered to rise at room temperature until a finger pressed into it leaves a mark that rises back slowly. If it springs back fast, it needs more time. If it doesn't spring back at all, it's overproved, bake right away. Alternatively, after 30 minutes at room temp, refrigerate uncovered overnight for a more sour, easier-to-score loaf.",
+        timer: 4*60*60
+      },
+      {
+        eyebrow: "PREHEAT",
+        title: "Preheat the pot",
+        content: "About an hour before baking, put a cast iron pot or dutch oven in the oven and crank the heat as high as it goes.",
+        timer: 60*60
+      },
+      {
+        eyebrow: "BAKE · 1",
+        title: "Score and bake covered",
+        content: "Turn the loaf onto a semolina-dusted board, score the top, and slide it gently into the hot pot. Cover with the lid and bake.",
+        timer: 20*60
+      },
+      {
+        eyebrow: "BAKE · 2",
+        title: "Lower the heat",
+        content: "Turn the oven down to 240 to 250°C (roughly 465 to 480°F) and continue baking, still covered.",
+        timer: 10*60
+      },
+      {
+        eyebrow: "BAKE · 3",
+        title: "Uncover and finish",
+        content: "Remove the lid and bake until the crust is as dark as you like it.",
+        timer: 15*60
+      },
+      {
+        eyebrow: "COOL",
+        title: "Cool before slicing",
+        content: "Carefully remove the loaf from the pot and place on a wire rack. Wait at least an hour before slicing, if you can stand it.",
+        timer: 60*60
+      },
+    ]
+  };
+</script>
+<script src="../assets/site.js"></script>
+<script src="../assets/recipe-engine.js"></script>
+
+</body>
+</html>
