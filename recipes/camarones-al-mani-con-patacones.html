@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#161a23">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>Camarones al Maní con Patacones, La Boricua Costeña</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Work+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+
+<div class="app">
+  <div class="masthead">
+    <a class="place" href="../index.html">← La Boricua Costeña</a>
+    <div class="place">Latina #1</div>
+  </div>
+  <div class="tile-strip"></div>
+
+  <div class="hero">
+    <h1>Camarones al <em>Maní</em></h1>
+    <p class="subtitle">Shrimp simmered in a creamy peanut sauce built on an achiote sofrito, with crispy patacones folded right into the stew at the end. A Pacific coast specialty, rich, smoky, and a little sweet from the peanut.</p>
+  </div>
+
+  <div class="meta-row">
+    <span>ACTIVE <b>30 min</b></span>
+    <span>SIMMER <b>20 min</b></span>
+    <span>SERVES <b>4</b></span>
+  </div>
+
+  <div class="card">
+    <div class="servings-row">
+      <div class="servings-label">Servings</div>
+      <div class="stepper">
+        <button id="dec" aria-label="Decrease servings">–</button>
+        <div class="count" id="servingsCount">4</div>
+        <button id="inc" aria-label="Increase servings">+</button>
+      </div>
+    </div>
+    <div class="servings-note"><span id="servingsNoteText">1.1 lbs shrimp, shell-on</span></div>
+
+    <div style="height:20px"></div>
+
+    <div class="section-label latin">Ingredients</div>
+    <ul class="ingredients" id="ingredientsList"></ul>
+  </div>
+
+  <div class="card">
+    <div class="note-box latin">
+      <b>Good to know,</b> chillangua (also called culantro or recao) is a Pacific coast herb, if you can't find it, cilantro is a fine substitute, use a bit more since it's less intense. Natural, unsweetened peanut butter works well in place of peanut paste. No frozen patacones on hand? Use our <a href="patacones-clasicos.html" style="color:var(--teal);">Patacones Clásicos</a> recipe and fry a fresh batch instead.
+    </div>
+  </div>
+
+  <details class="meal-prep latin">
+    <summary>Meal prep &amp; storage <span class="chev">⌄</span></summary>
+    <div class="meal-prep-body">
+      <p><b>Make ahead,</b> the shrimp broth and peanut sauce base can be made a day ahead and refrigerated, add the shrimp and patacones fresh when reheating.</p>
+      <p><b>Store,</b> airtight container in the fridge for up to 2 days, the patacones will soften over time.</p>
+      <p><b>Reheat,</b> gently on the stovetop over low heat, adding a splash of water or broth if the sauce has thickened too much.</p>
+    </div>
+  </details>
+
+  <div class="action-row">
+    <button class="start-btn latin" id="startBtn">Start cooking →</button>
+    <button class="print-btn latin" id="printBtn">Print</button>
+  </div>
+
+  <div class="print-only" id="printSteps"></div>
+
+  <footer>CAMARONES AL MANÍ CON PATACONES</footer>
+</div>
+
+<!-- COOK MODE -->
+<div class="cook-overlay" id="cookOverlay">
+  <div class="cook-top">
+    <button class="close-btn" id="closeBtn">✕</button>
+    <div class="step-count" id="stepCount">STEP 1 / 6</div>
+    <div style="width:38px"></div>
+  </div>
+
+  <div class="progress-track" id="progressTrack"></div>
+
+  <div class="cook-body" id="cookBody">
+    <div class="step-eyebrow" id="stepEyebrow">BROTH</div>
+    <h2 class="step-title" id="stepTitle"></h2>
+    <p class="step-content" id="stepContent"></p>
+
+    <div class="timer-wrap" id="timerWrap" style="display:none;">
+      <div class="dial">
+        <svg width="190" height="190" viewBox="0 0 190 190">
+          <circle class="track" cx="95" cy="95" r="82"></circle>
+          <circle class="fill" id="dialFill" cx="95" cy="95" r="82"></circle>
+        </svg>
+        <div class="dial-center">
+          <div class="dial-time" id="dialTime">00:00</div>
+          <div class="dial-label" id="dialLabel">READY</div>
+        </div>
+      </div>
+      <div class="timer-controls">
+        <button class="primary" id="timerToggle">Start timer</button>
+        <button id="timerReset">Reset</button>
+      </div>
+      <div class="timer-done-badge" id="timerDoneBadge"><span class="dot"></span>TIME'S UP</div>
+    </div>
+  </div>
+
+  <div class="done-screen" id="doneScreen">
+    <div class="glyph">🥜</div>
+    <h2>Listo.</h2>
+    <p>Finish with avocado, cilantro, and a squeeze of lime. Buen provecho.</p>
+    <button class="start-btn latin" id="restartBtn" style="max-width:280px;">Cook it again</button>
+  </div>
+
+  <div class="cook-nav" id="cookNav">
+    <button id="prevBtn">Back</button>
+    <button class="next" id="nextBtn">Next step</button>
+  </div>
+</div>
+
+<script>
+  window.RECIPE = {
+    accent: 'latin',
+    baseServings: 4,
+    servingStep: 2,
+    minServings: 2,
+    maxServings: 12,
+    ingredients: [
+      { name: "Shrimp, head-on and shell-on", base: 1.1, unit: "lb", sub: "≈500g" },
+      { name: "Peanut paste or natural peanut butter", base: 0.58, unit: "cup", sub: "≈150g" },
+      { name: "Onion, chopped", base: 1, unit: "" },
+      { name: "Bell peppers, chopped", base: 2, unit: "" },
+      { name: "Garlic cloves, minced", base: 2, unit: "" },
+      { name: "Chillangua or cilantro, chopped", base: 1, unit: "sprig" },
+      { name: "Ground cumin", base: 1, unit: "tsp" },
+      { name: "Coriander seed", base: 1, unit: "tsp" },
+      { name: "Achiote oil", base: 1, unit: "tbsp", sub: "or 1 tsp ground achiote/annatto" },
+      { name: "Water", base: 3.4, unit: "cup", sub: "for the shrimp broth, ≈800ml" },
+      { name: "Frozen or fresh patacones", base: 10, unit: "", sub: "or a batch of our Patacones Clásicos" },
+      { name: "Avocado, sliced", base: 1, unit: "", sub: "for serving" },
+      { name: "Fresh cilantro", base: 1, unit: "", sub: "for serving" },
+      { name: "Lime", base: 1, unit: "", sub: "for serving" },
+      { name: "Salt", base: 1, unit: "", sub: "to taste" },
+    ],
+    servingsNote: (scale, fmt) => `${fmt(1.1*scale)} lbs shrimp, shell-on`,
+    steps: [
+      {
+        eyebrow: "BROTH",
+        title: "Make the shrimp broth",
+        content: "Peel the <b>shrimp</b>, saving the heads and shells. Simmer the heads and shells in the <b>water</b> to make a concentrated broth, then strain and set aside.",
+        timer: 15*60
+      },
+      {
+        eyebrow: "SEAR",
+        title: "Sear the shrimp",
+        content: "Sear the peeled <b>shrimp</b> in a hot pan until just cooked through, then remove and set aside.",
+        timer: 3*60
+      },
+      {
+        eyebrow: "SOFRITO",
+        title: "Build the sofrito",
+        content: "In the same pan, make a sofrito with the <b>achiote oil</b>, <b>onion</b>, <b>bell peppers</b>, <b>garlic</b>, and <b>chillangua</b>. Stir in the <b>cumin</b> and <b>coriander seed</b>.",
+        timer: 8*60
+      },
+      {
+        eyebrow: "SAUCE",
+        title: "Make the peanut sauce",
+        content: "Dilute the <b>peanut paste</b> with the shrimp <b>broth</b>, then add it to the sofrito. Cook until you get a smooth, creamy sauce. Return the seared <b>shrimp</b> to the pan.",
+        timer: 8*60
+      },
+      {
+        eyebrow: "PATACONES",
+        title: "Add the patacones",
+        content: "Cook the <b>patacones</b> until crisp (air fryer works great straight from frozen). Chop them into pieces, add to the stew, and cook everything together for a couple minutes so they soak up some sauce while keeping a bit of crunch.",
+        timer: 3*60
+      },
+      {
+        eyebrow: "FINISH",
+        title: "Finish and serve",
+        content: "Season with <b>salt</b> to taste. Serve topped with sliced <b>avocado</b>, fresh <b>cilantro</b>, and a squeeze of <b>lime</b>.",
+        timer: null
+      },
+    ]
+  };
+</script>
+<script src="../assets/site.js"></script>
+<script src="../assets/recipe-engine.js"></script>
+
+</body>
+</html>

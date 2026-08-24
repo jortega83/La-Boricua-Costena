@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#161a23">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>Moros y Cristianos, La Boricua Costeña</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Work+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+
+<div class="app">
+  <div class="masthead">
+    <a class="place" href="../index.html">← La Boricua Costeña</a>
+    <div class="place">Latina #2</div>
+  </div>
+  <div class="tile-strip"></div>
+
+  <div class="hero">
+    <h1>Moros y <em>Cristianos</em></h1>
+    <p class="subtitle">Cuban black beans and long-grain rice cooked together with crispy bacon, sofrito, and warm spices, so the rice takes on all the flavor of the beans. A classic side, also called Arroz Congri.</p>
+  </div>
+
+  <div class="meta-row">
+    <span>PREP <b>10 min</b></span>
+    <span>COOK <b>50 min</b></span>
+    <span>SERVES <b>4</b></span>
+  </div>
+
+  <div class="card">
+    <div class="servings-row">
+      <div class="servings-label">Servings</div>
+      <div class="stepper">
+        <button id="dec" aria-label="Decrease servings">–</button>
+        <div class="count" id="servingsCount">4</div>
+        <button id="inc" aria-label="Increase servings">+</button>
+      </div>
+    </div>
+    <div class="servings-note"><span id="servingsNoteText">15 oz canned black beans</span></div>
+
+    <div style="height:20px"></div>
+
+    <div class="section-label latin">Ingredients</div>
+    <ul class="ingredients" id="ingredientsList"></ul>
+  </div>
+
+  <div class="card">
+    <div class="note-box latin">
+      <b>Good to know,</b> this is the quick version using canned beans. For a darker, more traditional moros, use 6oz dried black beans instead: soak overnight in 3 cups water, then drain, add 5 cups fresh water, and simmer 60 minutes until soft before using 1½ cups of that cooking liquid in place of the canned bean liquid and 1 cup water. Always rinse your rice first.
+    </div>
+  </div>
+
+  <details class="meal-prep latin">
+    <summary>Meal prep &amp; storage <span class="chev">⌄</span></summary>
+    <div class="meal-prep-body">
+      <p><b>Make ahead,</b> can be made up to 2 days in advance, just cool completely before refrigerating.</p>
+      <p><b>Store,</b> airtight container in the fridge for up to 4 days.</p>
+      <p><b>Reheat,</b> microwave, or stovetop over low heat with a splash of water.</p>
+      <p><b>Serve it,</b> alongside Cuban roast pork (lechón asado), yuca con mojo, or sweet plantains.</p>
+    </div>
+  </details>
+
+  <div class="action-row">
+    <button class="start-btn latin" id="startBtn">Start cooking →</button>
+    <button class="print-btn latin" id="printBtn">Print</button>
+  </div>
+
+  <div class="print-only" id="printSteps"></div>
+
+  <footer>MOROS Y CRISTIANOS · ARROZ CONGRI</footer>
+</div>
+
+<!-- COOK MODE -->
+<div class="cook-overlay" id="cookOverlay">
+  <div class="cook-top">
+    <button class="close-btn" id="closeBtn">✕</button>
+    <div class="step-count" id="stepCount">STEP 1 / 5</div>
+    <div style="width:38px"></div>
+  </div>
+
+  <div class="progress-track" id="progressTrack"></div>
+
+  <div class="cook-body" id="cookBody">
+    <div class="step-eyebrow" id="stepEyebrow">BACON</div>
+    <h2 class="step-title" id="stepTitle"></h2>
+    <p class="step-content" id="stepContent"></p>
+
+    <div class="timer-wrap" id="timerWrap" style="display:none;">
+      <div class="dial">
+        <svg width="190" height="190" viewBox="0 0 190 190">
+          <circle class="track" cx="95" cy="95" r="82"></circle>
+          <circle class="fill" id="dialFill" cx="95" cy="95" r="82"></circle>
+        </svg>
+        <div class="dial-center">
+          <div class="dial-time" id="dialTime">00:00</div>
+          <div class="dial-label" id="dialLabel">READY</div>
+        </div>
+      </div>
+      <div class="timer-controls">
+        <button class="primary" id="timerToggle">Start timer</button>
+        <button id="timerReset">Reset</button>
+      </div>
+      <div class="timer-done-badge" id="timerDoneBadge"><span class="dot"></span>TIME'S UP</div>
+    </div>
+  </div>
+
+  <div class="done-screen" id="doneScreen">
+    <div class="glyph">🫘</div>
+    <h2>Moros listos.</h2>
+    <p>Serve alongside roast pork, yuca con mojo, or sweet plantains. Enjoy.</p>
+    <button class="start-btn latin" id="restartBtn" style="max-width:280px;">Cook it again</button>
+  </div>
+
+  <div class="cook-nav" id="cookNav">
+    <button id="prevBtn">Back</button>
+    <button class="next" id="nextBtn">Next step</button>
+  </div>
+</div>
+
+<script>
+  window.RECIPE = {
+    accent: 'latin',
+    baseServings: 4,
+    servingStep: 2,
+    minServings: 2,
+    maxServings: 12,
+    ingredients: [
+      { name: "Thick-cut bacon slices", base: 3, unit: "" },
+      { name: "Green bell pepper, diced", base: 0.5, unit: "cup" },
+      { name: "Onion, diced", base: 1, unit: "small" },
+      { name: "Garlic cloves, minced", base: 2, unit: "" },
+      { name: "Long-grain rice, rinsed", base: 1, unit: "cup" },
+      { name: "Canned black beans, with liquid", base: 15, unit: "oz", sub: "do not drain" },
+      { name: "Water", base: 1, unit: "cup" },
+      { name: "Ground cumin", base: 0.5, unit: "tsp" },
+      { name: "Dried oregano", base: 0.5, unit: "tsp" },
+      { name: "Bay leaf", base: 1, unit: "" },
+      { name: "Salt and pepper", base: 1, unit: "", sub: "to taste" },
+    ],
+    servingsNote: (scale, fmt) => `${fmt(15*scale)} oz canned black beans`,
+    steps: [
+      {
+        eyebrow: "BACON",
+        title: "Fry the bacon",
+        content: "In a Dutch oven, fry the <b>bacon</b> slices until fully cooked and crispy. Do not discard the fat. Transfer the bacon to a paper towel-lined plate to drain, then roughly chop.",
+        timer: 6*60
+      },
+      {
+        eyebrow: "SOFRITO",
+        title: "Build the sofrito",
+        content: "In the same pot with the bacon fat, add the <b>green pepper</b> and <b>onion</b>. Sauté, then add the <b>garlic</b> and cook until fragrant.",
+        timer: 3*60
+      },
+      {
+        eyebrow: "COMBINE",
+        title: "Add rice, beans, and spices",
+        content: "Add the <b>rice</b>, <b>black beans</b> with their liquid, the <b>water</b>, <b>cumin</b>, <b>oregano</b>, <b>bay leaf</b>, <b>salt</b>, and <b>pepper</b>.",
+        timer: null
+      },
+      {
+        eyebrow: "STEAM",
+        title: "Cover and simmer",
+        content: "Cover, reduce heat to a simmer, and cook. Do not open the lid, the trapped steam is what cooks the rice.",
+        timer: 30*60
+      },
+      {
+        eyebrow: "FINISH",
+        title: "Finish and rest",
+        content: "Remove the lid and give it a big stir so nothing sticks to the bottom. Cook a bit longer until the rice is fluffy and fully cooked, then remove from heat, keep the lid on for 5 to 10 more minutes, fluff with a fork, and stir in the chopped <b>bacon</b>.",
+        timer: 8*60
+      },
+    ]
+  };
+</script>
+<script src="../assets/site.js"></script>
+<script src="../assets/recipe-engine.js"></script>
+
+</body>
+</html>

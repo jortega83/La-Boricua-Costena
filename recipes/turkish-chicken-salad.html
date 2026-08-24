@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#161a23">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>Turkish Chicken Salad, La Boricua Costeña</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Work+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+
+<div class="app">
+  <div class="masthead">
+    <a class="place" href="../index.html">← La Boricua Costeña</a>
+    <div class="place">Turca #1</div>
+  </div>
+  <div class="tile-strip"></div>
+
+  <div class="hero">
+    <h1>Turkish <em>Chicken Salad</em></h1>
+    <p class="subtitle">Shredded chicken folded into a creamy yogurt and dill dressing, served over crisp iceberg lettuce and finished with walnuts and a drizzle of olive oil. A dish the family made in Cartagena, tracing back to the city's Turkish community.</p>
+    <div class="credit"><span class="dot"></span>Closest match, courtesy of Raindrop Foundation Turkish Cooking Class</div>
+  </div>
+
+  <div class="meta-row">
+    <span>ACTIVE <b>20 min</b></span>
+    <span>COOK <b>18 min</b></span>
+    <span>SERVES <b>5</b></span>
+  </div>
+
+  <div class="card">
+    <div class="servings-row">
+      <div class="servings-label">Servings</div>
+      <div class="stepper">
+        <button id="dec" aria-label="Decrease servings">–</button>
+        <div class="count" id="servingsCount">5</div>
+        <button id="inc" aria-label="Increase servings">+</button>
+      </div>
+    </div>
+    <div class="servings-note"><span id="servingsNoteText">1 lb chicken breast</span></div>
+
+    <div style="height:20px"></div>
+
+    <div class="section-label">Ingredients</div>
+    <ul class="ingredients" id="ingredientsList"></ul>
+  </div>
+
+  <div class="card">
+    <div class="note-box">
+      <b>Good to know,</b> this is the closest match found to the family's version, exact proportions and method aren't documented, so the dressing ratio and technique here are a reasonable starting point. Taste and adjust the yogurt-to-mayo balance to what tastes right, and if anyone remembers more details of how it was made, this is easy to update.
+    </div>
+  </div>
+
+  <details class="meal-prep">
+    <summary>Meal prep &amp; storage <span class="chev">⌄</span></summary>
+    <div class="meal-prep-body">
+      <p><b>Make ahead,</b> the chicken salad (without the lettuce and walnuts) can be made a day ahead and refrigerated, the flavor deepens overnight.</p>
+      <p><b>Store,</b> airtight container in the fridge for up to 3 days.</p>
+      <p><b>Assemble fresh,</b> keep the lettuce, walnuts, and olive oil drizzle separate until serving so the lettuce stays crisp.</p>
+    </div>
+  </details>
+
+  <div class="action-row">
+    <button class="start-btn" id="startBtn">Start cooking →</button>
+    <button class="print-btn" id="printBtn">Print</button>
+  </div>
+
+  <div class="print-only" id="printSteps"></div>
+
+  <footer>TURKISH CHICKEN SALAD</footer>
+</div>
+
+<!-- COOK MODE -->
+<div class="cook-overlay" id="cookOverlay">
+  <div class="cook-top">
+    <button class="close-btn" id="closeBtn">✕</button>
+    <div class="step-count" id="stepCount">STEP 1 / 5</div>
+    <div style="width:38px"></div>
+  </div>
+
+  <div class="progress-track" id="progressTrack"></div>
+
+  <div class="cook-body" id="cookBody">
+    <div class="step-eyebrow" id="stepEyebrow">CHICKEN</div>
+    <h2 class="step-title" id="stepTitle"></h2>
+    <p class="step-content" id="stepContent"></p>
+
+    <div class="timer-wrap" id="timerWrap" style="display:none;">
+      <div class="dial">
+        <svg width="190" height="190" viewBox="0 0 190 190">
+          <circle class="track" cx="95" cy="95" r="82"></circle>
+          <circle class="fill" id="dialFill" cx="95" cy="95" r="82"></circle>
+        </svg>
+        <div class="dial-center">
+          <div class="dial-time" id="dialTime">00:00</div>
+          <div class="dial-label" id="dialLabel">READY</div>
+        </div>
+      </div>
+      <div class="timer-controls">
+        <button class="primary" id="timerToggle">Start timer</button>
+        <button id="timerReset">Reset</button>
+      </div>
+      <div class="timer-done-badge" id="timerDoneBadge"><span class="dot"></span>TIME'S UP</div>
+    </div>
+  </div>
+
+  <div class="done-screen" id="doneScreen">
+    <div class="glyph">🥗</div>
+    <h2>Salad's ready.</h2>
+    <p>Serve chilled or at room temperature. Enjoy.</p>
+    <button class="start-btn" id="restartBtn" style="max-width:280px;">Make it again</button>
+  </div>
+
+  <div class="cook-nav" id="cookNav">
+    <button id="prevBtn">Back</button>
+    <button class="next" id="nextBtn">Next step</button>
+  </div>
+</div>
+
+<script>
+  window.RECIPE = {
+    accent: 'coral',
+    baseServings: 5,
+    servingStep: 2,
+    minServings: 2,
+    maxServings: 15,
+    ingredients: [
+      { name: "Chicken breast", base: 1, unit: "lb" },
+      { name: "Green onions, chopped", base: 1, unit: "bunch" },
+      { name: "Garlic cloves, minced", base: 2, unit: "" },
+      { name: "Iceberg lettuce, chopped", base: 1, unit: "head" },
+      { name: "Fresh dill, chopped", base: 0.5, unit: "bunch" },
+      { name: "Plain yogurt", base: 2, unit: "cup" },
+      { name: "Mayonnaise", base: 1, unit: "cup" },
+      { name: "Walnuts, chopped", base: 0.5, unit: "cup", sub: "for garnish" },
+      { name: "Olive oil", base: 2, unit: "tbsp", sub: "for finishing" },
+      { name: "Salt and pepper", base: 1, unit: "", sub: "to taste" },
+    ],
+    servingsNote: (scale, fmt) => `${fmt(1*scale)} lb chicken breast`,
+    steps: [
+      {
+        eyebrow: "CHICKEN",
+        title: "Cook the chicken",
+        content: "Poach the <b>chicken breast</b> in a pot of salted water until fully cooked through.",
+        timer: 18*60
+      },
+      {
+        eyebrow: "SHRED",
+        title: "Cool and shred",
+        content: "Let the chicken cool enough to handle, then shred into bite-sized pieces.",
+        timer: 8*60
+      },
+      {
+        eyebrow: "DRESSING",
+        title: "Make the dressing",
+        content: "In a bowl, combine the <b>yogurt</b>, <b>mayonnaise</b>, <b>garlic</b>, <b>dill</b>, and <b>green onions</b>. Season with <b>salt and pepper</b>.",
+        timer: null
+      },
+      {
+        eyebrow: "COMBINE",
+        title: "Toss the chicken",
+        content: "Add the shredded <b>chicken</b> to the dressing and toss until well coated.",
+        timer: null
+      },
+      {
+        eyebrow: "SERVE",
+        title: "Assemble and garnish",
+        content: "Spread the chopped <b>iceberg lettuce</b> on a platter or in bowls, top with the chicken salad, and finish with the chopped <b>walnuts</b> and a drizzle of <b>olive oil</b>.",
+        timer: null
+      },
+    ]
+  };
+</script>
+<script src="../assets/site.js"></script>
+<script src="../assets/recipe-engine.js"></script>
+
+</body>
+</html>
