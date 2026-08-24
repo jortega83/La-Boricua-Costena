@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#161a23">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>Lentejas Colombianas, La Boricua Costeña</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Work+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+
+<div class="app">
+  <div class="masthead">
+    <a class="place" href="../index.html">← La Boricua Costeña</a>
+    <div class="place">Lentejas #1</div>
+  </div>
+  <div class="tile-strip"></div>
+
+  <div class="hero">
+    <h1>Lentejas <em>Colombianas</em></h1>
+    <p class="subtitle">A hearty lentil stew simmered with Colombian chorizo, carrots, and potato, popular in kitchens across the country including Caribbean coastal cities like Cartagena. Serve with white rice, patacones, and avocado.</p>
+  </div>
+
+  <div class="meta-row">
+    <span>ACTIVE <b>20 min</b></span>
+    <span>SIMMER <b>~1 hr</b></span>
+    <span>SERVES <b>5</b></span>
+  </div>
+
+  <div class="card">
+    <div class="servings-row">
+      <div class="servings-label">Servings</div>
+      <div class="stepper">
+        <button id="dec" aria-label="Decrease servings">–</button>
+        <div class="count" id="servingsCount">5</div>
+        <button id="inc" aria-label="Increase servings">+</button>
+      </div>
+    </div>
+    <div class="servings-note"><span id="servingsNoteText">1¼ cups dried lentils</span></div>
+
+    <div style="height:20px"></div>
+
+    <div class="section-label">Ingredients</div>
+    <ul class="ingredients" id="ingredientsList"></ul>
+  </div>
+
+  <div class="card">
+    <div class="note-box">
+      <b>Good to know,</b> Colombian chorizo is the real flavor driver here, look for it at a Latin market. If you can't find it, dried Spanish chorizo or a grilled Italian sausage both work well. The optional cilantro cream on top is a nice touch, but the soup is fully delicious without it too.
+    </div>
+  </div>
+
+  <details class="meal-prep">
+    <summary>Meal prep &amp; storage <span class="chev">⌄</span></summary>
+    <div class="meal-prep-body">
+      <p><b>Make ahead,</b> tastes even better the next day once the flavors settle.</p>
+      <p><b>Store,</b> airtight container in the fridge for up to 4 days.</p>
+      <p><b>Reheat,</b> stovetop over low heat or microwave, thinning with a little water if it's thickened up.</p>
+      <p><b>Freeze,</b> freezes well for up to 3 months. Thaw overnight in the fridge before reheating.</p>
+    </div>
+  </details>
+
+  <div class="action-row">
+    <button class="start-btn" id="startBtn">Start cooking →</button>
+    <button class="print-btn" id="printBtn">Print</button>
+  </div>
+
+  <div class="print-only" id="printSteps"></div>
+
+  <footer>LENTEJAS COLOMBIANAS</footer>
+</div>
+
+<!-- COOK MODE -->
+<div class="cook-overlay" id="cookOverlay">
+  <div class="cook-top">
+    <button class="close-btn" id="closeBtn">✕</button>
+    <div class="step-count" id="stepCount">STEP 1 / 5</div>
+    <div style="width:38px"></div>
+  </div>
+
+  <div class="progress-track" id="progressTrack"></div>
+
+  <div class="cook-body" id="cookBody">
+    <div class="step-eyebrow" id="stepEyebrow">CHORIZO</div>
+    <h2 class="step-title" id="stepTitle"></h2>
+    <p class="step-content" id="stepContent"></p>
+
+    <div class="timer-wrap" id="timerWrap" style="display:none;">
+      <div class="dial">
+        <svg width="190" height="190" viewBox="0 0 190 190">
+          <circle class="track" cx="95" cy="95" r="82"></circle>
+          <circle class="fill" id="dialFill" cx="95" cy="95" r="82"></circle>
+        </svg>
+        <div class="dial-center">
+          <div class="dial-time" id="dialTime">00:00</div>
+          <div class="dial-label" id="dialLabel">READY</div>
+        </div>
+      </div>
+      <div class="timer-controls">
+        <button class="primary" id="timerToggle">Start timer</button>
+        <button id="timerReset">Reset</button>
+      </div>
+      <div class="timer-done-badge" id="timerDoneBadge"><span class="dot"></span>TIME'S UP</div>
+    </div>
+  </div>
+
+  <div class="done-screen" id="doneScreen">
+    <div class="glyph">🍲</div>
+    <h2>Lentejas listas.</h2>
+    <p>Ladle into bowls and top with the cilantro cream if using. Serve with rice, patacones, and avocado.</p>
+    <button class="start-btn" id="restartBtn" style="max-width:280px;">Cook it again</button>
+  </div>
+
+  <div class="cook-nav" id="cookNav">
+    <button id="prevBtn">Back</button>
+    <button class="next" id="nextBtn">Next step</button>
+  </div>
+</div>
+
+<script>
+  window.RECIPE = {
+    accent: 'coral',
+    baseServings: 5,
+    servingStep: 2,
+    minServings: 2,
+    maxServings: 15,
+    ingredients: [
+      { name: "Vegetable oil", base: 1, unit: "tsp" },
+      { name: "Colombian chorizo, sliced", base: 1, unit: "cup" },
+      { name: "Onion, chopped", base: 0.5, unit: "cup" },
+      { name: "Garlic clove, minced", base: 1, unit: "" },
+      { name: "Scallions, chopped", base: 0.25, unit: "cup" },
+      { name: "Tomatoes, chopped", base: 0.5, unit: "cup" },
+      { name: "Water", base: 5, unit: "cup" },
+      { name: "Dried lentils", base: 1.25, unit: "cup" },
+      { name: "Salt", base: 0.5, unit: "tsp" },
+      { name: "Black pepper", base: 0.25, unit: "tsp" },
+      { name: "Carrots, grated", base: 0.5, unit: "cup" },
+      { name: "Potato, cut into bite-sized pieces", base: 0.5, unit: "cup" },
+      { name: "Ground cumin", base: 0.25, unit: "tsp" },
+      { name: "Heavy cream", base: 0.5, unit: "cup", sub: "optional, for cilantro cream" },
+      { name: "Fresh cilantro, chopped", base: 3, unit: "tbsp", sub: "optional, for cilantro cream" },
+      { name: "Lime juice", base: 1, unit: "tbsp", sub: "optional, for cilantro cream" },
+    ],
+    servingsNote: (scale, fmt) => `${fmt(1.25*scale)} cups dried lentils`,
+    steps: [
+      {
+        eyebrow: "CHORIZO",
+        title: "Cook the chorizo",
+        content: "Cook the <b>chorizo</b> in the <b>oil</b> in a large pot over medium heat, stirring occasionally. Transfer to a paper towel-lined plate with a slotted spoon.",
+        timer: 5*60
+      },
+      {
+        eyebrow: "SOFRITO",
+        title: "Build the base",
+        content: "Add the <b>carrots</b>, <b>onion</b>, <b>garlic</b>, <b>tomato</b>, and <b>scallions</b> to the pot, season with <b>salt and pepper</b>. Cook, stirring occasionally, then stir in the <b>cumin</b> and cook 1 more minute.",
+        timer: 12*60
+      },
+      {
+        eyebrow: "SIMMER",
+        title: "Add lentils and water",
+        content: "Add the <b>lentils</b> and <b>water</b>, bring to a boil. Reduce the heat to medium-low, cover, and cook until the lentils are tender but not mushy.",
+        timer: 45*60
+      },
+      {
+        eyebrow: "FINISH",
+        title: "Add chorizo and potatoes",
+        content: "Add the cooked <b>chorizo</b> and <b>potatoes</b> back in. Cook until the potatoes are fully cooked and fork-tender, thinning with a little water if needed.",
+        timer: 18*60
+      },
+      {
+        eyebrow: "SERVE",
+        title: "Serve it up",
+        content: "If using, mix the <b>heavy cream</b> with the <b>cilantro</b> and <b>lime juice</b>, season with salt and pepper. Ladle the lentejas into bowls, top with the cilantro cream, and serve with rice, patacones, and avocado.",
+        timer: null
+      },
+    ]
+  };
+</script>
+<script src="../assets/site.js"></script>
+<script src="../assets/recipe-engine.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#161a23">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>Patacones, La Boricua Costeña</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Work+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+
+<div class="app">
+  <div class="masthead">
+    <a class="place" href="../index.html">← La Boricua Costeña</a>
+    <div class="place">Bocadillos #2</div>
+  </div>
+  <div class="tile-strip"></div>
+
+  <div class="hero">
+    <h1>Patacones <em>Clásicos</em></h1>
+    <p class="subtitle">Crunchy chips made from twice-fried green plantain, a staple of the Colombian Caribbean coast (yes, the ones from Encanto). Perfect for scooping guacamole, salsa, or hogao.</p>
+  </div>
+
+  <div class="meta-row">
+    <span>PREP <b>10 min</b></span>
+    <span>COOK <b>20 min</b></span>
+    <span>MAKES <b>10 patacones</b></span>
+  </div>
+
+  <div class="card">
+    <div class="servings-row">
+      <div class="servings-label">Green plantains</div>
+      <div class="stepper">
+        <button id="dec" aria-label="Decrease servings">–</button>
+        <div class="count" id="servingsCount">2</div>
+        <button id="inc" aria-label="Increase servings">+</button>
+      </div>
+    </div>
+    <div class="servings-note"><span id="servingsNoteText">Makes about 10 patacones</span></div>
+
+    <div style="height:20px"></div>
+
+    <div class="section-label">Ingredients</div>
+    <ul class="ingredients" id="ingredientsList"></ul>
+  </div>
+
+  <div class="card">
+    <div class="note-box">
+      <b>Good to know,</b> thinner patacones get a nice corn-chip-like crunch, great for dipping. Thicker ones (don't press as hard) hold up better if you're topping them with shredded meat, chicken, or shrimp. In Puerto Rico and the Dominican Republic, these same plantains are called tostones.
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="note-box">
+      <b>Serve them right,</b> guacamole and hogao (a cooked Colombian tomato sauce) are the classic pairing, spread the hogao on first, then top with guacamole. On the coast, patacones traditionally go alongside fried fish and coconut rice.
+    </div>
+  </div>
+
+  <details class="meal-prep">
+    <summary>Meal prep &amp; storage <span class="chev">⌄</span></summary>
+    <div class="meal-prep-body">
+      <p><b>Make ahead,</b> patacones don't hold well once fried, best made fresh right before serving.</p>
+      <p><b>First fry ahead,</b> you can do the first fry and flatten a few hours ahead, then finish with the second fry just before eating.</p>
+      <p><b>Healthier option,</b> an air fryer works well if you'd rather skip the deep fry.</p>
+    </div>
+  </details>
+
+  <div class="action-row">
+    <button class="start-btn" id="startBtn">Start cooking →</button>
+    <button class="print-btn" id="printBtn">Print</button>
+  </div>
+
+  <div class="print-only" id="printSteps"></div>
+
+  <footer>PATACONES CLÁSICOS</footer>
+</div>
+
+<!-- COOK MODE -->
+<div class="cook-overlay" id="cookOverlay">
+  <div class="cook-top">
+    <button class="close-btn" id="closeBtn">✕</button>
+    <div class="step-count" id="stepCount">STEP 1 / 6</div>
+    <div style="width:38px"></div>
+  </div>
+
+  <div class="progress-track" id="progressTrack"></div>
+
+  <div class="cook-body" id="cookBody">
+    <div class="step-eyebrow" id="stepEyebrow">HEAT</div>
+    <h2 class="step-title" id="stepTitle"></h2>
+    <p class="step-content" id="stepContent"></p>
+
+    <div class="timer-wrap" id="timerWrap" style="display:none;">
+      <div class="dial">
+        <svg width="190" height="190" viewBox="0 0 190 190">
+          <circle class="track" cx="95" cy="95" r="82"></circle>
+          <circle class="fill" id="dialFill" cx="95" cy="95" r="82"></circle>
+        </svg>
+        <div class="dial-center">
+          <div class="dial-time" id="dialTime">00:00</div>
+          <div class="dial-label" id="dialLabel">READY</div>
+        </div>
+      </div>
+      <div class="timer-controls">
+        <button class="primary" id="timerToggle">Start timer</button>
+        <button id="timerReset">Reset</button>
+      </div>
+      <div class="timer-done-badge" id="timerDoneBadge"><span class="dot"></span>TIME'S UP</div>
+    </div>
+  </div>
+
+  <div class="done-screen" id="doneScreen">
+    <div class="glyph">🍽️</div>
+    <h2>Patacones listos.</h2>
+    <p>Salt them right away and serve hot with guacamole, salsa, or hogao. Buen provecho.</p>
+    <button class="start-btn" id="restartBtn" style="max-width:280px;">Make another batch</button>
+  </div>
+
+  <div class="cook-nav" id="cookNav">
+    <button id="prevBtn">Back</button>
+    <button class="next" id="nextBtn">Next step</button>
+  </div>
+</div>
+
+<script>
+  window.RECIPE = {
+    accent: 'coral',
+    baseServings: 2,
+    servingStep: 2,
+    minServings: 2,
+    maxServings: 8,
+    ingredients: [
+      { name: "Green plantains", base: 2, unit: "" },
+      { name: "Oil, for frying", base: 2, unit: "cup", sub: "avocado oil works well" },
+      { name: "Salt", base: 1, unit: "tsp", sub: "to taste" },
+    ],
+    servingsNote: (scale, fmt) => `Makes about ${fmt(10*scale)} patacones`,
+    steps: [
+      {
+        eyebrow: "HEAT",
+        title: "Heat the oil",
+        content: "Heat the <b>oil</b> in a deep pot or pan over medium-high heat.",
+        timer: 4*60
+      },
+      {
+        eyebrow: "PREP",
+        title: "Peel the plantains",
+        content: "Cut each <b>plantain</b> in half and trim the ends. Cut a slit down one side of the skin and peel it off by hand, it should come off easily.",
+        timer: null
+      },
+      {
+        eyebrow: "FRY · 1",
+        title: "First fry",
+        content: "Cut the plantains into ½ inch rounds. Add to the hot oil and fry until light golden brown.",
+        timer: 3*60
+      },
+      {
+        eyebrow: "SMASH",
+        title: "Smash flat",
+        content: "Place the fried rounds between a piece of clean plastic (like a ziplock bag) and smash flat with a plate or tortilla press. Press harder for thin, crunchy chips, lighter if you plan to top them later.",
+        timer: null
+      },
+      {
+        eyebrow: "FRY · 2",
+        title: "Second fry",
+        content: "Fry the flattened plantains again until golden brown all over.",
+        timer: 3*60
+      },
+      {
+        eyebrow: "SERVE",
+        title: "Drain and salt",
+        content: "Drain on paper towels to remove excess oil, and salt immediately. Serve with guacamole, salsa, or hogao.",
+        timer: null
+      },
+    ]
+  };
+</script>
+<script src="../assets/site.js"></script>
+<script src="../assets/recipe-engine.js"></script>
+
+</body>
+</html>

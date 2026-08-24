@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#161a23">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>Mote de Queso, La Boricua Costeña</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Work+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+
+<div class="app">
+  <div class="masthead">
+    <a class="place" href="../index.html">← La Boricua Costeña</a>
+    <div class="place">Mote #2</div>
+  </div>
+  <div class="tile-strip"></div>
+
+  <div class="hero">
+    <h1>Mote de <em>Queso</em></h1>
+    <p class="subtitle">A thick, creamy Cartagena classic, ñame simmered until tender and finished with a sofrito and melted cheese. One of the most beloved soups of the Colombian Caribbean coast.</p>
+  </div>
+
+  <div class="meta-row">
+    <span>PREP <b>10 min</b></span>
+    <span>COOK <b>55 min</b></span>
+    <span>SERVES <b>4</b></span>
+  </div>
+
+  <div class="card">
+    <div class="servings-row">
+      <div class="servings-label">Servings</div>
+      <div class="stepper">
+        <button id="dec" aria-label="Decrease servings">–</button>
+        <div class="count" id="servingsCount">4</div>
+        <button id="inc" aria-label="Increase servings">+</button>
+      </div>
+    </div>
+    <div class="servings-note"><span id="servingsNoteText">3 lbs ñame</span></div>
+
+    <div style="height:20px"></div>
+
+    <div class="section-label">Ingredients</div>
+    <ul class="ingredients" id="ingredientsList"></ul>
+  </div>
+
+  <div class="card">
+    <div class="note-box">
+      <b>No queso costeño in the US? </b>Feta is the closest match for flavor and crumble, and it's what most Colombian home cooks in the States reach for. Cotija and queso blanco are good options too. Some supermarkets and Sam's Club locations carry a Central American cheese called "queso El Viajero," which is very close to the real thing if you can track it down. A Latin market is your best bet for any of these.
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="note-box">
+      <b>No suero either? </b>That's fine, this version doesn't need it. Traditional versions sometimes finish with a drizzle of suero costeño (a tangy cultured cream) on top, but a good squeeze of fresh lime juice at the end does the same job of brightening the soup. If you want something closer to that tang, thin a little sour cream with milk and a squeeze of lime.
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="note-box">
+      <b>Can't find ñame? </b>Yuca or a regular yam both work as substitutes. Frozen ñame at a Latin market is often more reliable than fresh, and easier to work with, two bags of frozen is roughly equal to one large fresh ñame.
+    </div>
+  </div>
+
+  <details class="meal-prep">
+    <summary>Meal prep &amp; storage <span class="chev">⌄</span></summary>
+    <div class="meal-prep-body">
+      <p><b>Make ahead,</b> reheats well, though the texture is best the day it's made.</p>
+      <p><b>Store,</b> airtight container in the fridge for up to 3 days.</p>
+      <p><b>Reheat,</b> stovetop over low heat, adding a splash of water if it's thickened up too much.</p>
+    </div>
+  </details>
+
+  <div class="action-row">
+    <button class="start-btn" id="startBtn">Start cooking →</button>
+    <button class="print-btn" id="printBtn">Print</button>
+  </div>
+
+  <div class="print-only" id="printSteps"></div>
+
+  <footer>MOTE DE QUESO</footer>
+</div>
+
+<!-- COOK MODE -->
+<div class="cook-overlay" id="cookOverlay">
+  <div class="cook-top">
+    <button class="close-btn" id="closeBtn">✕</button>
+    <div class="step-count" id="stepCount">STEP 1 / 4</div>
+    <div style="width:38px"></div>
+  </div>
+
+  <div class="progress-track" id="progressTrack"></div>
+
+  <div class="cook-body" id="cookBody">
+    <div class="step-eyebrow" id="stepEyebrow">ÑAME</div>
+    <h2 class="step-title" id="stepTitle"></h2>
+    <p class="step-content" id="stepContent"></p>
+
+    <div class="timer-wrap" id="timerWrap" style="display:none;">
+      <div class="dial">
+        <svg width="190" height="190" viewBox="0 0 190 190">
+          <circle class="track" cx="95" cy="95" r="82"></circle>
+          <circle class="fill" id="dialFill" cx="95" cy="95" r="82"></circle>
+        </svg>
+        <div class="dial-center">
+          <div class="dial-time" id="dialTime">00:00</div>
+          <div class="dial-label" id="dialLabel">READY</div>
+        </div>
+      </div>
+      <div class="timer-controls">
+        <button class="primary" id="timerToggle">Start timer</button>
+        <button id="timerReset">Reset</button>
+      </div>
+      <div class="timer-done-badge" id="timerDoneBadge"><span class="dot"></span>TIME'S UP</div>
+    </div>
+  </div>
+
+  <div class="done-screen" id="doneScreen">
+    <div class="glyph">🍲</div>
+    <h2>Mote listo.</h2>
+    <p>Serve immediately with patacones, avocado, and ají. Buen provecho.</p>
+    <button class="start-btn" id="restartBtn" style="max-width:280px;">Cook it again</button>
+  </div>
+
+  <div class="cook-nav" id="cookNav">
+    <button id="prevBtn">Back</button>
+    <button class="next" id="nextBtn">Next step</button>
+  </div>
+</div>
+
+<script>
+  window.RECIPE = {
+    accent: 'coral',
+    baseServings: 4,
+    servingStep: 2,
+    minServings: 2,
+    maxServings: 12,
+    ingredients: [
+      { name: "Ñame (white yam), peeled and cut into chunks", base: 3, unit: "lb", sub: "or yuca or regular yam" },
+      { name: "Water", base: 7, unit: "cup" },
+      { name: "Oil", base: 2, unit: "tbsp" },
+      { name: "Scallions, chopped", base: 4, unit: "" },
+      { name: "White onion, diced", base: 0.5, unit: "cup" },
+      { name: "Tomato, diced", base: 1, unit: "cup" },
+      { name: "Garlic cloves, minced", base: 2, unit: "" },
+      { name: "Ground cumin", base: 2, unit: "tsp" },
+      { name: "Crumbled cheese", base: 1, unit: "cup", sub: "feta, cotija, or queso costeño" },
+      { name: "Fresh cilantro", base: 1, unit: "", sub: "for garnish" },
+      { name: "Salt", base: 1, unit: "", sub: "to taste" },
+      { name: "Lime juice", base: 1, unit: "", sub: "juice of 1 lime" },
+    ],
+    servingsNote: (scale, fmt) => `${fmt(3*scale)} lbs ñame`,
+    steps: [
+      {
+        eyebrow: "ÑAME",
+        title: "Cook the ñame",
+        content: "Place the <b>ñame</b> and <b>water</b> in a medium pot. Cook over medium heat until soft and tender.",
+        timer: 45*60
+      },
+      {
+        eyebrow: "SOFRITO",
+        title: "Make the sofrito",
+        content: "While the ñame cooks, heat the <b>oil</b> in a skillet over medium heat. Add the <b>onion</b>, <b>scallions</b>, <b>tomato</b>, <b>garlic</b>, and <b>cumin</b>. Cook, stirring frequently, until the onions are tender.",
+        timer: 7*60
+      },
+      {
+        eyebrow: "COMBINE",
+        title: "Add sofrito and cheese",
+        content: "Turn the heat to low and add the <b>sofrito</b> and <b>cheese</b> to the cooked ñame. The soup should turn creamy with small tender chunks of ñame, add more water if it's too thick.",
+        timer: 10*60
+      },
+      {
+        eyebrow: "FINISH",
+        title: "Finish and serve",
+        content: "Add the <b>lime juice</b> and season with <b>salt</b> to taste. Mix well, remove from heat, and garnish with <b>cilantro</b>. Serve immediately.",
+        timer: null
+      },
+    ]
+  };
+</script>
+<script src="../assets/site.js"></script>
+<script src="../assets/recipe-engine.js"></script>
+
+</body>
+</html>
