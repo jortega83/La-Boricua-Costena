@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#161a23">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>Build Your Own Boil Bag, La Boricua Costeña</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Work+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+<style>
+  .step-block{ margin-bottom: 26px; }
+  .step-block-head{
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    margin-bottom: 12px;
+  }
+  .step-block-head .num{
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--meal);
+    border: 1px solid rgba(63,116,184,0.4);
+    border-radius: 999px;
+    padding: 3px 9px;
+  }
+  .step-block-head h3{
+    font-family: 'Fraunces', serif;
+    font-weight: 600;
+    font-size: 18px;
+    margin: 0;
+  }
+  .check-grid{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px 14px;
+  }
+  .check-item{
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    padding: 9px 0;
+    font-size: 14px;
+    cursor: pointer;
+  }
+  .check-item input{
+    width: 18px; height: 18px;
+    accent-color: var(--meal);
+    flex-shrink: 0;
+  }
+  .radio-grid{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+  }
+  .radio-item{
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    padding: 11px 14px;
+    font-size: 14px;
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    cursor: pointer;
+    background: var(--bg-raised-2);
+  }
+  .radio-item:has(input:checked){ border-color: var(--meal); background: rgba(63,116,184,0.1); }
+  .radio-item input{ accent-color: var(--meal); flex-shrink: 0; }
+
+  .build-btn{
+    width: 100%;
+    padding: 17px;
+    border-radius: 999px;
+    border: none;
+    background: var(--meal);
+    color: var(--bg);
+    font-family: 'Work Sans', sans-serif;
+    font-weight: 700;
+    font-size: 16px;
+    cursor: pointer;
+    margin-top: 6px;
+  }
+  .build-btn:hover{ background: var(--meal-deep); }
+
+  .results{ display: none; }
+  .results.show{ display: block; }
+
+  .bag-steps{ list-style: none; margin: 0; padding: 0; counter-reset: bagstep; }
+  .bag-steps li{
+    counter-increment: bagstep;
+    padding: 12px 0 12px 38px;
+    border-bottom: 1px solid var(--line);
+    font-size: 14px;
+    line-height: 1.55;
+    position: relative;
+    color: var(--cream-dim);
+  }
+  .bag-steps li:last-child{ border-bottom: none; }
+  .bag-steps li::before{
+    content: counter(bagstep);
+    position: absolute;
+    left: 0;
+    top: 12px;
+    width: 24px; height: 24px;
+    border-radius: 50%;
+    background: var(--bg-raised-2);
+    color: var(--meal);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .bag-steps li b{ color: var(--cream); }
+
+  .no-print{}
+  @media print{
+    .no-print{ display: none !important; }
+    body{ background: #fff; color: #111; }
+    .app{ max-width: 100%; padding: 0 12px; }
+    .card{ background: #fff; border-color: #ccc; break-inside: avoid; }
+    .bag-steps li{ color: #333; border-color: #ccc; }
+    .bag-steps li::before{ background: #eee; color: #333; }
+    .bag-steps li b{ color: #111; }
+  }
+</style>
+</head>
+<body>
+
+<div class="app">
+  <div class="masthead">
+    <a class="place" href="index.html">← La Boricua Costeña</a>
+    <div class="place">Bag Builder</div>
+  </div>
+  <div class="tile-strip"></div>
+
+  <div class="hero">
+    <h1>Build Your Own <em>Boil Bag</em></h1>
+    <p class="subtitle">Order it the way you would in person, pick your seafood, your add-ins, your flavor, and your spice level, and get a full ingredient list and step-by-step cook instructions for it.</p>
+  </div>
+
+  <div class="card no-print">
+    <div class="step-block">
+      <div class="step-block-head"><span class="num">STEP 1</span><h3>Let's Shake It</h3></div>
+      <div class="check-grid" id="seafoodGrid"></div>
+    </div>
+
+    <div class="step-block">
+      <div class="step-block-head"><span class="num">ADD-INS</span><h3>Round It Out</h3></div>
+      <div class="check-grid" id="addinGrid"></div>
+    </div>
+
+    <div class="step-block">
+      <div class="step-block-head"><span class="num">STEP 2</span><h3>Choose Your Flavor</h3></div>
+      <div class="radio-grid" id="flavorGrid"></div>
+    </div>
+
+    <div class="step-block" style="margin-bottom:6px;">
+      <div class="step-block-head"><span class="num">STEP 3</span><h3>Pick a Spicy Level</h3></div>
+      <div class="radio-grid" id="spiceGrid"></div>
+    </div>
+
+    <button class="build-btn" id="buildBtn">Build my bag →</button>
+  </div>
+
+  <div class="results" id="results">
+    <div class="card">
+      <div class="section-label meal">Your bag</div>
+      <ul class="ingredients" id="bagIngredients"></ul>
+    </div>
+
+    <div class="card">
+      <div class="section-label meal">Instructions</div>
+      <ol class="bag-steps" id="bagSteps"></ol>
+    </div>
+
+    <button class="build-btn no-print" id="printBtn">Print my bag</button>
+  </div>
+
+  <footer>BUILD YOUR OWN BOIL BAG</footer>
+</div>
+
+<script src="assets/site.js"></script>
+<script>
+(function(){
+  const SEAFOOD = [
+    { id: 'blueCrab', name: 'Blue Crabs (seasonal)', amount: '4', unit: 'crabs', wave: 1 },
+    { id: 'crawfish', name: 'Crawfish', amount: '0.5', unit: 'lb', wave: 1 },
+    { id: 'snowCrab', name: 'Snow Crab Legs', amount: '0.5', unit: 'lb', wave: 2 },
+    { id: 'kingCrab', name: 'King Crab Legs', amount: '0.5', unit: 'lb', wave: 2 },
+    { id: 'lobsterTail', name: 'Lobster Tail', amount: '1', unit: 'tail', wave: 2 },
+    { id: 'shrimpHead', name: 'Shrimp with Head', amount: '0.5', unit: 'lb', wave: 3 },
+    { id: 'shrimpNoHead', name: 'Shrimp with no Head', amount: '0.5', unit: 'lb', wave: 3 },
+    { id: 'blackMussels', name: 'Black Mussels', amount: '0.5', unit: 'lb', wave: 3 },
+    { id: 'greenMussels', name: 'Green Mussels', amount: '0.5', unit: 'lb', wave: 3 },
+    { id: 'babyClams', name: 'Baby Clams', amount: '0.5', unit: 'lb', wave: 3 },
+    { id: 'oystersSteamed', name: 'Oysters (steamed)', amount: '6', unit: 'oysters', wave: 'steamed' },
+    { id: 'oystersRaw', name: 'Oysters (raw)', amount: '6', unit: 'oysters', wave: 'raw' },
+  ];
+
+  const ADDINS = [
+    { id: 'corn', name: 'Corn on the cob, cut into thirds', amount: '1', unit: 'ear', wave: 1 },
+    { id: 'potatoes', name: 'Baby potatoes, halved', amount: '2', unit: 'potatoes', wave: 1 },
+    { id: 'sausage', name: 'Andouille sausage, sliced', amount: '0.5', unit: 'lb', wave: 1 },
+    { id: 'eggs', name: 'Eggs', amount: '2', unit: '', wave: 'egg' },
+  ];
+
+  const FLAVORS = {
+    cajun: {
+      name: 'Cajun (Original)',
+      sauce: [
+        ['Butter', '1 cup (2 sticks)'],
+        ['Garlic, minced', '6 cloves'],
+        ['Cajun seasoning', '2 tbsp'],
+        ['Old Bay seasoning', '1 tbsp'],
+        ['Smoked paprika', '1 tsp'],
+        ['Brown sugar', '2 tbsp'],
+        ['Lemon juice', '2 tbsp'],
+      ],
+    },
+    garlicButter: {
+      name: 'Garlic Butter',
+      sauce: [
+        ['Butter', '1 cup (2 sticks)'],
+        ['Garlic, minced', '10 cloves'],
+        ['Cajun seasoning', '1 tbsp'],
+        ['Lemon juice', '2 tbsp'],
+        ['Fresh parsley, chopped', '2 tbsp'],
+      ],
+    },
+    lemonPepper: {
+      name: 'Lemon Pepper',
+      sauce: [
+        ['Butter', '1 cup (2 sticks)'],
+        ['Garlic, minced', '6 cloves'],
+        ['Cracked black pepper', '1 tbsp'],
+        ['Old Bay seasoning', '1 tbsp'],
+        ['Lemon zest and juice', 'of 2 lemons'],
+      ],
+    },
+    tastySpecial: {
+      name: 'The Tasty Special (all the above)',
+      sauce: [
+        ['Butter', '1 cup (2 sticks)'],
+        ['Garlic, minced', '10 cloves'],
+        ['Cajun seasoning', '1 tbsp'],
+        ['Old Bay seasoning', '1 tbsp'],
+        ['Cracked black pepper', '1 tbsp'],
+        ['Smoked paprika', '1 tsp'],
+        ['Brown sugar', '2 tbsp'],
+        ['Lemon zest and juice', 'of 2 lemons'],
+        ['Fresh parsley, chopped', '2 tbsp'],
+      ],
+    },
+  };
+
+  const SPICE = {
+    nonSpicy: { name: 'Non-Spicy', cayenne: null },
+    mild: { name: 'Mild', cayenne: '¼ tsp' },
+    medium: { name: 'Medium', cayenne: '¾ tsp' },
+    hot: { name: 'Hot', cayenne: '2 tsp' },
+  };
+
+  function buildGrid(container, items, type) {
+    container.innerHTML = items.map(item => `
+      <label class="check-item">
+        <input type="checkbox" name="${type}" value="${item.id}">
+        ${item.name}
+      </label>
+    `).join('');
+  }
+
+  function buildRadioGrid(container, obj, name, checkedId) {
+    container.innerHTML = Object.entries(obj).map(([id, item]) => `
+      <label class="radio-item">
+        <input type="radio" name="${name}" value="${id}" ${id === checkedId ? 'checked' : ''}>
+        ${item.name}
+      </label>
+    `).join('');
+  }
+
+  buildGrid(document.getElementById('seafoodGrid'), SEAFOOD, 'seafood');
+  buildGrid(document.getElementById('addinGrid'), ADDINS, 'addin');
+  buildRadioGrid(document.getElementById('flavorGrid'), FLAVORS, 'flavor', 'garlicButter');
+  buildRadioGrid(document.getElementById('spiceGrid'), SPICE, 'spice', 'mild');
+
+  document.getElementById('buildBtn').addEventListener('click', () => {
+    const checkedSeafood = SEAFOOD.filter(s => document.querySelector(`input[name="seafood"][value="${s.id}"]`).checked);
+    const checkedAddins = ADDINS.filter(a => document.querySelector(`input[name="addin"][value="${a.id}"]`).checked);
+    const flavorId = document.querySelector('input[name="flavor"]:checked').value;
+    const spiceId = document.querySelector('input[name="spice"]:checked').value;
+    const flavor = FLAVORS[flavorId];
+    const spice = SPICE[spiceId];
+
+    if (checkedSeafood.length === 0 && checkedAddins.length === 0) {
+      alert('Pick at least one item for your bag.');
+      return;
+    }
+
+    // Ingredients list
+    const ingList = document.getElementById('bagIngredients');
+    let ingHtml = '';
+    checkedSeafood.concat(checkedAddins).forEach(item => {
+      ingHtml += `<li><span class="amt">${item.amount} ${item.unit}</span><span class="name">${item.name}</span></li>`;
+    });
+    ingHtml += `<li><span class="amt">4 qt</span><span class="name">Water, for the boil</span></li>`;
+    ingHtml += `<li><span class="amt">3 tbsp</span><span class="name">Old Bay seasoning<small>for the boil</small></span></li>`;
+    ingHtml += `<li><span class="amt">1</span><span class="name">Lemon, halved<small>for the boil</small></span></li>`;
+    ingHtml += `<li><span class="amt">4</span><span class="name">Garlic cloves, smashed<small>for the boil</small></span></li>`;
+    ingHtml += `<li><span class="amt">1</span><span class="name">Onion, quartered<small>for the boil</small></span></li>`;
+    flavor.sauce.forEach(([name, amt]) => {
+      ingHtml += `<li><span class="amt">${amt}</span><span class="name">${name}<small>for the ${flavor.name} sauce</small></span></li>`;
+    });
+    if (spice.cayenne) {
+      ingHtml += `<li><span class="amt">${spice.cayenne}</span><span class="name">Cayenne pepper<small>for ${spice.name} spice level</small></span></li>`;
+    }
+    ingList.innerHTML = ingHtml;
+
+    // Steps
+    const wave1 = checkedSeafood.concat(checkedAddins).filter(i => i.wave === 1);
+    const wave2 = checkedSeafood.filter(i => i.wave === 2);
+    const wave3 = checkedSeafood.filter(i => i.wave === 3);
+    const eggs = checkedAddins.filter(i => i.wave === 'egg');
+    const oystersSteamed = checkedSeafood.filter(i => i.wave === 'steamed');
+    const oystersRaw = checkedSeafood.filter(i => i.wave === 'raw');
+
+    const steps = [];
+    steps.push(`Bring the <b>water</b> to a boil with the <b>Old Bay</b>, <b>lemon</b>, <b>garlic</b>, and <b>onion</b>. Let it boil a few minutes to infuse.`);
+    if (wave1.length) steps.push(`Add ${wave1.map(i => `<b>${i.name}</b>`).join(', ')} to the pot. Boil for about 12 minutes.`);
+    if (wave2.length) steps.push(`Add ${wave2.map(i => `<b>${i.name}</b>`).join(', ')}. Since crab legs are already cooked, this is mostly about warming them through. Boil about 6 minutes.`);
+    if (wave3.length) steps.push(`Add ${wave3.map(i => `<b>${i.name}</b>`).join(', ')}. Boil about 4 minutes, until shrimp are pink and shells have opened.`);
+    if (eggs.length) steps.push(`Separately, hard boil the <b>eggs</b> for about 10 minutes, then cool and peel.`);
+    if (oystersSteamed.length) steps.push(`Separately, steam the <b>oysters</b> in a covered pot with a splash of water until they open, about 5 to 7 minutes.`);
+    if (oystersRaw.length) steps.push(`<b>Oysters (raw)</b> aren't boiled, shuck them and serve cold on the side.`);
+    steps.push(`Drain the boiled seafood and add-ins well.`);
+    steps.push(`Melt the <b>butter</b> in a saucepan over medium heat. Add the <b>garlic</b> and cook until fragrant, then stir in the rest of the ${flavor.name} sauce ingredients${spice.cayenne ? `, plus the <b>cayenne</b> for ${spice.name} heat` : ''}. Simmer a few minutes to bring it together.`);
+    steps.push(`Put everything in a large heat-safe bag or bowl. Pour the sauce over the top, seal or cover, and shake well to coat. Serve right away.`);
+
+    document.getElementById('bagSteps').innerHTML = steps.map(s => `<li>${s}</li>`).join('');
+
+    document.getElementById('results').classList.add('show');
+    document.getElementById('results').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+
+  document.getElementById('printBtn').addEventListener('click', () => window.print());
+})();
+</script>
+
+</body>
+</html>
