@@ -33,6 +33,10 @@ const RECIPE_INDEX = [
     { title: 'Pescado con Coco', href: 'recipes/pescado-con-coco.html', desc: 'Fish simmered in tomato-coconut sauce', category: 'Colombian Coast' },
     { title: 'Pastel de Arroz Cartagenero', href: 'recipes/pastel-de-arroz-cartagenero.html', desc: 'Achiote rice and stewed meats wrapped in vijao, Navidad', category: 'Colombian Coast' },
     { title: 'Patacón Costeño con Todo', href: 'recipes/patacon-costeno.html', desc: 'Loaded fried plantain sandwich, comida callejera', category: 'Colombian Coast' },
+    { title: 'Mote de Frijol de Ojo Negro', href: 'recipes/mote-de-frijol-de-ojo-negro.html', desc: 'Black-eyed pea and ripe plantain stew', category: 'Colombian Coast' },
+    { title: 'Lentejas Colombianas', href: 'recipes/lentejas-colombianas.html', desc: 'Lentil stew with Colombian chorizo, carrot, and potato', category: 'Colombian Coast' },
+    { title: 'Patacones Clásicos', href: 'recipes/patacones-clasicos.html', desc: 'Plain twice-fried plantain chips, great for dipping', category: 'Colombian Coast' },
+    { title: 'Mote de Queso', href: 'recipes/mote-de-queso.html', desc: 'Ñame and cheese soup, a Cartagena classic', category: 'Colombian Coast' },
     { title: 'Pernil Asado', href: 'recipes/pernil.html', desc: 'Slow-roasted pork shoulder with crispy skin, Navidad', category: 'Cocina Boricua' },
     { title: 'Pasteles Boricua', href: 'recipes/pasteles-de-masa.html', desc: 'Christmas root vegetable and pork parcels, Navidad', category: 'Cocina Boricua' },
     { title: "Arroz con Gandules", href: 'recipes/arroz-con-gandules.html', desc: "Puerto Rico's national dish, rice with pigeon peas", category: 'Cocina Boricua' },
@@ -53,9 +57,9 @@ const RECIPE_INDEX = [
     { title: "Titi Nork's Jalapeño Poppers", href: 'recipes/titi-norks-jalapeno-poppers.html', desc: 'Cream cheese, bacon-wrapped, baked crisp', category: 'American Kitchen' },
     { title: 'Pineapple Chicken Fried Rice', href: 'recipes/pineapple-chicken-fried-rice.html', desc: 'Ground chicken, scrambled eggs, sweet pineapple', category: 'American Kitchen' },
     { title: "Chris E's Sourdough Bread", href: 'recipes/chris-e-sourdough-bread.html', desc: 'High-hydration Tartine-style loaf, dark crackling crust', category: 'American Kitchen' },
-    { title: 'Sourdough Crumpets', href: 'recipes/sourdough-crumpets.html', desc: 'A great way to use up starter discard', category: 'American Kitchen' },
-    { title: 'Sourdough Buttermilk Waffles', href: 'recipes/sourdough-buttermilk-waffles.html', desc: 'Light, airy, crispy on the outside', category: 'American Kitchen' },
-    { title: 'Sourdough Pizza', href: 'recipes/sourdough-pizza.html', desc: 'Charred base, pan-fried and broiled', category: 'American Kitchen' },
+    { title: "Chris E's Sourdough Crumpets", href: 'recipes/sourdough-crumpets.html', desc: 'A great way to use up starter discard', category: 'American Kitchen' },
+    { title: "Chris E's Sourdough Buttermilk Waffles", href: 'recipes/sourdough-buttermilk-waffles.html', desc: 'Light, airy, crispy on the outside', category: 'American Kitchen' },
+    { title: "Chris E's Sourdough Pizza", href: 'recipes/sourdough-pizza.html', desc: 'Charred base, pan-fried and broiled', category: 'American Kitchen' },
     { title: 'Chipotle Chicken Bowl', href: 'recipes/chipotle-chicken-meal-prep.html', desc: 'Cilantro lime rice, black beans, fajita veggies', category: 'Meal Prep' },
     { title: 'Chipotle Steak Bowl', href: 'recipes/chipotle-steak-meal-prep.html', desc: 'Seared steak, cilantro lime rice, black beans', category: 'Meal Prep' },
     { title: 'Sweet and Sour Chicken', href: 'recipes/sweet-and-sour-chicken-meal-prep.html', desc: 'Crispy chicken, peppers, and pineapple, better than takeout', category: 'Meal Prep' },
@@ -77,6 +81,9 @@ const SUBSTITUTIONS = {
   'yautia': "No yautía? White or yellow malanga is the closest substitute for pasteles.",
   'cream of coconut': "Out of cream of coconut? A can of full-fat coconut milk with a couple tablespoons of sugar stirred in works in a pinch, for coquito especially.",
   'buttermilk': "No buttermilk? Add a tablespoon of lemon juice or vinegar to a cup of milk and let it sit 5 minutes.",
+  'queso costeno': "No queso costeño in the US? Feta is the closest match, cotija and queso blanco work well too. Some Sam's Club locations carry a Central American cheese called queso El Viajero that's even closer.",
+  'suero': "No suero costeño? A squeeze of fresh lime juice does the same brightening job. For something closer to the tang, thin a little sour cream with milk and lime juice.",
+  'ñame': "Can't find ñame? Yuca or a regular yam both work as substitutes, look for frozen ñame at a Latin market too.",
 };
 
 const CALORIE_ANSWERS = [
