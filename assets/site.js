@@ -60,6 +60,7 @@ const RECIPE_INDEX = [
     { title: "Chris E's Sourdough Crumpets", href: 'recipes/sourdough-crumpets.html', desc: 'A great way to use up starter discard', category: 'American Kitchen' },
     { title: "Chris E's Sourdough Buttermilk Waffles", href: 'recipes/sourdough-buttermilk-waffles.html', desc: 'Light, airy, crispy on the outside', category: 'American Kitchen' },
     { title: "Chris E's Sourdough Pizza", href: 'recipes/sourdough-pizza.html', desc: 'Charred base, pan-fried and broiled', category: 'American Kitchen' },
+    { title: "Johanna's Seafood Boil", href: 'recipes/johannas-seafood-boil.html', desc: 'King crab, snow crab, and shrimp, restaurant-style sauce', category: 'American Kitchen' },
     { title: 'Chipotle Chicken Bowl', href: 'recipes/chipotle-chicken-meal-prep.html', desc: 'Cilantro lime rice, black beans, fajita veggies', category: 'Meal Prep' },
     { title: 'Chipotle Steak Bowl', href: 'recipes/chipotle-steak-meal-prep.html', desc: 'Seared steak, cilantro lime rice, black beans', category: 'Meal Prep' },
     { title: 'Sweet and Sour Chicken', href: 'recipes/sweet-and-sour-chicken-meal-prep.html', desc: 'Crispy chicken, peppers, and pineapple, better than takeout', category: 'Meal Prep' },
