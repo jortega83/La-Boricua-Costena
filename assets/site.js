@@ -37,6 +37,8 @@ const RECIPE_INDEX = [
     { title: 'Lentejas Colombianas', href: 'recipes/lentejas-colombianas.html', desc: 'Lentil stew with Colombian chorizo, carrot, and potato', category: 'Colombian Coast' },
     { title: 'Patacones Clásicos', href: 'recipes/patacones-clasicos.html', desc: 'Plain twice-fried plantain chips, great for dipping', category: 'Colombian Coast' },
     { title: 'Mote de Queso', href: 'recipes/mote-de-queso.html', desc: 'Ñame and cheese soup, a Cartagena classic', category: 'Colombian Coast' },
+    { title: 'Turkish Chicken Salad', href: 'recipes/turkish-chicken-salad.html', desc: "Family recipe from Cartagena's Turkish community", category: 'Colombian Coast' },
+    { title: 'Arroz con Almendras y Pollo', href: 'recipes/arroz-con-almendras-y-pollo.html', desc: 'Rice with toasted almonds, caramelized onion, cinnamon', category: 'Colombian Coast' },
     { title: 'Pernil Asado', href: 'recipes/pernil.html', desc: 'Slow-roasted pork shoulder with crispy skin, Navidad', category: 'Cocina Boricua' },
     { title: 'Pasteles Boricua', href: 'recipes/pasteles-de-masa.html', desc: 'Christmas root vegetable and pork parcels, Navidad', category: 'Cocina Boricua' },
     { title: "Arroz con Gandules", href: 'recipes/arroz-con-gandules.html', desc: "Puerto Rico's national dish, rice with pigeon peas", category: 'Cocina Boricua' },
@@ -72,6 +74,8 @@ const RECIPE_INDEX = [
     { title: 'Cajun Chicken and Sausage Rice', href: 'recipes/cajun-chicken-sausage-rice-meal-prep.html', desc: 'One-pot jambalaya-style, andouille sausage', category: 'Meal Prep' },
     { title: 'Buffalo Chicken Bowl', href: 'recipes/buffalo-chicken-bowl-meal-prep.html', desc: 'Spicy chicken, ranch drizzle, celery, carrots', category: 'Meal Prep' },
     { title: 'Mediterranean Chicken Bowl', href: 'recipes/mediterranean-chicken-bowl-meal-prep.html', desc: 'Hummus, olives, cucumber, yogurt sauce', category: 'Meal Prep' },
+    { title: 'Camarones al Maní', href: 'recipes/camarones-al-mani-con-patacones.html', desc: 'Shrimp in peanut sauce with patacones folded in', category: 'Latin Cuisine' },
+    { title: 'Moros y Cristianos', href: 'recipes/moros-y-cristianos.html', desc: 'Cuban black beans and rice with crispy bacon', category: 'Latin Cuisine' },
 ];
 
 const SUBSTITUTIONS = {
