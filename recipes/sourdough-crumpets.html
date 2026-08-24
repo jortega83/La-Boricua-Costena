@@ -42,7 +42,7 @@
         <button id="inc" aria-label="Increase servings">+</button>
       </div>
     </div>
-    <div class="servings-note"><span id="servingsNoteText">300g starter discard</span></div>
+    <div class="servings-note"><span id="servingsNoteText">1¼ cups starter discard</span></div>
 
     <div style="height:20px"></div>
 
@@ -130,14 +130,14 @@
     minServings: 4,
     maxServings: 24,
     ingredients: [
-      { name: "Old, acidic sourdough starter discard", base: 300, unit: "g" },
+      { name: "Old, acidic sourdough starter discard", base: 1.25, unit: "cup", sub: "≈300g" },
       { name: "Soft brown sugar", base: 1, unit: "tbsp" },
       { name: "Sea salt", base: 1, unit: "tsp" },
       { name: "Baking soda", base: 1, unit: "tsp" },
       { name: "Lemon juice", base: 1, unit: "", sub: "juice of 1 lemon, if starter isn't very acidic" },
       { name: "Butter", base: 2, unit: "tbsp", sub: "for greasing the rings" },
     ],
-    servingsNote: (scale, fmt) => `${fmt(300*scale)}g starter discard`,
+    servingsNote: (scale, fmt) => `${fmt(1.25*scale)} cups starter discard`,
     steps: [
       {
         eyebrow: "MIX",

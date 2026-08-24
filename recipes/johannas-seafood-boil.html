@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#161a23">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>Johanna's Seafood Boil, La Boricua Costeña</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Work+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+
+<div class="app">
+  <div class="masthead">
+    <a class="place" href="../index.html">← La Boricua Costeña</a>
+    <div class="place">Americana #17</div>
+  </div>
+  <div class="tile-strip"></div>
+
+  <div class="hero">
+    <h1>Johanna's <em>Seafood Boil</em></h1>
+    <p class="subtitle">King crab, snow crab, and shrimp, boiled with a full crab boil seasoning blend, shocked in ice water to lock in the texture, then finished hot in the pan with a rich garlic butter sauce, the way a real boil spot does it.</p>
+    <div class="credit"><span class="dot"></span>Receta de Johanna</div>
+  </div>
+
+  <div class="meta-row">
+    <span>ACTIVE <b>30 min</b></span>
+    <span>BOIL <b>15 min</b></span>
+    <span>SERVES <b>4</b></span>
+  </div>
+
+  <div class="card">
+    <div class="servings-row">
+      <div class="servings-label">Servings</div>
+      <div class="stepper">
+        <button id="dec" aria-label="Decrease servings">–</button>
+        <div class="count" id="servingsCount">4</div>
+        <button id="inc" aria-label="Increase servings">+</button>
+      </div>
+    </div>
+    <div class="servings-note"><span id="servingsNoteText">1.5 lbs king crab, 1.5 lbs snow crab, 1 lb shrimp</span></div>
+
+    <div style="height:20px"></div>
+
+    <div class="section-label rum">Ingredients</div>
+    <ul class="ingredients" id="ingredientsList"></ul>
+  </div>
+
+  <div class="card">
+    <div class="note-box rum">
+      <b>What makes this restaurant quality,</b> three things: a real crab boil seasoning packet in the water (not just Old Bay alone), an ice bath right after boiling so the seafood doesn't keep cooking and turn rubbery, and finishing in a hot pan with the sauce instead of just pouring it on cold, that last step is what actually melts the flavor into the meat instead of sitting on the surface.
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="note-box rum">
+      <b>Good to know,</b> king and snow crab legs are almost always sold pre-cooked and frozen, so the boil is really just about warming them through and infusing flavor, not cooking from raw. Want it spicier? Add more cayenne to the sauce, or drop it entirely for non-spicy.
+    </div>
+  </div>
+
+  <details class="meal-prep rum">
+    <summary>Storage &amp; leftovers <span class="chev">⌄</span></summary>
+    <div class="meal-prep-body">
+      <p><b>Best fresh,</b> this is meant to be eaten hot right out of the pan, the butter sauce firms up as it cools.</p>
+      <p><b>Store,</b> leftovers keep in an airtight container in the fridge for up to 2 days.</p>
+      <p><b>Reheat,</b> gently in a covered pan over low heat, or microwave in short bursts, high heat toughens the seafood.</p>
+    </div>
+  </details>
+
+  <a class="recipe-card meal" href="../build-your-own-boil.html" style="margin-bottom:4px;">
+    <div class="rc-text">
+      <h3>Want a custom bag?</h3>
+      <p>Build your own with different seafood, add-ins, and flavor</p>
+    </div>
+    <div class="arrow">→</div>
+  </a>
+
+  <div class="action-row">
+    <button class="start-btn rum" id="startBtn">Start cooking →</button>
+    <button class="print-btn rum" id="printBtn">Print</button>
+  </div>
+
+  <div class="print-only" id="printSteps"></div>
+
+  <footer>JOHANNA'S SEAFOOD BOIL</footer>
+</div>
+
+<!-- COOK MODE -->
+<div class="cook-overlay" id="cookOverlay">
+  <div class="cook-top">
+    <button class="close-btn" id="closeBtn">✕</button>
+    <div class="step-count" id="stepCount">STEP 1 / 8</div>
+    <div style="width:38px"></div>
+  </div>
+
+  <div class="progress-track" id="progressTrack"></div>
+
+  <div class="cook-body" id="cookBody">
+    <div class="step-eyebrow" id="stepEyebrow">BOIL</div>
+    <h2 class="step-title" id="stepTitle"></h2>
+    <p class="step-content" id="stepContent"></p>
+
+    <div class="timer-wrap" id="timerWrap" style="display:none;">
+      <div class="dial">
+        <svg width="190" height="190" viewBox="0 0 190 190">
+          <circle class="track" cx="95" cy="95" r="82"></circle>
+          <circle class="fill" id="dialFill" cx="95" cy="95" r="82"></circle>
+        </svg>
+        <div class="dial-center">
+          <div class="dial-time" id="dialTime">00:00</div>
+          <div class="dial-label" id="dialLabel">READY</div>
+        </div>
+      </div>
+      <div class="timer-controls">
+        <button class="primary" id="timerToggle">Start timer</button>
+        <button id="timerReset">Reset</button>
+      </div>
+      <div class="timer-done-badge" id="timerDoneBadge"><span class="dot"></span>TIME'S UP</div>
+    </div>
+  </div>
+
+  <div class="done-screen" id="doneScreen">
+    <div class="glyph">🦀</div>
+    <h2>Boil's ready.</h2>
+    <p>Serve hot with extra napkins, crab crackers, lemon wedges, and lots of sauce for dipping. Enjoy.</p>
+    <button class="start-btn rum" id="restartBtn" style="max-width:280px;">Make it again</button>
+  </div>
+
+  <div class="cook-nav" id="cookNav">
+    <button id="prevBtn">Back</button>
+    <button class="next" id="nextBtn">Next step</button>
+  </div>
+</div>
+
+<script>
+  window.RECIPE = {
+    accent: 'rum',
+    baseServings: 4,
+    servingStep: 2,
+    minServings: 2,
+    maxServings: 12,
+    ingredients: [
+      { name: "King crab legs, thawed if frozen", base: 1.5, unit: "lb" },
+      { name: "Snow crab legs, thawed if frozen", base: 1.5, unit: "lb" },
+      { name: "Shrimp, shell-on, deveined", base: 1, unit: "lb" },
+      { name: "Water", base: 4, unit: "qt", sub: "for the boil, enough to cover" },
+      { name: "Crab boil seasoning packet", base: 1, unit: "", sub: "such as Zatarain's or Louisiana brand" },
+      { name: "Old Bay seasoning", base: 3, unit: "tbsp", sub: "for the boil" },
+      { name: "Lemon, halved", base: 1, unit: "" },
+      { name: "Bay leaves", base: 2, unit: "" },
+      { name: "Garlic cloves, smashed", base: 4, unit: "", sub: "for the boil" },
+      { name: "Onion, quartered", base: 1, unit: "" },
+      { name: "Ice", base: 4, unit: "cup", sub: "for the ice bath" },
+      { name: "Butter", base: 1, unit: "cup", sub: "2 sticks, for the sauce" },
+      { name: "Garlic cloves, minced", base: 8, unit: "", sub: "for the sauce" },
+      { name: "Chicken or seafood stock", base: 0.5, unit: "cup", sub: "for the sauce" },
+      { name: "Cajun seasoning", base: 2, unit: "tbsp", sub: "for the sauce" },
+      { name: "Old Bay seasoning", base: 1, unit: "tbsp", sub: "for the sauce" },
+      { name: "Smoked paprika", base: 1, unit: "tsp", sub: "for the sauce" },
+      { name: "Brown sugar", base: 2, unit: "tbsp", sub: "for the sauce" },
+      { name: "Louisiana-style hot sauce", base: 1, unit: "tbsp", sub: "for the sauce" },
+      { name: "Lemon juice", base: 2, unit: "tbsp", sub: "for the sauce" },
+      { name: "Cayenne pepper", base: 0.25, unit: "tsp", sub: "for a mild spice level" },
+      { name: "Fresh parsley, chopped", base: 2, unit: "tbsp", sub: "for garnish" },
+      { name: "Lemon wedges", base: 1, unit: "", sub: "for serving" },
+    ],
+    servingsNote: (scale, fmt) => `${fmt(1.5*scale)} lbs king crab, ${fmt(1.5*scale)} lbs snow crab, ${fmt(1*scale)} lb shrimp`,
+    steps: [
+      {
+        eyebrow: "BOIL",
+        title: "Season the water",
+        content: "Bring the <b>water</b> to a boil with the <b>crab boil seasoning packet</b>, <b>Old Bay</b>, <b>lemon</b>, <b>bay leaves</b>, smashed <b>garlic</b>, and <b>onion</b>. Let it boil a few minutes to fully infuse, this seasoning packet is what gives real boil houses their depth of flavor.",
+        timer: 6*60
+      },
+      {
+        eyebrow: "CRAB",
+        title: "Add the crab legs",
+        content: "Add the <b>king crab</b> and <b>snow crab</b> legs to the pot. Since they're already cooked, this is about warming them through and letting them soak up the seasoned water.",
+        timer: 6*60
+      },
+      {
+        eyebrow: "SHRIMP",
+        title: "Add the shrimp",
+        content: "Add the <b>shrimp</b> and cook until pink and opaque.",
+        timer: 3*60
+      },
+      {
+        eyebrow: "ICE BATH",
+        title: "Shock in ice water",
+        content: "Drain the seafood and immediately transfer it to a large bowl of <b>ice</b> water for a minute or two. This stops the cooking right away so the seafood stays tender instead of turning rubbery, a real restaurant trick.",
+        timer: 90
+      },
+      {
+        eyebrow: "DRAIN",
+        title: "Drain again",
+        content: "Drain the seafood well and set aside while you make the sauce.",
+        timer: null
+      },
+      {
+        eyebrow: "SAUCE",
+        title: "Make the garlic butter sauce",
+        content: "Melt the <b>butter</b> in a large pan or pot over medium heat. Add the minced <b>garlic</b> and cook until fragrant, then stir in the <b>stock</b>, <b>Cajun seasoning</b>, <b>Old Bay</b>, <b>paprika</b>, <b>brown sugar</b>, <b>hot sauce</b>, <b>lemon juice</b>, and <b>cayenne</b>. Simmer until it comes together into a rich sauce.",
+        timer: 5*60
+      },
+      {
+        eyebrow: "TOSS",
+        title: "Toss it all in the hot pan",
+        content: "Add the crab and shrimp directly into the pan with the sauce, still on the heat. Toss everything together for a minute or two so the sauce actually melts into the seafood, this is the difference between sauce that coats and sauce that soaks in.",
+        timer: 2*60
+      },
+      {
+        eyebrow: "SERVE",
+        title: "Garnish and serve",
+        content: "Transfer everything to a big bowl or tray, or a bag if you want the shake-it-up presentation. Garnish with <b>parsley</b> and serve with <b>lemon wedges</b> on the side.",
+        timer: null
+      },
+    ]
+  };
+</script>
+<script src="../assets/site.js"></script>
+<script src="../assets/recipe-engine.js"></script>
+
+</body>
+</html>

@@ -42,7 +42,7 @@
         <button id="inc" aria-label="Increase servings">+</button>
       </div>
     </div>
-    <div class="servings-note"><span id="servingsNoteText">320g flour, 50g starter</span></div>
+    <div class="servings-note"><span id="servingsNoteText">2⅔ cups flour, 3⅓ tbsp starter</span></div>
 
     <div style="height:20px"></div>
 
@@ -130,15 +130,15 @@
     minServings: 2,
     maxServings: 8,
     ingredients: [
-      { name: "Sourdough starter", base: 50, unit: "g" },
-      { name: "Warm water", base: 200, unit: "g" },
-      { name: "00 flour", base: 320, unit: "g", sub: "or bread flour" },
+      { name: "Sourdough starter", base: 3.33, unit: "tbsp", sub: "≈50g" },
+      { name: "Warm water", base: 0.845, unit: "cup", sub: "≈200g" },
+      { name: "00 flour", base: 2.667, unit: "cup", sub: "or bread flour, ≈320g" },
       { name: "Olive oil", base: 2, unit: "tbsp" },
-      { name: "Sea salt", base: 10, unit: "g" },
-      { name: "Diastatic malt powder", base: 10, unit: "g", sub: "optional, or a pinch of sugar/honey" },
+      { name: "Sea salt", base: 1.667, unit: "tsp", sub: "≈10g" },
+      { name: "Diastatic malt powder", base: 1, unit: "tbsp", sub: "optional, or a pinch of sugar/honey, ≈10g" },
       { name: "Toppings of choice", base: 1, unit: "", sub: "sauce, cheese, etc." },
     ],
-    servingsNote: (scale, fmt) => `${fmt(320*scale)}g flour, ${fmt(50*scale)}g starter`,
+    servingsNote: (scale, fmt) => `${fmt(2.667*scale)} cups flour, ${fmt(3.33*scale)} tbsp starter`,
     steps: [
       {
         eyebrow: "MIX",
@@ -185,7 +185,7 @@
       {
         eyebrow: "SHAPE",
         title: "Divide and shape",
-        content: "About 4 hours before baking, remove the dough from the fridge and divide into equal balls, about 300g each is a good size. Shape each into a tight ball.",
+        content: "About 4 hours before baking, remove the dough from the fridge and divide into equal balls, about ¾ pound (300g) each is a good size. Shape each into a tight ball.",
         timer: null
       },
       {

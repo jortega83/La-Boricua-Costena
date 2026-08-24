@@ -42,7 +42,7 @@
         <button id="inc" aria-label="Increase servings">+</button>
       </div>
     </div>
-    <div class="servings-note"><span id="servingsNoteText">1kg strong white + 300g whole grain flour</span></div>
+    <div class="servings-note"><span id="servingsNoteText">5¾ cups strong white + 2½ cups whole grain flour</span></div>
 
     <div style="height:20px"></div>
 
@@ -163,15 +163,15 @@
     maxServings: 8,
     ingredients: [
       { name: "Active sourdough starter", base: 1, unit: "tbsp", sub: "for the levain" },
-      { name: "Flour, mix of white and wholemeal", base: 200, unit: "g", sub: "for the levain" },
-      { name: "Water", base: 200, unit: "g", sub: "for the levain" },
-      { name: "Warm water", base: 700, unit: "g", sub: "for the dough, plus a little extra if needed" },
-      { name: "Strong white bread flour", base: 700, unit: "g", sub: "for the dough" },
-      { name: "Wholemeal, spelt, or rye flour", base: 300, unit: "g", sub: "for the dough" },
-      { name: "Fine sea salt", base: 20, unit: "g" },
+      { name: "Flour, mix of white and wholemeal", base: 1.667, unit: "cup", sub: "for the levain, ≈200g" },
+      { name: "Water", base: 0.845, unit: "cup", sub: "for the levain, ≈200g" },
+      { name: "Warm water", base: 3, unit: "cup", sub: "for the dough, ≈700g, plus a little extra if needed" },
+      { name: "Strong white bread flour", base: 5.75, unit: "cup", sub: "for the dough, ≈700g" },
+      { name: "Wholemeal, spelt, or rye flour", base: 2.5, unit: "cup", sub: "for the dough, ≈300g" },
+      { name: "Fine sea salt", base: 3.5, unit: "tsp", sub: "≈20g" },
       { name: "Semolina or rice flour", base: 1, unit: "", sub: "for dusting the proving basket and board" },
     ],
-    servingsNote: (scale, fmt) => `${fmt(700*scale)}g strong white + ${fmt(300*scale)}g whole grain flour`,
+    servingsNote: (scale, fmt) => `${fmt(5.75*scale)} cups strong white + ${fmt(2.5*scale)} cups whole grain flour`,
     steps: [
       {
         eyebrow: "DAY 1 · MORNING",
@@ -188,7 +188,7 @@
       {
         eyebrow: "DAY 2 · MIX",
         title: "Mix the dough",
-        content: "Whisk 200g of the <b>levain</b> into the <b>warm water</b>. Using your hands, mix in the <b>flours</b> until fully incorporated with no dry bits, it should feel shaggy and thickly porridgy, not soupy or stiff.",
+        content: "Whisk about 1 cup (200g) of the <b>levain</b> into the <b>warm water</b>. Using your hands, mix in the <b>flours</b> until fully incorporated with no dry bits, it should feel shaggy and thickly porridgy, not soupy or stiff.",
         timer: null
       },
       {
