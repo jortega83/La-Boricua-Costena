@@ -1,24 +1,24 @@
 :root{
-  --bg: #12181a;
-  --bg-raised: #1a2225;
-  --bg-raised-2: #212b2e;
-  --line: #2b373a;
-  --cream: #f2ead9;
-  --cream-dim: #b9b2a3;
+  --bg: #161a23;
+  --bg-raised: #1e2330;
+  --bg-raised-2: #262c3d;
+  --line: #333b4f;
+  --cream: #f4ecd8;
+  --cream-dim: #9d97ab;
 
-  /* Colombian coast accents (Julian / Graciana's side) */
-  --coral: #e2703a;
-  --coral-dim: #a95530;
-  --teal: #4fa39a;
+  /* Colombian coast accents (Julian / Graciana's side) — ladrillo brick + Caribbean sea */
+  --coral: #c85431;
+  --coral-dim: #8f3b21;
+  --teal: #2f9c92;
 
-  /* Puerto Rican accents (Johanna's side) */
-  --rum: #d4a24c;
-  --rum-deep: #a97c34;
+  /* Puerto Rican accents (Johanna's side) — achiote gold */
+  --rum: #d9a441;
+  --rum-deep: #a87a26;
   --rose: #c85c6b;
 
-  /* Meal Prep accent */
-  --meal: #4fa3c9;
-  --meal-deep: #3a7fa0;
+  /* Meal Prep accent — cobalt azulejo tile blue */
+  --meal: #3f74b8;
+  --meal-deep: #2c5590;
 
   --radius: 18px;
 }
@@ -75,10 +75,28 @@ body::before{
   position: fixed;
   inset: 0;
   background:
-    radial-gradient(ellipse 900px 500px at 15% -10%, rgba(226,112,58,0.10), transparent 60%),
-    radial-gradient(ellipse 700px 500px at 110% 10%, rgba(212,162,76,0.10), transparent 60%);
+    radial-gradient(ellipse 900px 500px at 15% -10%, rgba(200,84,49,0.09), transparent 60%),
+    radial-gradient(ellipse 700px 500px at 110% 10%, rgba(217,164,65,0.09), transparent 60%),
+    radial-gradient(ellipse 800px 600px at 50% 120%, rgba(63,116,184,0.07), transparent 60%);
   pointer-events: none;
   z-index: 0;
+}
+
+/* Azulejo tile strip — a nod to the ceramic tilework of Cartagena's colonial
+   walls and Old San Juan's balconies. Four brand pigments in a repeating
+   diamond, the site's one deliberate ornament. */
+.tile-strip{
+  height: 7px;
+  width: 100%;
+  margin: 0 -20px 22px;
+  background: repeating-linear-gradient(
+    -45deg,
+    var(--coral) 0px, var(--coral) 14px,
+    var(--rum) 14px, var(--rum) 28px,
+    var(--teal) 28px, var(--teal) 42px,
+    var(--meal) 42px, var(--meal) 56px
+  );
+  opacity: 0.9;
 }
 
 .app{
@@ -102,7 +120,7 @@ body::before{
   position: sticky;
   top: 0;
   z-index: 20;
-  background: rgba(18,24,26,0.88);
+  background: rgba(22,26,35,0.88);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
 }
@@ -473,6 +491,7 @@ footer{
 
 @media print{
   body::before{ display: none; }
+  .tile-strip{ display: none; }
   .cook-overlay, .print-btn, .action-row .start-btn, .meal-prep summary .chev, .back-to-top{ display: none !important; }
   body{ background: #fff; color: #111; }
   .app{ max-width: 100%; padding: 0 12px; }
