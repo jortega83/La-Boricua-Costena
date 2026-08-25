@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#161a23">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>Johanna's Chocolate Chip Cookies, La Boricua Costeña</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Work+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+
+<div class="app">
+  <div class="masthead">
+    <a class="place" href="../index.html">← La Boricua Costeña</a>
+    <div class="place">Americana #20</div>
+  </div>
+  <div class="tile-strip"></div>
+
+  <div class="hero">
+    <h1>Johanna's <em>Chocolate Chip Cookies</em></h1>
+    <p class="subtitle">Big bakery-style cookies with a chilled, portioned dough baked straight from frozen for a crisp edge and a soft, gooey center.</p>
+    <div class="credit"><span class="dot"></span>Receta de Johanna</div>
+  </div>
+
+  <div class="meta-row">
+    <span>CHILL <b>1 hr</b></span>
+    <span>FREEZE <b>until solid</b></span>
+    <span>MAKES <b>16 cookies</b></span>
+  </div>
+
+  <div class="card">
+    <div class="servings-row">
+      <div class="servings-label">Cookies</div>
+      <div class="stepper">
+        <button id="dec" aria-label="Decrease servings">–</button>
+        <div class="count" id="servingsCount">16</div>
+        <button id="inc" aria-label="Increase servings">+</button>
+      </div>
+    </div>
+    <div class="servings-note"><span id="servingsNoteText">2 cups butter, 6 cups flour</span></div>
+
+    <div style="height:20px"></div>
+
+    <div class="section-label rum">Ingredients</div>
+    <ul class="ingredients" id="ingredientsList"></ul>
+  </div>
+
+  <div class="card">
+    <div class="note-box rum">
+      <b>This is a base dough,</b> it's built to be customized. Swap in 2 cups of any mix-ins you like, chocolate chips, candy, chopped cookie pieces, added with the dry ingredients. Any wet flavors like vanilla or purées go in with the eggs. The chill is where the flavor and texture happen, don't skip it.
+    </div>
+  </div>
+
+  <details class="meal-prep rum">
+    <summary>Storage &amp; leftovers <span class="chev">⌄</span></summary>
+    <div class="meal-prep-body">
+      <p><b>Make ahead,</b> the whole point of freezing the portioned dough is to have cookies ready whenever you want them, no need to bake the full batch at once.</p>
+      <p><b>Store raw dough,</b> frozen dough balls keep in a freezer bag for up to 3 months, bake straight from frozen anytime.</p>
+      <p><b>Store baked cookies,</b> airtight container at room temperature for up to 5 days.</p>
+    </div>
+  </details>
+
+  <div class="action-row">
+    <button class="start-btn rum" id="startBtn">Start cooking →</button>
+    <button class="print-btn rum" id="printBtn">Print</button>
+  </div>
+
+  <div class="print-only" id="printSteps"></div>
+
+  <footer>JOHANNA'S CHOCOLATE CHIP COOKIES</footer>
+</div>
+
+<!-- COOK MODE -->
+<div class="cook-overlay" id="cookOverlay">
+  <div class="cook-top">
+    <button class="close-btn" id="closeBtn">✕</button>
+    <div class="step-count" id="stepCount">STEP 1 / 6</div>
+    <div style="width:38px"></div>
+  </div>
+
+  <div class="progress-track" id="progressTrack"></div>
+
+  <div class="cook-body" id="cookBody">
+    <div class="step-eyebrow" id="stepEyebrow">CREAM</div>
+    <h2 class="step-title" id="stepTitle"></h2>
+    <p class="step-content" id="stepContent"></p>
+
+    <div class="timer-wrap" id="timerWrap" style="display:none;">
+      <div class="dial">
+        <svg width="190" height="190" viewBox="0 0 190 190">
+          <circle class="track" cx="95" cy="95" r="82"></circle>
+          <circle class="fill" id="dialFill" cx="95" cy="95" r="82"></circle>
+        </svg>
+        <div class="dial-center">
+          <div class="dial-time" id="dialTime">00:00</div>
+          <div class="dial-label" id="dialLabel">READY</div>
+        </div>
+      </div>
+      <div class="timer-controls">
+        <button class="primary" id="timerToggle">Start timer</button>
+        <button id="timerReset">Reset</button>
+      </div>
+      <div class="timer-done-badge" id="timerDoneBadge"><span class="dot"></span>TIME'S UP</div>
+    </div>
+  </div>
+
+  <div class="done-screen" id="doneScreen">
+    <div class="glyph">🍪</div>
+    <h2>Cookies are ready.</h2>
+    <p>Let them cool on the pan for a few minutes before moving, the centers are still setting. Enjoy.</p>
+    <button class="start-btn rum" id="restartBtn" style="max-width:280px;">Bake another batch</button>
+  </div>
+
+  <div class="cook-nav" id="cookNav">
+    <button id="prevBtn">Back</button>
+    <button class="next" id="nextBtn">Next step</button>
+  </div>
+</div>
+
+<script>
+  window.RECIPE = {
+    accent: 'rum',
+    baseServings: 16,
+    servingStep: 4,
+    minServings: 4,
+    maxServings: 32,
+    ingredients: [
+      { name: "Unsalted butter, softened", base: 2, unit: "cup", sub: "≈454g" },
+      { name: "White sugar", base: 1, unit: "cup", sub: "≈200g" },
+      { name: "Brown sugar, packed", base: 2, unit: "cup", sub: "≈440g" },
+      { name: "Fine sea salt", base: 1.33, unit: "tsp", sub: "≈8g" },
+      { name: "Whole eggs", base: 4, unit: "", sub: "≈200g" },
+      { name: "Egg yolks", base: 2, unit: "", sub: "≈36g" },
+      { name: "All-purpose flour", base: 6, unit: "cup", sub: "≈720g" },
+      { name: "Cornstarch", base: 2, unit: "tsp", sub: "≈6g" },
+      { name: "Baking soda", base: 2, unit: "tsp", sub: "≈9g" },
+      { name: "Semisweet chocolate chips", base: 2, unit: "cup", sub: "≈340g, or any mix-in you like" },
+    ],
+    servingsNote: (scale, fmt) => `${fmt(2*scale)} cups butter, ${fmt(6*scale)} cups flour`,
+    steps: [
+      {
+        eyebrow: "CREAM",
+        title: "Cream the butter and sugar",
+        content: "Cream the <b>butter</b> and <b>white sugar</b> together. Add the <b>brown sugar</b> and <b>salt</b>, mix to combine.",
+        timer: 3*60
+      },
+      {
+        eyebrow: "EGGS",
+        title: "Add the eggs",
+        content: "Add the <b>eggs</b> and <b>egg yolks</b> on medium speed until fully incorporated. Any wet flavors like vanilla go in now.",
+        timer: 2*60
+      },
+      {
+        eyebrow: "DRY",
+        title: "Add the dry ingredients",
+        content: "Add the <b>flour</b>, <b>cornstarch</b>, and <b>baking soda</b>, and mix just until no dry streaks remain. Fold in the <b>chocolate chips</b>.",
+        timer: 2*60
+      },
+      {
+        eyebrow: "CHILL",
+        title: "Chill the dough",
+        content: "Chill the dough in the fridge. This is where the flavor and texture happen, don't skip it.",
+        timer: 60*60
+      },
+      {
+        eyebrow: "PORTION",
+        title: "Portion and freeze",
+        content: "Portion the dough into 4 to 5 oz balls (about 113 to 140g each). Freeze until solid.",
+        timer: null
+      },
+      {
+        eyebrow: "BAKE",
+        title: "Bake from frozen",
+        content: "Preheat the oven to 405°F. Bake the cookies straight from frozen, no need to thaw.",
+        timer: 12*60
+      },
+    ]
+  };
+</script>
+<script src="../assets/site.js"></script>
+<script src="../assets/recipe-engine.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#161a23">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>Sopa de Pescado con Coco, La Boricua Costeña</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Work+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+
+<div class="app">
+  <div class="masthead">
+    <a class="place" href="../index.html">← La Boricua Costeña</a>
+    <div class="place">Latina #4</div>
+  </div>
+  <div class="tile-strip"></div>
+
+  <div class="hero">
+    <h1>Sopa de <em>Pescado con Coco</em></h1>
+    <p class="subtitle">A hearty coastal fish and shrimp chowder in a rich coconut broth, loaded with yuca, green plantain, and calabaza. A full meal in one pot, built from a whole fish for maximum flavor.</p>
+  </div>
+
+  <div class="meta-row">
+    <span>ACTIVE <b>40 min</b></span>
+    <span>SIMMER <b>40 min</b></span>
+    <span>SERVES <b>8</b></span>
+  </div>
+
+  <div class="card">
+    <div class="servings-row">
+      <div class="servings-label">Servings</div>
+      <div class="stepper">
+        <button id="dec" aria-label="Decrease servings">–</button>
+        <div class="count" id="servingsCount">8</div>
+        <button id="inc" aria-label="Increase servings">+</button>
+      </div>
+    </div>
+    <div class="servings-note"><span id="servingsNoteText">1 whole large fish, 2 lbs shrimp</span></div>
+
+    <div style="height:20px"></div>
+
+    <div class="section-label latin">Ingredients</div>
+    <ul class="ingredients" id="ingredientsList"></ul>
+  </div>
+
+  <div class="card">
+    <div class="note-box latin">
+      <b>Good to know,</b> sierra (king mackerel) is traditional here, but any firm, flavorful whole fish works. Cooking the fish whole, head included, gives the broth far more depth than using fillets alone. Culantro (not cilantro) has a stronger, more savory flavor, if you can't find it, use a bit more regular cilantro.
+    </div>
+  </div>
+
+  <details class="meal-prep latin">
+    <summary>Meal prep &amp; storage <span class="chev">⌄</span></summary>
+    <div class="meal-prep-body">
+      <p><b>Make ahead,</b> tastes even better the next day once the flavors settle.</p>
+      <p><b>Store,</b> airtight container in the fridge for up to 3 days.</p>
+      <p><b>Reheat,</b> gently on the stovetop over low heat so the shrimp doesn't overcook.</p>
+      <p><b>Freeze,</b> freezes well for up to 2 months, though the yuca and plantain soften further once thawed.</p>
+    </div>
+  </details>
+
+  <div class="action-row">
+    <button class="start-btn latin" id="startBtn">Start cooking →</button>
+    <button class="print-btn latin" id="printBtn">Print</button>
+  </div>
+
+  <div class="print-only" id="printSteps"></div>
+
+  <footer>SOPA DE PESCADO CON COCO</footer>
+</div>
+
+<!-- COOK MODE -->
+<div class="cook-overlay" id="cookOverlay">
+  <div class="cook-top">
+    <button class="close-btn" id="closeBtn">✕</button>
+    <div class="step-count" id="stepCount">STEP 1 / 7</div>
+    <div style="width:38px"></div>
+  </div>
+
+  <div class="progress-track" id="progressTrack"></div>
+
+  <div class="cook-body" id="cookBody">
+    <div class="step-eyebrow" id="stepEyebrow">SEASON</div>
+    <h2 class="step-title" id="stepTitle"></h2>
+    <p class="step-content" id="stepContent"></p>
+
+    <div class="timer-wrap" id="timerWrap" style="display:none;">
+      <div class="dial">
+        <svg width="190" height="190" viewBox="0 0 190 190">
+          <circle class="track" cx="95" cy="95" r="82"></circle>
+          <circle class="fill" id="dialFill" cx="95" cy="95" r="82"></circle>
+        </svg>
+        <div class="dial-center">
+          <div class="dial-time" id="dialTime">00:00</div>
+          <div class="dial-label" id="dialLabel">READY</div>
+        </div>
+      </div>
+      <div class="timer-controls">
+        <button class="primary" id="timerToggle">Start timer</button>
+        <button id="timerReset">Reset</button>
+      </div>
+      <div class="timer-done-badge" id="timerDoneBadge"><span class="dot"></span>TIME'S UP</div>
+    </div>
+  </div>
+
+  <div class="done-screen" id="doneScreen">
+    <div class="glyph">🥥</div>
+    <h2>Sopa lista.</h2>
+    <p>Finish with fresh cilantro and serve hot in big bowls. Buen provecho.</p>
+    <button class="start-btn latin" id="restartBtn" style="max-width:280px;">Cook it again</button>
+  </div>
+
+  <div class="cook-nav" id="cookNav">
+    <button id="prevBtn">Back</button>
+    <button class="next" id="nextBtn">Next step</button>
+  </div>
+</div>
+
+<script>
+  window.RECIPE = {
+    accent: 'latin',
+    baseServings: 8,
+    servingStep: 2,
+    minServings: 4,
+    maxServings: 16,
+    ingredients: [
+      { name: "Whole large fish (sierra), cleaned, with head", base: 1, unit: "" },
+      { name: "Garlic powder", base: 1, unit: "tsp", sub: "for seasoning the fish" },
+      { name: "Paprika", base: 0.5, unit: "tsp", sub: "for seasoning the fish" },
+      { name: "Salt and pepper", base: 1, unit: "", sub: "for the fish, to taste" },
+      { name: "Onion", base: 1, unit: "", sub: "for the broth" },
+      { name: "Garlic cloves", base: 4, unit: "", sub: "for the broth" },
+      { name: "Celery stalk", base: 1, unit: "", sub: "for the broth" },
+      { name: "Culantro leaves", base: 4, unit: "", sub: "for the broth, or extra cilantro" },
+      { name: "Whole peppercorns and salt", base: 1, unit: "", sub: "for the broth, to taste" },
+      { name: "Shrimp consommé packet", base: 1, unit: "", sub: "for the broth" },
+      { name: "Shrimp, peeled and deveined", base: 2, unit: "lb" },
+      { name: "Garlic powder", base: 1, unit: "tsp", sub: "for the shrimp" },
+      { name: "Salt", base: 1, unit: "", sub: "for the shrimp, to taste" },
+      { name: "Carrot, chopped", base: 1, unit: "" },
+      { name: "Celery stalk, chopped", base: 1, unit: "" },
+      { name: "Red bell pepper", base: 0.5, unit: "" },
+      { name: "Green bell pepper", base: 0.5, unit: "" },
+      { name: "Scallions, chopped", base: 0.33, unit: "cup" },
+      { name: "Culantro or cilantro, chopped", base: 2, unit: "tbsp" },
+      { name: "Salt and pepper", base: 1, unit: "", sub: "to taste" },
+      { name: "Calabaza (pumpkin squash), chopped", base: 1, unit: "lb" },
+      { name: "Green plantain, chopped", base: 1, unit: "" },
+      { name: "Yuca, chopped", base: 1, unit: "lb" },
+      { name: "Coconut milk", base: 2, unit: "cup" },
+      { name: "Sazón with saffron/azafrán packet", base: 1, unit: "" },
+      { name: "Achiote paste", base: 0.5, unit: "tsp" },
+      { name: "Hot pepper (ají picante)", base: 0.5, unit: "" },
+      { name: "Fresh cilantro, chopped", base: 0.25, unit: "cup", sub: "for finishing" },
+    ],
+    servingsNote: (scale, fmt) => `${fmt(1*scale)} whole large fish, ${fmt(2*scale)} lbs shrimp`,
+    steps: [
+      {
+        eyebrow: "SEASON",
+        title: "Season the fish",
+        content: "Rub the whole <b>fish</b> with the <b>garlic powder</b>, <b>paprika</b>, <b>salt</b>, and <b>pepper</b>.",
+        timer: null
+      },
+      {
+        eyebrow: "BROTH",
+        title: "Make the broth",
+        content: "In a large pot, boil the seasoned <b>fish</b> with the <b>onion</b>, <b>garlic</b>, <b>celery</b>, <b>culantro</b>, <b>peppercorns</b>, <b>salt</b>, and <b>shrimp consommé</b> until the fish is fully cooked.",
+        timer: 20*60
+      },
+      {
+        eyebrow: "DEBONE",
+        title: "Remove and debone the fish",
+        content: "Carefully remove the <b>fish</b> from the pot, debone and flake the meat, and set it aside. Strain and reserve the broth.",
+        timer: 10*60
+      },
+      {
+        eyebrow: "SHRIMP",
+        title: "Season the shrimp",
+        content: "Toss the <b>shrimp</b> with the <b>garlic powder</b> and <b>salt</b>, set aside.",
+        timer: null
+      },
+      {
+        eyebrow: "VEGETABLES",
+        title: "Build the vegetable base",
+        content: "Return the reserved broth to the pot. Add the <b>carrot</b>, <b>celery</b>, <b>red</b> and <b>green bell pepper</b>, <b>scallions</b>, and <b>culantro</b>. Season with <b>salt and pepper</b>.",
+        timer: 8*60
+      },
+      {
+        eyebrow: "STARCHES",
+        title: "Add the starches",
+        content: "Add the <b>calabaza</b>, <b>green plantain</b>, and <b>yuca</b>. Simmer until tender.",
+        timer: 20*60
+      },
+      {
+        eyebrow: "FINISH",
+        title: "Finish the soup",
+        content: "Stir in the <b>coconut milk</b>, <b>sazón</b>, <b>achiote paste</b>, and <b>hot pepper</b>. Add the <b>shrimp</b> and cook until pink, then return the flaked <b>fish</b> to warm through. Finish with fresh <b>cilantro</b>.",
+        timer: 5*60
+      },
+    ]
+  };
+</script>
+<script src="../assets/site.js"></script>
+<script src="../assets/recipe-engine.js"></script>
+
+</body>
+</html>
