@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#161a23">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>Ensalada Rusa Clásica, La Boricua Costeña</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Work+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+
+<div class="app">
+  <div class="masthead">
+    <a class="place" href="../index.html">← La Boricua Costeña</a>
+    <div class="place">Latina #3</div>
+  </div>
+  <div class="tile-strip"></div>
+
+  <div class="hero">
+    <h1>Ensalada Rusa <em>Clásica</em></h1>
+    <p class="subtitle">Potatoes, carrots, and peas in a bright mayonnaise dressing, with apple and celery for crunch and sweetness. The classic version found across Latin America, perfect alongside grilled meats.</p>
+  </div>
+
+  <div class="meta-row">
+    <span>ACTIVE <b>45 min</b></span>
+    <span>CHILL <b>1 hr</b></span>
+    <span>SERVES <b>8</b></span>
+  </div>
+
+  <div class="card">
+    <div class="servings-row">
+      <div class="servings-label">Servings</div>
+      <div class="stepper">
+        <button id="dec" aria-label="Decrease servings">–</button>
+        <div class="count" id="servingsCount">8</div>
+        <button id="inc" aria-label="Increase servings">+</button>
+      </div>
+    </div>
+    <div class="servings-note"><span id="servingsNoteText">3.5 lbs potatoes</span></div>
+
+    <div style="height:20px"></div>
+
+    <div class="section-label latin">Ingredients</div>
+    <ul class="ingredients" id="ingredientsList"></ul>
+  </div>
+
+  <div class="card">
+    <div class="note-box latin">
+      <b>Good to know,</b> some cooks skip the apple, but the sweet crunch is what makes this version special. Other traditional add-ins include green beans, corn, diced beets, hard-boiled egg, or shredded chicken, add whatever sounds good.
+    </div>
+  </div>
+
+  <details class="meal-prep latin">
+    <summary>Meal prep &amp; storage <span class="chev">⌄</span></summary>
+    <div class="meal-prep-body">
+      <p><b>Make ahead,</b> perfect for picnics and parties, can be made a day ahead.</p>
+      <p><b>Store,</b> airtight container in the fridge for up to 3 days.</p>
+      <p><b>Keep it fresh,</b> add the apple close to serving time if making far ahead, so it doesn't brown.</p>
+    </div>
+  </details>
+
+  <div class="action-row">
+    <button class="start-btn latin" id="startBtn">Start cooking →</button>
+    <button class="print-btn latin" id="printBtn">Print</button>
+  </div>
+
+  <div class="print-only" id="printSteps"></div>
+
+  <footer>ENSALADA RUSA CLÁSICA</footer>
+</div>
+
+<!-- COOK MODE -->
+<div class="cook-overlay" id="cookOverlay">
+  <div class="cook-top">
+    <button class="close-btn" id="closeBtn">✕</button>
+    <div class="step-count" id="stepCount">STEP 1 / 5</div>
+    <div style="width:38px"></div>
+  </div>
+
+  <div class="progress-track" id="progressTrack"></div>
+
+  <div class="cook-body" id="cookBody">
+    <div class="step-eyebrow" id="stepEyebrow">COOK</div>
+    <h2 class="step-title" id="stepTitle"></h2>
+    <p class="step-content" id="stepContent"></p>
+
+    <div class="timer-wrap" id="timerWrap" style="display:none;">
+      <div class="dial">
+        <svg width="190" height="190" viewBox="0 0 190 190">
+          <circle class="track" cx="95" cy="95" r="82"></circle>
+          <circle class="fill" id="dialFill" cx="95" cy="95" r="82"></circle>
+        </svg>
+        <div class="dial-center">
+          <div class="dial-time" id="dialTime">00:00</div>
+          <div class="dial-label" id="dialLabel">READY</div>
+        </div>
+      </div>
+      <div class="timer-controls">
+        <button class="primary" id="timerToggle">Start timer</button>
+        <button id="timerReset">Reset</button>
+      </div>
+      <div class="timer-done-badge" id="timerDoneBadge"><span class="dot"></span>TIME'S UP</div>
+    </div>
+  </div>
+
+  <div class="done-screen" id="doneScreen">
+    <div class="glyph">🥗</div>
+    <h2>Ensalada lista.</h2>
+    <p>Serve well chilled alongside grilled meats or fried fish. Buen provecho.</p>
+    <button class="start-btn latin" id="restartBtn" style="max-width:280px;">Make it again</button>
+  </div>
+
+  <div class="cook-nav" id="cookNav">
+    <button id="prevBtn">Back</button>
+    <button class="next" id="nextBtn">Next step</button>
+  </div>
+</div>
+
+<script>
+  window.RECIPE = {
+    accent: 'latin',
+    baseServings: 8,
+    servingStep: 4,
+    minServings: 4,
+    maxServings: 24,
+    ingredients: [
+      { name: "Potatoes, peeled, cooked, and diced", base: 3.5, unit: "lb" },
+      { name: "Carrots, peeled, cooked, and diced", base: 1, unit: "lb" },
+      { name: "Peas, steamed", base: 1, unit: "cup" },
+      { name: "Celery, finely chopped", base: 1, unit: "cup" },
+      { name: "Apple, diced", base: 1.5, unit: "" },
+      { name: "White onion, finely chopped", base: 1, unit: "cup" },
+      { name: "Lime juice", base: 1.5, unit: "", sub: "juice of 1 to 2 limes" },
+      { name: "Garlic clove, crushed", base: 1, unit: "" },
+      { name: "Mayonnaise", base: 1, unit: "cup" },
+      { name: "Cilantro, parsley, or dill, chopped", base: 1, unit: "tbsp" },
+      { name: "Salt", base: 1, unit: "", sub: "to taste" },
+    ],
+    servingsNote: (scale, fmt) => `${fmt(3.5*scale)} lbs potatoes`,
+    steps: [
+      {
+        eyebrow: "COOK",
+        title: "Cook the potatoes and carrots",
+        content: "Boil the <b>potatoes</b> and <b>carrots</b> in salted water until tender, then drain and let cool. Dice into small cubes.",
+        timer: 20*60
+      },
+      {
+        eyebrow: "PEAS",
+        title: "Steam the peas",
+        content: "Steam the <b>peas</b> until tender.",
+        timer: 5*60
+      },
+      {
+        eyebrow: "COMBINE",
+        title: "Combine the vegetables",
+        content: "In a large bowl, combine the diced <b>potatoes</b> and <b>carrots</b>, the <b>peas</b>, <b>celery</b>, <b>apple</b>, and <b>onion</b>.",
+        timer: null
+      },
+      {
+        eyebrow: "DRESS",
+        title: "Add the dressing",
+        content: "Add the <b>lime juice</b>, <b>garlic</b>, <b>mayonnaise</b>, and <b>cilantro</b>. Season with <b>salt</b> and mix gently.",
+        timer: null
+      },
+      {
+        eyebrow: "CHILL",
+        title: "Refrigerate before serving",
+        content: "Refrigerate until ready to serve, it's best well chilled.",
+        timer: 60*60
+      },
+    ]
+  };
+</script>
+<script src="../assets/site.js"></script>
+<script src="../assets/recipe-engine.js"></script>
+
+</body>
+</html>

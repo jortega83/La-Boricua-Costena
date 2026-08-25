@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#161a23">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>Shrimp and Sweet Potato Bowl, La Boricua Costeña</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Work+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+
+<div class="app">
+  <div class="masthead">
+    <a class="place" href="../index.html">← La Boricua Costeña</a>
+    <div class="place">Meal Prep #12</div>
+  </div>
+  <div class="tile-strip"></div>
+
+  <div class="hero">
+    <h1>Shrimp &amp; <em>Sweet Potato Bowl</em></h1>
+    <p class="subtitle">Fast, high-protein, and loaded with lean seafood and complex carbs. Cajun-seared shrimp, roasted sweet potato, fresh toppings, and a drizzle of hot honey.</p>
+  </div>
+
+  <div class="meta-row">
+    <span>ACTIVE <b>15 min</b></span>
+    <span>ROAST <b>25 min</b></span>
+    <span>SERVES <b>4</b></span>
+  </div>
+
+  <div class="card">
+    <div class="servings-row">
+      <div class="servings-label">Bowls</div>
+      <div class="stepper">
+        <button id="dec" aria-label="Decrease servings">–</button>
+        <div class="count" id="servingsCount">4</div>
+        <button id="inc" aria-label="Increase servings">+</button>
+      </div>
+    </div>
+    <div class="servings-note"><span id="servingsNoteText">1.75 lbs shrimp</span></div>
+
+    <div style="height:20px"></div>
+
+    <div class="section-label meal">Ingredients</div>
+    <ul class="ingredients" id="ingredientsList"></ul>
+  </div>
+
+  <div class="card">
+    <div class="note-box meal">
+      <b>Good to know,</b> a quinoa or rice blend makes this heartier, shredded cabbage or arugula keeps it lighter and lower carb. Swap the pico de gallo for diced pineapple salsa for a sweeter version.
+    </div>
+  </div>
+
+  <details class="meal-prep meal">
+    <summary>Meal prep &amp; storage <span class="chev">⌄</span></summary>
+    <div class="meal-prep-body">
+      <p><b>Make ahead,</b> roast the sweet potato and prep the base ahead, sear the shrimp fresh each time for the best texture.</p>
+      <p><b>Store,</b> keep components in separate containers in the fridge for up to 4 days.</p>
+      <p><b>Keep fresh,</b> add the avocado and hot honey right before eating.</p>
+      <p><b>Reheat,</b> the shrimp and sweet potato in the microwave, then build the bowl with the cold, fresh toppings.</p>
+    </div>
+  </details>
+
+  <div class="action-row">
+    <button class="start-btn meal" id="startBtn">Start cooking →</button>
+    <button class="print-btn meal" id="printBtn">Print</button>
+  </div>
+
+  <div class="print-only" id="printSteps"></div>
+
+  <footer>SHRIMP &amp; SWEET POTATO BOWL</footer>
+</div>
+
+<!-- COOK MODE -->
+<div class="cook-overlay" id="cookOverlay">
+  <div class="cook-top">
+    <button class="close-btn" id="closeBtn">✕</button>
+    <div class="step-count" id="stepCount">STEP 1 / 4</div>
+    <div style="width:38px"></div>
+  </div>
+
+  <div class="progress-track" id="progressTrack"></div>
+
+  <div class="cook-body" id="cookBody">
+    <div class="step-eyebrow" id="stepEyebrow">SWEET POTATO</div>
+    <h2 class="step-title" id="stepTitle"></h2>
+    <p class="step-content" id="stepContent"></p>
+
+    <div class="timer-wrap" id="timerWrap" style="display:none;">
+      <div class="dial">
+        <svg width="190" height="190" viewBox="0 0 190 190">
+          <circle class="track" cx="95" cy="95" r="82"></circle>
+          <circle class="fill" id="dialFill" cx="95" cy="95" r="82"></circle>
+        </svg>
+        <div class="dial-center">
+          <div class="dial-time" id="dialTime">00:00</div>
+          <div class="dial-label" id="dialLabel">READY</div>
+        </div>
+      </div>
+      <div class="timer-controls">
+        <button class="primary" id="timerToggle">Start timer</button>
+        <button id="timerReset">Reset</button>
+      </div>
+      <div class="timer-done-badge" id="timerDoneBadge"><span class="dot"></span>TIME'S UP</div>
+    </div>
+  </div>
+
+  <div class="done-screen" id="doneScreen">
+    <div class="glyph">🍤</div>
+    <h2>Bowls are ready.</h2>
+    <p>Portion into containers for the week, or eat right away while it's hot. Enjoy.</p>
+    <button class="start-btn meal" id="restartBtn" style="max-width:280px;">Cook it again</button>
+  </div>
+
+  <div class="cook-nav" id="cookNav">
+    <button id="prevBtn">Back</button>
+    <button class="next" id="nextBtn">Next step</button>
+  </div>
+</div>
+
+<script>
+  window.RECIPE = {
+    accent: 'meal',
+    baseServings: 4,
+    servingStep: 2,
+    minServings: 2,
+    maxServings: 12,
+    ingredients: [
+      { name: "Sweet potato, diced", base: 1.5, unit: "lb", sub: "about 4 medium" },
+      { name: "Olive oil", base: 2, unit: "tbsp", sub: "for the sweet potato" },
+      { name: "Shrimp, peeled and deveined", base: 1.75, unit: "lb" },
+      { name: "Cajun or chipotle seasoning", base: 2, unit: "tbsp" },
+      { name: "Butter or olive oil", base: 1, unit: "tbsp", sub: "for searing" },
+      { name: "Shredded cabbage, arugula, or quinoa/rice blend", base: 6, unit: "cup", sub: "base" },
+      { name: "Pico de gallo or diced pineapple salsa", base: 2, unit: "cup" },
+      { name: "Avocado, sliced", base: 1, unit: "" },
+      { name: "Hot honey", base: 2, unit: "tbsp", sub: "for drizzling" },
+      { name: "Salt and pepper", base: 1, unit: "", sub: "to taste" },
+    ],
+    servingsNote: (scale, fmt) => `${fmt(1.75*scale)} lbs shrimp`,
+    steps: [
+      {
+        eyebrow: "SWEET POTATO",
+        title: "Roast the sweet potato",
+        content: "Preheat the oven to 375°F. Toss the diced <b>sweet potato</b> with <b>olive oil</b>, <b>salt</b>, and <b>pepper</b>. Spread on a sheet pan and roast until fork-tender.",
+        timer: 27*60
+      },
+      {
+        eyebrow: "SEASON",
+        title: "Season the shrimp",
+        content: "Pat the <b>shrimp</b> dry and toss with the <b>Cajun or chipotle seasoning</b>.",
+        timer: null
+      },
+      {
+        eyebrow: "SEAR",
+        title: "Sear the shrimp",
+        content: "Heat the <b>butter or oil</b> in a skillet over medium-high heat. Cook the shrimp until pink and opaque.",
+        timer: 5*60
+      },
+      {
+        eyebrow: "ASSEMBLE",
+        title: "Build the bowls",
+        content: "Layer the <b>greens or grain base</b>, add the roasted <b>sweet potato</b> and seared <b>shrimp</b>, top with <b>pico de gallo</b> and <b>avocado</b>, and finish with a light drizzle of <b>hot honey</b>.",
+        timer: null
+      },
+    ]
+  };
+</script>
+<script src="../assets/site.js"></script>
+<script src="../assets/recipe-engine.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#161a23">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>Loaded Party Nachos, La Boricua Costeña</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Work+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+
+<div class="app">
+  <div class="masthead">
+    <a class="place" href="../index.html">← La Boricua Costeña</a>
+    <div class="place">Game Day #2</div>
+  </div>
+  <div class="tile-strip"></div>
+
+  <div class="hero">
+    <h1>Loaded Party <em>Nachos</em></h1>
+    <p class="subtitle">Seasoned beef, refried beans, and melted cheese built in two layers so every single chip gets loaded, not just the ones on top. Finished with fresh pico de gallo, guacamole, and all the fixings.</p>
+  </div>
+
+  <div class="meta-row">
+    <span>ACTIVE <b>25 min</b></span>
+    <span>BAKE <b>10 min</b></span>
+    <span>SERVES <b>6 to 8</b></span>
+  </div>
+
+  <div class="card">
+    <div class="servings-row">
+      <div class="servings-label">Servings</div>
+      <div class="stepper">
+        <button id="dec" aria-label="Decrease servings">–</button>
+        <div class="count" id="servingsCount">8</div>
+        <button id="inc" aria-label="Increase servings">+</button>
+      </div>
+    </div>
+    <div class="servings-note"><span id="servingsNoteText">1.5 lbs ground beef</span></div>
+
+    <div style="height:20px"></div>
+
+    <div class="section-label rum">Ingredients</div>
+    <ul class="ingredients" id="ingredientsList"></ul>
+  </div>
+
+  <div class="card">
+    <div class="note-box rum">
+      <b>The real trick,</b> building this in two layers instead of one big pile is what keeps every chip loaded instead of just the top ones. It's a couple extra minutes of work for a much better result. Add cold toppings only after baking, they don't belong in the oven.
+    </div>
+  </div>
+
+  <details class="meal-prep rum">
+    <summary>Storage &amp; leftovers <span class="chev">⌄</span></summary>
+    <div class="meal-prep-body">
+      <p><b>Best fresh,</b> nachos don't hold well, assemble and bake right before serving.</p>
+      <p><b>Make ahead,</b> the beef, beans, and pico de gallo can all be made a day ahead and refrigerated separately, then assemble and bake fresh.</p>
+      <p><b>Leftovers,</b> store the beef and bean mixture in the fridge for up to 3 days, don't store assembled nachos.</p>
+    </div>
+  </details>
+
+  <div class="action-row">
+    <button class="start-btn rum" id="startBtn">Start cooking →</button>
+    <button class="print-btn rum" id="printBtn">Print</button>
+  </div>
+
+  <div class="print-only" id="printSteps"></div>
+
+  <footer>LOADED PARTY NACHOS</footer>
+</div>
+
+<!-- COOK MODE -->
+<div class="cook-overlay" id="cookOverlay">
+  <div class="cook-top">
+    <button class="close-btn" id="closeBtn">✕</button>
+    <div class="step-count" id="stepCount">STEP 1 / 6</div>
+    <div style="width:38px"></div>
+  </div>
+
+  <div class="progress-track" id="progressTrack"></div>
+
+  <div class="cook-body" id="cookBody">
+    <div class="step-eyebrow" id="stepEyebrow">BEEF</div>
+    <h2 class="step-title" id="stepTitle"></h2>
+    <p class="step-content" id="stepContent"></p>
+
+    <div class="timer-wrap" id="timerWrap" style="display:none;">
+      <div class="dial">
+        <svg width="190" height="190" viewBox="0 0 190 190">
+          <circle class="track" cx="95" cy="95" r="82"></circle>
+          <circle class="fill" id="dialFill" cx="95" cy="95" r="82"></circle>
+        </svg>
+        <div class="dial-center">
+          <div class="dial-time" id="dialTime">00:00</div>
+          <div class="dial-label" id="dialLabel">READY</div>
+        </div>
+      </div>
+      <div class="timer-controls">
+        <button class="primary" id="timerToggle">Start timer</button>
+        <button id="timerReset">Reset</button>
+      </div>
+      <div class="timer-done-badge" id="timerDoneBadge"><span class="dot"></span>TIME'S UP</div>
+    </div>
+  </div>
+
+  <div class="done-screen" id="doneScreen">
+    <div class="glyph">🧀</div>
+    <h2>Nachos are ready.</h2>
+    <p>Serve immediately, while the cheese is still hot and melty. Enjoy the game.</p>
+    <button class="start-btn rum" id="restartBtn" style="max-width:280px;">Make another batch</button>
+  </div>
+
+  <div class="cook-nav" id="cookNav">
+    <button id="prevBtn">Back</button>
+    <button class="next" id="nextBtn">Next step</button>
+  </div>
+</div>
+
+<script>
+  window.RECIPE = {
+    accent: 'rum',
+    baseServings: 8,
+    servingStep: 2,
+    minServings: 4,
+    maxServings: 16,
+    ingredients: [
+      { name: "Tortilla chips", base: 13, unit: "oz", sub: "1 large bag" },
+      { name: "Ground beef", base: 1.5, unit: "lb" },
+      { name: "Taco seasoning", base: 2, unit: "tbsp" },
+      { name: "Refried beans", base: 16, unit: "oz", sub: "1 can, warmed" },
+      { name: "Cooked white or Mexican rice", base: 1.5, unit: "cup", sub: "optional" },
+      { name: "Shredded Mexican cheese blend", base: 3, unit: "cup" },
+      { name: "Pico de gallo", base: 1.5, unit: "cup" },
+      { name: "Jalapeños, sliced", base: 0.25, unit: "cup" },
+      { name: "Black olives, sliced", base: 0.25, unit: "cup" },
+      { name: "Green onions, sliced", base: 0.25, unit: "cup" },
+      { name: "Sour cream", base: 0.5, unit: "cup" },
+      { name: "Guacamole or diced avocado", base: 1, unit: "cup" },
+      { name: "Hot sauce", base: 1, unit: "", sub: "to taste" },
+    ],
+    servingsNote: (scale, fmt) => `${fmt(1.5*scale)} lbs ground beef`,
+    steps: [
+      {
+        eyebrow: "BEEF",
+        title: "Brown the beef",
+        content: "Preheat the oven to 400°F. Brown the <b>ground beef</b> in a skillet, breaking it up as it cooks, then stir in the <b>taco seasoning</b>.",
+        timer: 8*60
+      },
+      {
+        eyebrow: "BEANS",
+        title: "Warm the beans",
+        content: "Warm the <b>refried beans</b>, thinning with a splash of water if needed so they're easy to spread.",
+        timer: 3*60
+      },
+      {
+        eyebrow: "LAYER 1",
+        title: "Build the first layer",
+        content: "On a large baking sheet lined with foil, spread half the <b>tortilla chips</b>. Dollop and spread half the <b>refried beans</b>, half the <b>rice</b> if using, half the <b>beef</b>, and half the <b>cheese</b>.",
+        timer: null
+      },
+      {
+        eyebrow: "LAYER 2",
+        title: "Build the second layer",
+        content: "Repeat with the remaining <b>chips</b>, <b>beans</b>, <b>rice</b>, <b>beef</b>, and <b>cheese</b>. This double-layer trick is what keeps every chip loaded, not just the top ones.",
+        timer: null
+      },
+      {
+        eyebrow: "BAKE",
+        title: "Bake until melted",
+        content: "Bake until the cheese is fully melted and bubbly.",
+        timer: 10*60
+      },
+      {
+        eyebrow: "FINISH",
+        title: "Add the toppings",
+        content: "Immediately top with the <b>pico de gallo</b>, <b>jalapeños</b>, <b>olives</b>, and <b>green onions</b>. Finish with dollops of <b>sour cream</b> and <b>guacamole</b>, and a drizzle of <b>hot sauce</b>. Serve right away.",
+        timer: null
+      },
+    ]
+  };
+</script>
+<script src="../assets/site.js"></script>
+<script src="../assets/recipe-engine.js"></script>
+
+</body>
+</html>

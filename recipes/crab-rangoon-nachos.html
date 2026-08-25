@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#161a23">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>Crab Rangoon Nachos, La Boricua Costeña</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Work+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+
+<div class="app">
+  <div class="masthead">
+    <a class="place" href="../index.html">← La Boricua Costeña</a>
+    <div class="place">Game Day #1</div>
+  </div>
+  <div class="tile-strip"></div>
+
+  <div class="hero">
+    <h1>Crab Rangoon <em>Nachos</em></h1>
+    <p class="subtitle">All the flavor of crab rangoon, piled onto crispy fried wonton chips instead of stuffed and folded. Warm, creamy crab and cream cheese filling, finished with sweet chili sauce and spicy mayo.</p>
+  </div>
+
+  <div class="meta-row">
+    <span>ACTIVE <b>25 min</b></span>
+    <span>MAKES <b>15 nachos</b></span>
+    <span>SERVES <b>4 to 6</b></span>
+  </div>
+
+  <div class="card">
+    <div class="servings-row">
+      <div class="servings-label">Wonton sheets</div>
+      <div class="stepper">
+        <button id="dec" aria-label="Decrease servings">–</button>
+        <div class="count" id="servingsCount">30</div>
+        <button id="inc" aria-label="Increase servings">+</button>
+      </div>
+    </div>
+    <div class="servings-note"><span id="servingsNoteText">Makes about 15 nachos</span></div>
+
+    <div style="height:20px"></div>
+
+    <div class="section-label rum">Ingredients</div>
+    <ul class="ingredients" id="ingredientsList"></ul>
+  </div>
+
+  <div class="card">
+    <div class="note-box rum">
+      <b>Good to know,</b> gochugaru gives a milder, fruitier heat than regular chili powder, use whichever you have. Lump crab meat gives the best texture, but imitation crab works in a pinch for a budget version.
+    </div>
+  </div>
+
+  <details class="meal-prep rum">
+    <summary>Storage &amp; leftovers <span class="chev">⌄</span></summary>
+    <div class="meal-prep-body">
+      <p><b>Best fresh,</b> assemble and serve right away, the chips soften once topped with the warm filling.</p>
+      <p><b>Make ahead,</b> the filling can be made a day ahead and refrigerated, warm it up before serving. Fry the wonton chips fresh.</p>
+      <p><b>Store leftovers,</b> keep the filling separately in the fridge for up to 3 days, don't store assembled nachos.</p>
+    </div>
+  </details>
+
+  <div class="action-row">
+    <button class="start-btn rum" id="startBtn">Start cooking →</button>
+    <button class="print-btn rum" id="printBtn">Print</button>
+  </div>
+
+  <div class="print-only" id="printSteps"></div>
+
+  <footer>CRAB RANGOON NACHOS</footer>
+</div>
+
+<!-- COOK MODE -->
+<div class="cook-overlay" id="cookOverlay">
+  <div class="cook-top">
+    <button class="close-btn" id="closeBtn">✕</button>
+    <div class="step-count" id="stepCount">STEP 1 / 5</div>
+    <div style="width:38px"></div>
+  </div>
+
+  <div class="progress-track" id="progressTrack"></div>
+
+  <div class="cook-body" id="cookBody">
+    <div class="step-eyebrow" id="stepEyebrow">CHIPS</div>
+    <h2 class="step-title" id="stepTitle"></h2>
+    <p class="step-content" id="stepContent"></p>
+
+    <div class="timer-wrap" id="timerWrap" style="display:none;">
+      <div class="dial">
+        <svg width="190" height="190" viewBox="0 0 190 190">
+          <circle class="track" cx="95" cy="95" r="82"></circle>
+          <circle class="fill" id="dialFill" cx="95" cy="95" r="82"></circle>
+        </svg>
+        <div class="dial-center">
+          <div class="dial-time" id="dialTime">00:00</div>
+          <div class="dial-label" id="dialLabel">READY</div>
+        </div>
+      </div>
+      <div class="timer-controls">
+        <button class="primary" id="timerToggle">Start timer</button>
+        <button id="timerReset">Reset</button>
+      </div>
+      <div class="timer-done-badge" id="timerDoneBadge"><span class="dot"></span>TIME'S UP</div>
+    </div>
+  </div>
+
+  <div class="done-screen" id="doneScreen">
+    <div class="glyph">🦀</div>
+    <h2>Nachos are ready.</h2>
+    <p>Serve immediately while the chips are still crisp. Enjoy.</p>
+    <button class="start-btn rum" id="restartBtn" style="max-width:280px;">Make another batch</button>
+  </div>
+
+  <div class="cook-nav" id="cookNav">
+    <button id="prevBtn">Back</button>
+    <button class="next" id="nextBtn">Next step</button>
+  </div>
+</div>
+
+<script>
+  window.RECIPE = {
+    accent: 'rum',
+    baseServings: 30,
+    servingStep: 15,
+    minServings: 15,
+    maxServings: 60,
+    ingredients: [
+      { name: "Wonton wrappers", base: 30, unit: "sheets", sub: "for the chips" },
+      { name: "Oil, for frying", base: 2, unit: "cup" },
+      { name: "Cream cheese, softened", base: 8, unit: "oz" },
+      { name: "Sour cream", base: 4, unit: "oz" },
+      { name: "Crab meat", base: 6, unit: "oz" },
+      { name: "Green onions, chopped", base: 0.25, unit: "cup" },
+      { name: "Soy sauce", base: 1, unit: "tbsp" },
+      { name: "Chili powder or gochugaru", base: 1, unit: "tsp" },
+      { name: "Sesame oil", base: 1, unit: "tsp" },
+      { name: "Sugar", base: 0.5, unit: "tsp" },
+      { name: "Sweet chili sauce", base: 1, unit: "", sub: "for finishing" },
+      { name: "Spicy mayo", base: 1, unit: "", sub: "for finishing" },
+      { name: "Green onions", base: 1, unit: "", sub: "for garnish" },
+    ],
+    servingsNote: (scale, fmt) => `Makes about ${fmt(15*scale)} nachos`,
+    steps: [
+      {
+        eyebrow: "CHIPS",
+        title: "Fry the wonton chips",
+        content: "Cut the <b>wonton wrappers</b> in half diagonally. Fry in the <b>oil</b> in batches until golden and crispy. Drain on paper towels and sprinkle lightly with salt.",
+        timer: 4*60
+      },
+      {
+        eyebrow: "FILLING",
+        title: "Make the crab filling",
+        content: "In a bowl, mix the <b>cream cheese</b>, <b>sour cream</b>, <b>crab meat</b>, <b>green onions</b>, <b>soy sauce</b>, <b>chili powder</b>, <b>sesame oil</b>, and <b>sugar</b> until well combined.",
+        timer: null
+      },
+      {
+        eyebrow: "WARM",
+        title: "Warm the filling",
+        content: "Gently warm the filling on the stovetop over low heat or in the microwave until soft and slightly melted, stirring occasionally.",
+        timer: 3*60
+      },
+      {
+        eyebrow: "ASSEMBLE",
+        title: "Assemble the nachos",
+        content: "Arrange the crispy <b>wonton chips</b> on a platter. Spoon the warm crab <b>filling</b> generously over the top.",
+        timer: null
+      },
+      {
+        eyebrow: "FINISH",
+        title: "Drizzle and garnish",
+        content: "Drizzle with <b>sweet chili sauce</b> and <b>spicy mayo</b>, then sprinkle with chopped <b>green onions</b>. Serve immediately.",
+        timer: null
+      },
+    ]
+  };
+</script>
+<script src="../assets/site.js"></script>
+<script src="../assets/recipe-engine.js"></script>
+
+</body>
+</html>

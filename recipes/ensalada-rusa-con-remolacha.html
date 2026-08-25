@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#161a23">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>Ensalada Rusa con Remolacha, La Boricua Costeña</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Work+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+
+<div class="app">
+  <div class="masthead">
+    <a class="place" href="../index.html">← La Boricua Costeña</a>
+    <div class="place">Ensaladas #1</div>
+  </div>
+  <div class="tile-strip"></div>
+
+  <div class="hero">
+    <h1>Ensalada Rusa <em>con Remolacha</em></h1>
+    <p class="subtitle">Potato, carrot, and beet in a simple mayonnaise dressing with fresh cilantro. A traditional side dish on the Colombian Caribbean coast, including Cartagena, served ice cold alongside meat and fish.</p>
+  </div>
+
+  <div class="meta-row">
+    <span>ACTIVE <b>30 min</b></span>
+    <span>CHILL <b>1 hr</b></span>
+    <span>SERVES <b>6</b></span>
+  </div>
+
+  <div class="card">
+    <div class="servings-row">
+      <div class="servings-label">Servings</div>
+      <div class="stepper">
+        <button id="dec" aria-label="Decrease servings">–</button>
+        <div class="count" id="servingsCount">6</div>
+        <button id="inc" aria-label="Increase servings">+</button>
+      </div>
+    </div>
+    <div class="servings-note"><span id="servingsNoteText">3 medium potatoes</span></div>
+
+    <div style="height:20px"></div>
+
+    <div class="section-label">Ingredients</div>
+    <ul class="ingredients" id="ingredientsList"></ul>
+  </div>
+
+  <div class="card">
+    <div class="note-box">
+      <b>Good to know,</b> cook the beet separately from the potato and carrot, its strong color and tougher texture need their own pot and timing. Add the beet to the bowl last and toss gently, or it will tint everything pink.
+    </div>
+  </div>
+
+  <details class="meal-prep">
+    <summary>Meal prep &amp; storage <span class="chev">⌄</span></summary>
+    <div class="meal-prep-body">
+      <p><b>Make ahead,</b> tastes even better after chilling a few hours, good to make the day before.</p>
+      <p><b>Store,</b> airtight container in the fridge for up to 3 days.</p>
+      <p><b>Serve it,</b> ice cold, alongside meats, fish, or classic Cartagena dishes.</p>
+    </div>
+  </details>
+
+  <div class="action-row">
+    <button class="start-btn" id="startBtn">Start cooking →</button>
+    <button class="print-btn" id="printBtn">Print</button>
+  </div>
+
+  <div class="print-only" id="printSteps"></div>
+
+  <footer>ENSALADA RUSA CON REMOLACHA</footer>
+</div>
+
+<!-- COOK MODE -->
+<div class="cook-overlay" id="cookOverlay">
+  <div class="cook-top">
+    <button class="close-btn" id="closeBtn">✕</button>
+    <div class="step-count" id="stepCount">STEP 1 / 5</div>
+    <div style="width:38px"></div>
+  </div>
+
+  <div class="progress-track" id="progressTrack"></div>
+
+  <div class="cook-body" id="cookBody">
+    <div class="step-eyebrow" id="stepEyebrow">COOK</div>
+    <h2 class="step-title" id="stepTitle"></h2>
+    <p class="step-content" id="stepContent"></p>
+
+    <div class="timer-wrap" id="timerWrap" style="display:none;">
+      <div class="dial">
+        <svg width="190" height="190" viewBox="0 0 190 190">
+          <circle class="track" cx="95" cy="95" r="82"></circle>
+          <circle class="fill" id="dialFill" cx="95" cy="95" r="82"></circle>
+        </svg>
+        <div class="dial-center">
+          <div class="dial-time" id="dialTime">00:00</div>
+          <div class="dial-label" id="dialLabel">READY</div>
+        </div>
+      </div>
+      <div class="timer-controls">
+        <button class="primary" id="timerToggle">Start timer</button>
+        <button id="timerReset">Reset</button>
+      </div>
+      <div class="timer-done-badge" id="timerDoneBadge"><span class="dot"></span>TIME'S UP</div>
+    </div>
+  </div>
+
+  <div class="done-screen" id="doneScreen">
+    <div class="glyph">🥗</div>
+    <h2>Ensalada lista.</h2>
+    <p>Serve ice cold alongside meats, fish, or your favorite Cartagena classics. Buen provecho.</p>
+    <button class="start-btn" id="restartBtn" style="max-width:280px;">Make it again</button>
+  </div>
+
+  <div class="cook-nav" id="cookNav">
+    <button id="prevBtn">Back</button>
+    <button class="next" id="nextBtn">Next step</button>
+  </div>
+</div>
+
+<script>
+  window.RECIPE = {
+    accent: 'coral',
+    baseServings: 6,
+    servingStep: 2,
+    minServings: 2,
+    maxServings: 18,
+    ingredients: [
+      { name: "Potatoes, medium", base: 3, unit: "" },
+      { name: "Carrots", base: 2, unit: "" },
+      { name: "Beets, medium", base: 2, unit: "" },
+      { name: "Mayonnaise", base: 1, unit: "cup", sub: "to taste" },
+      { name: "Fresh cilantro, chopped", base: 2, unit: "tbsp" },
+      { name: "Salt and pepper", base: 1, unit: "", sub: "to taste" },
+      { name: "Hard-boiled eggs, chopped", base: 2, unit: "", sub: "optional" },
+      { name: "Petit pois (peas)", base: 0.5, unit: "cup", sub: "optional" },
+    ],
+    servingsNote: (scale, fmt) => `${fmt(3*scale)} medium potatoes`,
+    steps: [
+      {
+        eyebrow: "WASH",
+        title: "Wash the vegetables",
+        content: "Wash the <b>potatoes</b>, <b>carrots</b>, and <b>beets</b> well.",
+        timer: null
+      },
+      {
+        eyebrow: "COOK",
+        title: "Cook the potato and carrot",
+        content: "Cook the <b>potatoes</b> and <b>carrots</b> together, either diced or whole with the skin on to peel afterward, until tender.",
+        timer: 20*60
+      },
+      {
+        eyebrow: "BEETS",
+        title: "Cook the beets separately",
+        content: "Cook the <b>beets</b> in a separate pot, their strong color and tougher texture need their own timing, until tender but still a bit firm (al dente).",
+        timer: 30*60
+      },
+      {
+        eyebrow: "COOL",
+        title: "Cool and dice",
+        content: "Remove everything from the heat and let it cool completely. Peel if you cooked the vegetables whole, then cut the <b>potato</b>, <b>carrot</b>, and <b>beet</b> into small, even cubes.",
+        timer: 15*60
+      },
+      {
+        eyebrow: "MIX",
+        title: "Mix and chill",
+        content: "In a large bowl, combine the <b>potato</b> and <b>carrot</b>. Add the <b>mayonnaise</b> gradually, along with <b>salt</b>, <b>pepper</b>, and <b>cilantro</b>. Mix gently, then fold in the <b>beet</b> last so it doesn't tint everything pink. Add <b>hard-boiled egg</b> or <b>peas</b> if using. Refrigerate at least an hour before serving.",
+        timer: 60*60
+      },
+    ]
+  };
+</script>
+<script src="../assets/site.js"></script>
+<script src="../assets/recipe-engine.js"></script>
+
+</body>
+</html>
