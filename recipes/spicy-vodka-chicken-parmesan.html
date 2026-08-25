@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#161a23">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>Spicy Vodka Chicken Parmesan, La Boricua Costeña</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Work+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+
+<div class="app">
+  <div class="masthead">
+    <a class="place" href="../index.html">← La Boricua Costeña</a>
+    <div class="place">Americana #14</div>
+  </div>
+  <div class="tile-strip"></div>
+
+  <div class="hero">
+    <h1>Spicy Vodka <em>Chicken Parm</em></h1>
+    <p class="subtitle">Crispy fried chicken cutlets topped with a fiery, creamy vodka tomato sauce and a heavy layer of melted mozzarella and provolone. Chicken parm's bolder cousin.</p>
+  </div>
+
+  <div class="meta-row">
+    <span>ACTIVE <b>35 min</b></span>
+    <span>MAKES <b>4 cutlets</b></span>
+    <span>SERVES <b>4</b></span>
+  </div>
+
+  <div class="card">
+    <div class="servings-row">
+      <div class="servings-label">Servings</div>
+      <div class="stepper">
+        <button id="dec" aria-label="Decrease servings">–</button>
+        <div class="count" id="servingsCount">4</div>
+        <button id="inc" aria-label="Increase servings">+</button>
+      </div>
+    </div>
+    <div class="servings-note"><span id="servingsNoteText">2 large chicken breasts</span></div>
+
+    <div style="height:20px"></div>
+
+    <div class="section-label rum">Ingredients</div>
+    <ul class="ingredients" id="ingredientsList"></ul>
+  </div>
+
+  <div class="card">
+    <div class="note-box rum">
+      <b>Good to know,</b> letting the vodka actually reduce for a minute or two cooks off the harsh alcohol taste and leaves behind depth, don't rush that step. No broiler-safe pan? Melt the cheese over the sauce in a small oven-safe dish instead, then spoon it over the chicken.
+    </div>
+  </div>
+
+  <details class="meal-prep rum">
+    <summary>Meal prep &amp; storage <span class="chev">⌄</span></summary>
+    <div class="meal-prep-body">
+      <p><b>Make ahead,</b> the vodka sauce can be made a day ahead and reheated gently. Fry the chicken fresh for the best crunch.</p>
+      <p><b>Store,</b> airtight container in the fridge for up to 3 days.</p>
+      <p><b>Reheat,</b> oven at 350°F until warmed through, this keeps the coating crisper than the microwave.</p>
+    </div>
+  </details>
+
+  <div class="action-row">
+    <button class="start-btn rum" id="startBtn">Start cooking →</button>
+    <button class="print-btn rum" id="printBtn">Print</button>
+  </div>
+
+  <div class="print-only" id="printSteps"></div>
+
+  <footer>SPICY VODKA CHICKEN PARMESAN</footer>
+</div>
+
+<!-- COOK MODE -->
+<div class="cook-overlay" id="cookOverlay">
+  <div class="cook-top">
+    <button class="close-btn" id="closeBtn">✕</button>
+    <div class="step-count" id="stepCount">STEP 1 / 5</div>
+    <div style="width:38px"></div>
+  </div>
+
+  <div class="progress-track" id="progressTrack"></div>
+
+  <div class="cook-body" id="cookBody">
+    <div class="step-eyebrow" id="stepEyebrow">BREAD</div>
+    <h2 class="step-title" id="stepTitle"></h2>
+    <p class="step-content" id="stepContent"></p>
+
+    <div class="timer-wrap" id="timerWrap" style="display:none;">
+      <div class="dial">
+        <svg width="190" height="190" viewBox="0 0 190 190">
+          <circle class="track" cx="95" cy="95" r="82"></circle>
+          <circle class="fill" id="dialFill" cx="95" cy="95" r="82"></circle>
+        </svg>
+        <div class="dial-center">
+          <div class="dial-time" id="dialTime">00:00</div>
+          <div class="dial-label" id="dialLabel">READY</div>
+        </div>
+      </div>
+      <div class="timer-controls">
+        <button class="primary" id="timerToggle">Start timer</button>
+        <button id="timerReset">Reset</button>
+      </div>
+      <div class="timer-done-badge" id="timerDoneBadge"><span class="dot"></span>TIME'S UP</div>
+    </div>
+  </div>
+
+  <div class="done-screen" id="doneScreen">
+    <div class="glyph">🧀</div>
+    <h2>Chicken parm's ready.</h2>
+    <p>Garnish with fresh basil and serve immediately, while the cheese is still bubbling. Enjoy.</p>
+    <button class="start-btn rum" id="restartBtn" style="max-width:280px;">Cook it again</button>
+  </div>
+
+  <div class="cook-nav" id="cookNav">
+    <button id="prevBtn">Back</button>
+    <button class="next" id="nextBtn">Next step</button>
+  </div>
+</div>
+
+<script>
+  window.RECIPE = {
+    accent: 'rum',
+    baseServings: 4,
+    servingStep: 2,
+    minServings: 2,
+    maxServings: 12,
+    ingredients: [
+      { name: "Chicken breasts, butterflied and pounded thin", base: 2, unit: "large" },
+      { name: "Salt and pepper", base: 1, unit: "", sub: "to taste" },
+      { name: "All-purpose flour", base: 0.75, unit: "cup" },
+      { name: "Eggs, beaten", base: 2, unit: "" },
+      { name: "Italian breadcrumbs or panko", base: 1.5, unit: "cup" },
+      { name: "Grated parmesan", base: 0.5, unit: "cup", sub: "for the breading" },
+      { name: "Olive or avocado oil", base: 0.5, unit: "cup", sub: "for frying" },
+      { name: "Butter", base: 2, unit: "tbsp", sub: "for the sauce" },
+      { name: "Shallot, minced", base: 1, unit: "" },
+      { name: "Garlic cloves, minced", base: 4, unit: "" },
+      { name: "Crushed red pepper flakes", base: 1, unit: "tsp" },
+      { name: "Tomato paste", base: 3, unit: "tbsp" },
+      { name: "Vodka", base: 0.33, unit: "cup" },
+      { name: "Heavy cream", base: 1, unit: "cup" },
+      { name: "Grated parmesan", base: 0.5, unit: "cup", sub: "for the sauce" },
+      { name: "Fresh mozzarella, sliced", base: 8, unit: "oz" },
+      { name: "Provolone, sliced or shredded", base: 4, unit: "oz" },
+      { name: "Fresh basil", base: 1, unit: "", sub: "for garnish" },
+    ],
+    servingsNote: (scale, fmt) => `${fmt(2*scale)} large chicken breasts`,
+    steps: [
+      {
+        eyebrow: "BREAD",
+        title: "Bread the chicken",
+        content: "Season the pounded <b>chicken</b> cutlets with <b>salt and pepper</b>. Dredge each in <b>flour</b>, dip in the beaten <b>eggs</b>, then coat thoroughly in the <b>breadcrumbs</b> mixed with <b>parmesan</b>.",
+        timer: null
+      },
+      {
+        eyebrow: "FRY",
+        title: "Fry the cutlets",
+        content: "Heat the <b>oil</b> in a large pan over medium-high heat. Fry the breaded cutlets until golden brown and crispy, then set aside.",
+        timer: 7*60
+      },
+      {
+        eyebrow: "SAUCE",
+        title: "Make the spicy vodka sauce",
+        content: "In the same pan, melt the <b>butter</b> and sauté the <b>shallot</b> and <b>garlic</b>. Add the <b>red pepper flakes</b> and <b>tomato paste</b>, cooking until the paste darkens. Pour in the <b>vodka</b> and let it reduce, then stir in the <b>heavy cream</b> and <b>parmesan</b>. Season to taste.",
+        timer: 6*60
+      },
+      {
+        eyebrow: "MELT",
+        title: "Melt the cheese",
+        content: "Spoon some of the warm vodka sauce into a broiler-safe pan or dish, top with the <b>mozzarella</b> and <b>provolone</b>, and broil until bubbly and golden at the edges.",
+        timer: 4*60
+      },
+      {
+        eyebrow: "ASSEMBLE",
+        title: "Assemble and serve",
+        content: "Plate the crispy chicken cutlets and top with the melted cheesy vodka sauce. Garnish with fresh <b>basil</b>.",
+        timer: null
+      },
+    ]
+  };
+</script>
+<script src="../assets/site.js"></script>
+<script src="../assets/recipe-engine.js"></script>
+
+</body>
+</html>

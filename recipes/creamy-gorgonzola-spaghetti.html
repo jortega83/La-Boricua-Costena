@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#161a23">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>Creamy Gorgonzola Spaghetti, La Boricua Costeña</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Work+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+
+<div class="app">
+  <div class="masthead">
+    <a class="place" href="../index.html">← La Boricua Costeña</a>
+    <div class="place">Latina #4</div>
+  </div>
+  <div class="tile-strip"></div>
+
+  <div class="hero">
+    <h1>Creamy Gorgonzola <em>Spaghetti</em></h1>
+    <p class="subtitle">A one-pan Brazilian spaghetti, the noodles cook right in a caramelized onion and sun-dried tomato base with a splash of shoyu, finished with fresh cream, parmesan, and gorgonzola melted in at the end.</p>
+  </div>
+
+  <div class="meta-row">
+    <span>ACTIVE <b>20 min</b></span>
+    <span>COOK <b>15 min</b></span>
+    <span>SERVES <b>5</b></span>
+  </div>
+
+  <div class="card">
+    <div class="servings-row">
+      <div class="servings-label">Servings</div>
+      <div class="stepper">
+        <button id="dec" aria-label="Decrease servings">–</button>
+        <div class="count" id="servingsCount">5</div>
+        <button id="inc" aria-label="Increase servings">+</button>
+      </div>
+    </div>
+    <div class="servings-note"><span id="servingsNoteText">14 oz spaghetti</span></div>
+
+    <div style="height:20px"></div>
+
+    <div class="section-label latin">Ingredients</div>
+    <ul class="ingredients" id="ingredientsList"></ul>
+  </div>
+
+  <div class="card">
+    <div class="note-box latin">
+      <b>The one-pan secret,</b> everything cooks in the same pan, including the pasta itself, no separate pot to boil noodles. Keep a kettle or pot of boiling water on the side and add it in small splashes as the pasta drinks it up, never cold water, that stalls the cooking. Slicing the onions thin (half-moons) helps them melt down fully into the sauce, no strong onion bite left by the end.
+    </div>
+  </div>
+
+  <details class="meal-prep latin">
+    <summary>Meal prep &amp; storage <span class="chev">⌄</span></summary>
+    <div class="meal-prep-body">
+      <p><b>Best fresh,</b> this is a creamy, saucy pasta best eaten right away while it's loose and glossy.</p>
+      <p><b>Store,</b> airtight container in the fridge for up to 2 days.</p>
+      <p><b>Reheat,</b> stovetop over low heat with a splash of water or cream to loosen the sauce back up.</p>
+      <p><b>Want protein?</b> Crisped bacon or seared filet mignon, sliced thin, are great additions, stir in near the end.</p>
+    </div>
+  </details>
+
+  <div class="action-row">
+    <button class="start-btn latin" id="startBtn">Start cooking →</button>
+    <button class="print-btn latin" id="printBtn">Print</button>
+  </div>
+
+  <div class="print-only" id="printSteps"></div>
+
+  <footer>CREAMY GORGONZOLA SPAGHETTI</footer>
+</div>
+
+<!-- COOK MODE -->
+<div class="cook-overlay" id="cookOverlay">
+  <div class="cook-top">
+    <button class="close-btn" id="closeBtn">✕</button>
+    <div class="step-count" id="stepCount">STEP 1 / 5</div>
+    <div style="width:38px"></div>
+  </div>
+
+  <div class="progress-track" id="progressTrack"></div>
+
+  <div class="cook-body" id="cookBody">
+    <div class="step-eyebrow" id="stepEyebrow">BASE</div>
+    <h2 class="step-title" id="stepTitle"></h2>
+    <p class="step-content" id="stepContent"></p>
+
+    <div class="timer-wrap" id="timerWrap" style="display:none;">
+      <div class="dial">
+        <svg width="190" height="190" viewBox="0 0 190 190">
+          <circle class="track" cx="95" cy="95" r="82"></circle>
+          <circle class="fill" id="dialFill" cx="95" cy="95" r="82"></circle>
+        </svg>
+        <div class="dial-center">
+          <div class="dial-time" id="dialTime">00:00</div>
+          <div class="dial-label" id="dialLabel">READY</div>
+        </div>
+      </div>
+      <div class="timer-controls">
+        <button class="primary" id="timerToggle">Start timer</button>
+        <button id="timerReset">Reset</button>
+      </div>
+      <div class="timer-done-badge" id="timerDoneBadge"><span class="dot"></span>TIME'S UP</div>
+    </div>
+  </div>
+
+  <div class="done-screen" id="doneScreen">
+    <div class="glyph">🍝</div>
+    <h2>Massa pronta.</h2>
+    <p>Serve immediately while it's hot, creamy, and loose. Team gorgonzola or too strong for you?</p>
+    <button class="start-btn latin" id="restartBtn" style="max-width:280px;">Make it again</button>
+  </div>
+
+  <div class="cook-nav" id="cookNav">
+    <button id="prevBtn">Back</button>
+    <button class="next" id="nextBtn">Next step</button>
+  </div>
+</div>
+
+<script>
+  window.RECIPE = {
+    accent: 'latin',
+    baseServings: 5,
+    servingStep: 1,
+    minServings: 2,
+    maxServings: 10,
+    ingredients: [
+      { name: "Spaghetti", base: 14, unit: "oz", sub: "≈400g, about 100g per person" },
+      { name: "Onions, thinly sliced into half-moons", base: 2.5, unit: "" },
+      { name: "Garlic cloves, minced", base: 4.5, unit: "" },
+      { name: "Butter", base: 2, unit: "tbsp" },
+      { name: "Olive oil", base: 2, unit: "tbsp" },
+      { name: "Soy sauce", base: 1, unit: "tbsp" },
+      { name: "Sun-dried tomatoes, chopped", base: 4, unit: "oz", sub: "to taste, ≈80 to 140g" },
+      { name: "Crushed Calabrian chili flakes", base: 1, unit: "tsp", sub: "to taste" },
+      { name: "Finger chili pepper, seeded and sliced", base: 1, unit: "", sub: "optional, to taste" },
+      { name: "Heavy cream", base: 2, unit: "cup", sub: "≈500ml" },
+      { name: "Parmesan, grated", base: 0.5, unit: "cup", sub: "≈50g" },
+      { name: "Gorgonzola, cubed", base: 5, unit: "oz", sub: "to taste, ≈100 to 200g" },
+      { name: "Fresh parsley, finely chopped", base: 2, unit: "tbsp" },
+      { name: "Salt", base: 1, unit: "", sub: "to taste" },
+      { name: "Boiling water", base: 1, unit: "", sub: "as needed, add gradually" },
+    ],
+    servingsNote: (scale, fmt) => `${fmt(14*scale)} oz spaghetti`,
+    steps: [
+      {
+        eyebrow: "BASE",
+        title: "Caramelize the onions",
+        content: "In a large skillet or pan, heat a good drizzle of <b>olive oil</b> and a generous spoonful of <b>butter</b>. Sauté the sliced <b>onions</b> until well caramelized.",
+        timer: 10*60
+      },
+      {
+        eyebrow: "SEASON",
+        title: "Add the aromatics",
+        content: "Add the <b>garlic</b>, a little <b>soy sauce</b>, the <b>sun-dried tomatoes</b>, and the <b>chili flakes</b> and <b>finger chili</b> if using. Let the flavors come together for a minute.",
+        timer: 2*60
+      },
+      {
+        eyebrow: "PASTA",
+        title: "Cook the pasta in the pan",
+        content: "Add the raw <b>spaghetti</b> directly to the pan without breaking it, and add <b>boiling water</b> a little at a time along with <b>salt</b> to taste. Keep stirring and adding more hot water as needed until the pasta is al dente and has released its starch into the sauce.",
+        timer: 11*60
+      },
+      {
+        eyebrow: "CREAM",
+        title: "Add the cream and parmesan",
+        content: "With the heat off or very low, stir in the <b>heavy cream</b> and <b>parmesan</b>.",
+        timer: null
+      },
+      {
+        eyebrow: "FINISH",
+        title: "Melt in the gorgonzola",
+        content: "Add the <b>gorgonzola</b> cubes a little at a time, stirring gently so they melt into the hot sauce, contrasting beautifully with the sun-dried tomato. Finish with plenty of <b>parsley</b> on top and serve immediately.",
+        timer: null
+      },
+    ]
+  };
+</script>
+<script src="../assets/site.js"></script>
+<script src="../assets/recipe-engine.js"></script>
+
+</body>
+</html>
