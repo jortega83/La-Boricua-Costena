@@ -84,6 +84,8 @@ const RECIPE_INDEX = [
     { title: 'Spicy Vodka Chicken Parm', href: 'recipes/spicy-vodka-chicken-parmesan.html', desc: 'Crispy cutlets, fiery vodka sauce, melted cheese', category: 'American Kitchen' },
     { title: 'Chicken Shawarma Bowl', href: 'recipes/chicken-shawarma-bowl-meal-prep.html', desc: 'Spiced chicken, turmeric rice, sumac salad, garlic sauce', category: 'Meal Prep' },
     { title: 'Creamy Gorgonzola Spaghetti', href: 'recipes/creamy-gorgonzola-spaghetti.html', desc: 'One-pan Brazilian pasta, sun-dried tomato, gorgonzola', category: 'Latin Cuisine' },
+    { title: "Johanna's Chocolate Chip Cookies", href: 'recipes/johannas-chocolate-chip-cookies.html', desc: 'Big bakery-style cookies, baked straight from frozen', category: 'American Kitchen' },
+    { title: 'Sopa de Pescado con Coco', href: 'recipes/sopa-de-pescado-con-coco.html', desc: 'Whole fish and shrimp chowder in coconut broth', category: 'Latin Cuisine' },
 ];
 
 const SUBSTITUTIONS = {
