@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#161a23">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>Weekly Dinner Planner, La Boricua Costeña</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Work+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+<style>
+  .field{ display: flex; flex-direction: column; gap: 6px; margin-bottom: 16px; }
+  .field label{
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--cream-dim);
+  }
+  .field input{
+    background: var(--bg-raised-2);
+    border: 1px solid var(--line);
+    color: var(--cream);
+    border-radius: 10px;
+    padding: 11px 12px;
+    font-family: 'Work Sans', sans-serif;
+    font-size: 15px;
+  }
+  .field input:focus{ border-color: var(--meal); outline: none; }
+  .people-stepper{
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+  .people-stepper button{
+    width: 42px; height: 42px;
+    border-radius: 50%;
+    border: 1px solid var(--line);
+    background: var(--bg-raised-2);
+    color: var(--cream);
+    font-size: 19px;
+    font-family: 'JetBrains Mono', monospace;
+    cursor: pointer;
+  }
+  .people-stepper .count{
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 22px;
+    font-weight: 700;
+    min-width: 40px;
+    text-align: center;
+  }
+  .build-btn{
+    width: 100%;
+    padding: 17px;
+    border-radius: 999px;
+    border: none;
+    background: var(--meal);
+    color: var(--bg);
+    font-family: 'Work Sans', sans-serif;
+    font-weight: 700;
+    font-size: 16px;
+    cursor: pointer;
+    margin-top: 6px;
+  }
+  .build-btn:hover{ background: var(--meal-deep); }
+
+  .results{ display: none; }
+  .results.show{ display: block; }
+
+  .total-big{
+    text-align: center;
+    padding: 20px 0 14px;
+  }
+  .total-big .num{
+    font-family: 'Fraunces', serif;
+    font-weight: 700;
+    font-size: 46px;
+    color: var(--meal);
+    line-height: 1;
+  }
+  .total-big .label{
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--cream-dim);
+    margin-top: 8px;
+  }
+
+  .day-row{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 0;
+    border-bottom: 1px solid var(--line);
+  }
+  .day-row:last-child{ border-bottom: none; }
+  .day-row .day-label{
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--meal);
+    min-width: 42px;
+    flex-shrink: 0;
+  }
+  .day-row .day-info{ flex: 1; }
+  .day-row .day-info a{
+    font-family: 'Fraunces', serif;
+    font-weight: 600;
+    font-size: 15.5px;
+    color: var(--cream);
+  }
+  .day-row .day-info a:hover{ color: var(--meal); }
+  .day-row .day-info .cat{
+    display: block;
+    font-size: 12px;
+    color: var(--cream-dim);
+    margin-top: 2px;
+  }
+  .day-row .day-cost{
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 700;
+    color: var(--cream);
+    flex-shrink: 0;
+  }
+
+  .no-print{}
+  @media print{
+    .no-print{ display: none !important; }
+    body{ background: #fff; color: #111; }
+    .app{ max-width: 100%; padding: 0 12px; }
+    .card{ background: #fff; border-color: #ccc; break-inside: avoid; }
+    .day-row{ border-color: #ccc; }
+    .day-row .day-info .cat{ color: #333; }
+    .day-row .day-cost{ color: #111; }
+  }
+</style>
+</head>
+<body>
+
+<div class="app">
+  <div class="masthead">
+    <a class="place" href="index.html">← La Boricua Costeña</a>
+    <div class="place">Dinner Planner</div>
+  </div>
+  <div class="tile-strip"></div>
+
+  <div class="hero">
+    <h1>Weekly Dinner <em>Planner</em></h1>
+    <p class="subtitle">Enter how many people you're feeding and get a full week of dinners from the site, with a rough cost estimate for each night and the whole week.</p>
+  </div>
+
+  <div class="card no-print">
+    <div class="section-label meal">How many people?</div>
+    <div style="height:14px"></div>
+    <div class="people-stepper">
+      <button type="button" id="peopleDec">–</button>
+      <div class="count" id="peopleCount">4</div>
+      <button type="button" id="peopleInc">+</button>
+    </div>
+    <button class="build-btn" id="buildBtn" style="margin-top:20px;">Build my week →</button>
+  </div>
+
+  <div class="results" id="results">
+    <div class="card">
+      <div class="total-big">
+        <div class="num" id="weeklyTotal">$0</div>
+        <div class="label">Estimated weekly total</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="section-label meal">This week's dinners</div>
+      <div id="dayList"></div>
+    </div>
+
+    <div class="card">
+      <div class="note-box meal">
+        <b>About these numbers,</b> costs are rough per-serving estimates for planning purposes, not exact grocery totals, actual prices vary by store, region, and what's on sale. Use this as a starting point for your shopping budget, not a guarantee.
+      </div>
+    </div>
+
+    <button class="build-btn no-print" id="printBtn">Print my week</button>
+  </div>
+
+  <footer>WEEKLY DINNER PLANNER · ESTIMATES ONLY</footer>
+</div>
+
+<script src="assets/site.js"></script>
+<script>
+(function(){
+  const MENU = [
+    { day: 'Mon', title: "Johanna's Famous Chili", href: 'recipes/johannas-chili.html', category: 'American Kitchen', costPerServing: 2.75 },
+    { day: 'Tue', title: "Thu's Grilled Chicken", href: 'recipes/tus-grilled-chicken.html', category: 'American Kitchen', costPerServing: 3.25 },
+    { day: 'Wed', title: 'Arroz con Gandules', href: 'recipes/arroz-con-gandules.html', category: 'Cocina Boricua', costPerServing: 2.25 },
+    { day: 'Thu', title: 'Teriyaki Chicken Bowl', href: 'recipes/teriyaki-chicken-bowl-meal-prep.html', category: 'Meal Prep', costPerServing: 3.75 },
+    { day: 'Fri', title: "Johanna's Meatloaf", href: 'recipes/johannas-meatloaf.html', category: 'American Kitchen', costPerServing: 2.95 },
+    { day: 'Sat', title: "Johanna's Seafood Boil", href: 'recipes/johannas-seafood-boil.html', category: 'American Kitchen', costPerServing: 9.50 },
+    { day: 'Sun', title: 'Pernil Asado', href: 'recipes/pernil.html', category: 'Cocina Boricua', costPerServing: 4.25 },
+  ];
+
+  let people = 4;
+  const peopleCountEl = document.getElementById('peopleCount');
+
+  document.getElementById('peopleDec').addEventListener('click', () => {
+    if (people > 1) { people--; peopleCountEl.textContent = people; }
+  });
+  document.getElementById('peopleInc').addEventListener('click', () => {
+    if (people < 20) { people++; peopleCountEl.textContent = people; }
+  });
+
+  document.getElementById('buildBtn').addEventListener('click', () => {
+    const dayList = document.getElementById('dayList');
+    let total = 0;
+    dayList.innerHTML = MENU.map(meal => {
+      const cost = meal.costPerServing * people;
+      total += cost;
+      return `
+        <div class="day-row">
+          <span class="day-label">${meal.day}</span>
+          <div class="day-info">
+            <a href="${meal.href}">${meal.title}</a>
+            <span class="cat">${meal.category}</span>
+          </div>
+          <span class="day-cost">$${cost.toFixed(2)}</span>
+        </div>
+      `;
+    }).join('');
+
+    document.getElementById('weeklyTotal').textContent = '$' + total.toFixed(2);
+    document.getElementById('results').classList.add('show');
+    document.getElementById('results').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+
+  document.getElementById('printBtn').addEventListener('click', () => window.print());
+})();
+</script>
+
+</body>
+</html>
