@@ -81,6 +81,9 @@ const RECIPE_INDEX = [
     { title: 'Shrimp & Sweet Potato Bowl', href: 'recipes/shrimp-sweet-potato-bowl-meal-prep.html', desc: 'Cajun shrimp, roasted sweet potato, hot honey', category: 'Meal Prep' },
     { title: 'Loaded Party Nachos', href: 'recipes/loaded-party-nachos.html', desc: 'Double-layered beef and bean nachos, fully loaded', category: 'Snacks & Game Day' },
     { title: 'Crab Rangoon Nachos', href: 'recipes/crab-rangoon-nachos.html', desc: 'Crispy wonton chips, warm crab and cream cheese', category: 'Snacks & Game Day' },
+    { title: 'Spicy Vodka Chicken Parm', href: 'recipes/spicy-vodka-chicken-parmesan.html', desc: 'Crispy cutlets, fiery vodka sauce, melted cheese', category: 'American Kitchen' },
+    { title: 'Chicken Shawarma Bowl', href: 'recipes/chicken-shawarma-bowl-meal-prep.html', desc: 'Spiced chicken, turmeric rice, sumac salad, garlic sauce', category: 'Meal Prep' },
+    { title: 'Creamy Gorgonzola Spaghetti', href: 'recipes/creamy-gorgonzola-spaghetti.html', desc: 'One-pan Brazilian pasta, sun-dried tomato, gorgonzola', category: 'Latin Cuisine' },
 ];
 
 const SUBSTITUTIONS = {
