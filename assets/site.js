@@ -76,6 +76,11 @@ const RECIPE_INDEX = [
     { title: 'Mediterranean Chicken Bowl', href: 'recipes/mediterranean-chicken-bowl-meal-prep.html', desc: 'Hummus, olives, cucumber, yogurt sauce', category: 'Meal Prep' },
     { title: 'Camarones al Maní', href: 'recipes/camarones-al-mani-con-patacones.html', desc: 'Shrimp in peanut sauce with patacones folded in', category: 'Latin Cuisine' },
     { title: 'Moros y Cristianos', href: 'recipes/moros-y-cristianos.html', desc: 'Cuban black beans and rice with crispy bacon', category: 'Latin Cuisine' },
+    { title: 'Ensalada Rusa Clásica', href: 'recipes/ensalada-rusa-clasica.html', desc: 'Potato salad with apple, celery, and peas', category: 'Latin Cuisine' },
+    { title: 'Ensalada Rusa con Remolacha', href: 'recipes/ensalada-rusa-con-remolacha.html', desc: 'Potato, carrot, and beet salad, a Cartagena side', category: 'Colombian Coast' },
+    { title: 'Shrimp & Sweet Potato Bowl', href: 'recipes/shrimp-sweet-potato-bowl-meal-prep.html', desc: 'Cajun shrimp, roasted sweet potato, hot honey', category: 'Meal Prep' },
+    { title: 'Loaded Party Nachos', href: 'recipes/loaded-party-nachos.html', desc: 'Double-layered beef and bean nachos, fully loaded', category: 'Snacks & Game Day' },
+    { title: 'Crab Rangoon Nachos', href: 'recipes/crab-rangoon-nachos.html', desc: 'Crispy wonton chips, warm crab and cream cheese', category: 'Snacks & Game Day' },
 ];
 
 const SUBSTITUTIONS = {
